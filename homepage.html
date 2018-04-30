@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Quori</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <!-- Inline style -->
+  <style>
+    body {
+      padding-top: 70px;
+    }
+
+    .navbar-nav .navbar-brand{
+      float: none;
+      margin: 0 auto;
+      display: block;
+      text-align: center;
+    }
+
+    .navbar-nav>li {
+      display: inline-block;
+      float: none;
+    }
+
+    .user {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+    }
+
+    .one {
+      background-image: url('http://placehold.it/400x200');
+    }
+
+    .two {
+      background-image: url('http://placehold.it/200x200');
+    }
+
+    .three {
+      background-image: url('http://placehold.it/200x400');
+    }
+
+    a:link {
+      text-decoration: none;
+      color: Grey;
+    }
+  </style>
+</head>
+<!-- Code for the navbar -->
+
+<body>
+  <!-- The fixed top parameter makes the navbar stay at the top of the page when scrolling -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light" >
+    <a class="navbar-brand" href="#" style="padding-left:25%">
+      <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" >
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <div class="collapse navbar-collapse"id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Questions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Answers</a>
+
+          <li style="padding-left:15px">
+            <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          </li>
+          <li style="padding-left:10px">
+            <div class="user one"></div>
+          </li>
+    </div>
+    </li>
+    </ul>
+
+    </div>
+  </nav>
+  <div class="row">
+    <div class="col-1"></div>
+    <!-- Column for the feeds -->
+    <div class="col-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Feeds</h5>
+          <hr>
+          <h6 class="card-subtitle mb-2 text-muted"></h6>
+          <a href="#">Top Questions</a><br>
+          <a href="#">New Questions</a><br>
+          <a href="#">Bookmarked Answers</a><br>
+          <a href="#">Followed Catagory 1</a><br>
+          <a href="#">Followed Catsgory 2</a><br>
+          <a href="#">Followed Catagory 3</a><br>
+        </div>
+      </div>
+      <br>
+    </div>
+    <!-- Main column for the questions, id's need to be added to each card div depending on how much we want to display-->
+    <div class="col-4">
+      <div class="input-group" id="card1">
+        <input type="text" class="form-control" placeholder="Search for...">
+        <span class="input-group-btn">
+        <button class="btn btn-secondary" type="button">Submit</button>
+      </span>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Column for the suggestions -->
+    <div class="col-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Suggestions</h5>
+          <hr>
+          <h6 class="card-subtitle mb-2 text-muted"></h6>
+          <div class="d-inline-flex align-items-center">
+            <div class="user one"></div><a href="#" style="font-size:10px; padding-left:5px">Username1<br>19 Best Answers</small></a><br></div><br>
+          <div class="d-inline-flex align-items-center">
+            <div class="user one"></div><a href="#" style="font-size:10px; padding-left:5px">Username2<br>1 Best Answers</a><br></div><br>
+          <div class="d-inline-flex align-items-center">
+            <div class="user one"></div><a href="#" style="font-size:10px; padding-left:5px">Username3<br>12 Best Answers</a><br></div><br>
+          <div class="d-inline-flex align-items-center">
+            <div class="user one"></div><a href="#" style="font-size:10px; padding-left:5px">Username4<br>7 Best Answers</a><br></div><br>
+        </div>
+      </div>
+      <br>
+    </div>
+    <div class="col-1"></div>
+
+  </div>
+</body>
+
+</html>
