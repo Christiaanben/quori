@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta name="viewport" content="width=device-width; initial-scale=1.0">
-  <meta charset="utf-8">
-  <title>Register for Quori</title>
-  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-</head>
-
-<body>
+{%extends "layout.html" %}
+{% block body %}
 <nav class="container">
   <nav class="row">
     <div class="col-xs-12 col-sm-1 col-md-2"></div>
@@ -44,5 +34,4 @@
     <div class="col-xs-12 col-sm-1 col-md-2"></div>
   </nav>
 </nav>
-</body>
-</html>
+{% endblock %}
