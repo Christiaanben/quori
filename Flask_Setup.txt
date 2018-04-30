@@ -1,0 +1,6 @@
+This is the instructions to get Flask and Neo4j working (works in lab pc):
+1. Install flask:
+-We don't have access to install flask in the default directory so follow the instructions on this site:
+--https://stackoverflow.com/questions/33181071/why-is-python-saying-i-have-no-module-named-venv
+2. Find flask tutorial:
+-https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
