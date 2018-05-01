@@ -8,6 +8,7 @@ This is the instructions to get Flask and Neo4j working (works in lab pc):
 - flask/Scripts/activate (Windows)
 4. Install flask(if you've done this already skip to step 5):
 - pip install flask
+- pip install Flask-WTF
 5. Create flask app:
 - Tutorial at: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
 6. Export your flask app :
