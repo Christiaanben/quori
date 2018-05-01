@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <title>Quori</title>
+  <link rel="stylesheet" type="text/css" href="/static/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+<nav class="container">
+  <nav class="row">
+    <div class="col-xs-12 col-sm-1 col-md-2"></div>
+    <div class="col-xs-12 col-sm-10 col-md-8">
+      <div class="imgcontainer">
+        <img src="/static/logo.jpg" alt="Welcome to Quori!" class="logo">
+      </div>
+      <form style="text-align: center" method="post">
+		<input id="csrf_token" name="csrf_token" type="hidden" value="IjkyNWVlMzQzZDVhYzAzNmQ2MTBkMWIxMmE2MzU4YzRmMWRhNWQ1ZGIi.DclUdA.xPOHJ7DFcNOHC9WYGW4lcd_Zg-s">
+        <label for="username"><b>Username</b></label><div class="loginlabel"></div><br>
+        <input id="username" name="username" placeholder="Enter Username" size="32" type="text" value=""><br>
+		
+		<span style="color: red;">This field is required.</span>
+		<br>
+        <label for="password"><b>Password</b></label><div class="loginlabel"></div><br>
+        <input id="password" name="password" placeholder="Enter Password" size="32" type="password" value=""><br>
+		
+		<div style="color: red; " >This field is required.</div>
+		<br>
+        <nav class="row">
+          <div class="col-xs-12 col-sm-3 col-md-3"></div>
+          <div class="col-xs-12 col-sm-3 col-md-3">
+            <input class="btn btn-default" id="submit" name="submit" type="submit" value="Sign In">
+          </div>
+          <div class="col-xs-12 col-sm-3 col-md-3">
+            <button type="button" class="btn btn-default" onclick="window.location.href='/register'">Register</button>
+          </div>
+          <div class="col-xs-12 col-sm-3 col-md-3"></div>
+        </nav>
+      </form>
+    </div>
+    <div class="col-xs-12 col-sm-1 col-md-2"></div>
+  </nav>
+</nav>
+
+</body>
+</html>

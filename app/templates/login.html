@@ -11,8 +11,14 @@
 		{{form.hidden_tag()}}
         <label for="username"><b>Username</b></label><div class="loginlabel"></div><br>
         {{form.username(size=32,placeholder="Enter Username")}}<br>
+		{% for error in form.username.errors %}
+		<span style="color: red;">{{error}}</span>
+		{% endfor %}<br>
         <label for="password"><b>Password</b></label><div class="loginlabel"></div><br>
         {{form.password(size=32,placeholder="Enter Password")}}<br>
+		{% for error in form.password.errors %}
+		<span style="color: red;">{{error}}</span>
+		{% endfor %}<br>
         <nav class="row">
           <div class="col-xs-12 col-sm-3 col-md-3"></div>
           <div class="col-xs-12 col-sm-3 col-md-3">
