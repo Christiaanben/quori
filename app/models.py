@@ -13,6 +13,26 @@ graph = Graph(url + '/db/data/', username=username, password=password)
 class User:
     def __init__(self, username):
         self.username = username
+        
+    def addFollows(self, username):
+		query = '''
+        MATCH (a:Person),(b:Person)
+		WHERE a.username = \'''' + self.username + '''\' AND b.username = \'''' + username + '''\'
+		CREATE (a)-[r:Follows]->(b)
+        '''
+        # MATCH (a:Person),(b:Person)
+		# WHERE a.username = 'Ricky' AND b.username = 'Maan'
+		# CREATE (a)-[r:Follows]->(b)
+        
+    def addUpvotes(self, id):
+    	query = '''
+    	MATCH (a:Person),(b:Answer)
+		WHERE a.username = \''''self.username'''\' AND b.id = \''''id'''\'
+		CREATE (a)-[r:Upvoted]->(b)
+		'''
+		# MATCH (a:Person),(b:Answer)
+		# WHERE a.username = 'Ricky' AND b.id = 'A2'
+		# CREATE (a)-[r:Upvoted]->(b)
 
     def find(self):
         user = graph.find_one('User', 'username', self.username)
