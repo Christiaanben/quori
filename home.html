@@ -1,0 +1,115 @@
+{%extends "usertemplate.html" %}
+{%extends "suggestiontemplate.html" %}
+{% block body %}
+  <div class="row">
+    <div class="col-1"></div>
+    <!-- Column for the feeds -->
+    <div class="col-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Feeds</h5>
+          <hr>
+          <h6 class="card-subtitle mb-2 text-muted"></h6>
+          <a href="#">Top Questions</a><br>
+          <a href="#">New Questions</a><br>
+          <a href="#">Bookmarked Answers</a><br>
+          <a href="#">Followed Catagory 1</a><br>
+          <a href="#">Followed Catsgory 2</a><br>
+          <a href="#">Followed Catagory 3</a><br>
+        </div>
+      </div>
+      <br>
+    </div>
+    <!-- Main column for the questions, id's need to be added to each card div depending on how much we want to display-->
+    <div class="col-4">
+      <div class="input-group" id="card1">
+        <input type="text" class="form-control" placeholder="Search for...">
+        <span class="input-group-btn">
+        <button class="btn btn-secondary" type="button">Submit</button>
+      </span>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+      <br>
+      <div class="card" id="card1">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">Question Title</a></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p>This is some text within a card body.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Column for the suggestions -->
+    <div class="col-3">
+      {%block suggs%}
+      {%endblock%}
+    </div>
+    <div class="col-1"></div>
+
+  </div>
+  {%endblock%}
+</body>
+
+</html>
