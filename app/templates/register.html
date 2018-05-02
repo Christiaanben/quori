@@ -1,0 +1,37 @@
+{%extends "layout.html" %}
+{% block body %}
+<nav class="container">
+  <nav class="row">
+    <div class="col-xs-12 col-sm-1 col-md-2"></div>
+    <div class="col-xs-12 col-sm-10 col-md-8">
+      <div class="imgcontainer">
+        <img src="{{url_for('static',filename='logo.jpg')}}" alt="Welcome to Quori!" class="logo">
+      </div>
+      <div style="text-align: center">
+        <label for="username"><b>Username</b></label><div class="loginlabel"></div><br>
+        <input type="text" placeholder="Enter Username" id="username" name="username"><br><br>
+          
+        <label for="password"><b>Password</b></label><div class="loginlabel"></div><br>
+        <input type="password" placeholder="Enter Password" id="password" name="password"><br><br>
+        <label for="password"><b>Retype</b></label><div class="loginlabel"></div><br>
+        <input type="password" placeholder="Rtype Password" id="retypePassword" name="retypePassword"><br><br>
+          
+        <label for="username"><b>Email</b></label><div class="loginlabel"></div><br>
+        <input type="text" placeholder="Enter Email" id="email" name="email"><br><br>
+          
+        <div class="row">
+          <div class="col-xs-12 col-sm-3 col-md-3"></div>
+          <div class="col-xs-12 col-sm-3 col-md-3">
+            <button type="submit" class="btn btn-default" style="margin-bottom: 20px" id = "register">Register</button>
+          </div>
+          <div class="col-xs-12 col-sm-3 col-md-3">
+            <button type="submit" class="btn btn-default" id = "cancel">Cancel</button>
+          </div>
+          <div class="col-xs-12 col-sm-3 col-md-3"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-1 col-md-2"></div>
+  </nav>
+</nav>
+{% endblock %}

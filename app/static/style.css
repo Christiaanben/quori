@@ -1,0 +1,45 @@
+body {font-family: Arial, Helvetica, sans-serif;}
+
+.logo {
+    max-height: 300px;
+    max-width: 300px;;
+    width: 80%;
+}
+
+input[type=text], input[type=password] {
+    width: 80%;
+    max-width: 350px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    
+}
+
+button {
+    padding: 14px 20px;
+    margin: 8px 0;
+    width: 20%;
+    min-width: 100px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.loginlabel {
+    width: 55%;
+    max-width: 280px;
+    height:auto;
+    display:inline-block;
+}
+
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+
+.container {
+    padding: 16px;
+}

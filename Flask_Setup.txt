@@ -1,0 +1,18 @@
+This is the instructions to get Flask and Neo4j working (works in lab pc):
+1. Start Terminal:
+- Ctrl + Alt + T
+2. Create virtual environment(If you've done this already skip to step 3):
+- python -m virtualenv flask
+3. Activate virtual environment:
+- source flask/bin/activate
+- flask/Scripts/activate (Windows)
+4. Install flask(if you've done this already skip to step 5):
+- pip install flask
+- pip install Flask-WTF
+5. Create flask app:
+- Tutorial at: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
+6. Export your flask app :
+- export FLASK_APP=quori.py (in program dir)
+- set FLASK_APP=quori.py (windows)
+7. Run localhost:
+- flask run
