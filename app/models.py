@@ -4,62 +4,55 @@ from datetime import datetime
 import os
 import uuid
 
-url = os.environ.get('GRAPHENEDB_URL', 'http://localhost:7474')
-username = os.environ.get('neo4j')
-password = os.environ.get('password')
+#url = os.environ.get('GRAPHENEDB_URL', 'http://localhost:7474')
+#username = os.environ.get('neo4j')
+#password = os.environ.get('password')
 
-graph = Graph(url + '/db/data/', username=username, password=password)
+#graph = Graph(url + '/db/data/', username=username, password=password)
+graph = Graph('http://localhost:7474', username = 'neo4j', password = 'password')
 
 class User:
     def __init__(self, username):
         self.username = username
         
     def addFollows(self, username):
-		query = '''
-        MATCH (a:User),(b:User)
-		WHERE a.username = \'''' + self.username + '''\' AND b.username = \'''' + username + '''\'
-		CREATE (a)-[r:Follows]->(b)
-        '''
+        query = '''MATCH (a:User),(b:User)
+        WHERE a.username = \' ''' + self.username + '''\' AND b.username = \'''' + username + '''\'
+		CREATE (a)-[r:Follows]->(b)'''
         return graph.run(query)
         # MATCH (a:User),(b:User)
 		# WHERE a.username = 'Ricky' AND b.username = 'Maan'
 		# CREATE (a)-[r:Follows]->(b)
         
     def addUpvoted(self, id):
-    	query = '''
-    	MATCH (a:Person),(b:Answer)
-		WHERE a.username = \''''self.username'''\' AND b.id = \''''id'''\'
-		CREATE (a)-[r:Upvoted]->(b)
-		'''
-		return graph.run(query)
-		# MATCH (a:User),(b:User)
+        query = 'MATCH (a:Person), (b:Answer) WHERE a.username = \''
+        self.username + '\' AND b.id = \' ' + id + '\' CREATE (a)-[r:Upvoted]->(b)'    	
+        return graph.run(query)
+        # MATCH (a:User),(b:User)
 		# WHERE a.username = 'Ricky' AND b.id = 'A2'
 		# CREATE (a)-[r:Upvoted]->(b)
+        
+
+    def removeFollows(self, username):
+        query = 'MATCH (a:User)-[r:Follows]-(b:User) WHERE a.username = \''
+        +self.username +'\' AND b.username = \'' + username +'\' DELETE r'
+        graph.run(query)
 		
-	def removeFollows(self, username):
-		query = '''
-		MATCH (a:User)-[r:Follows]-(b:User) 
-		WHERE a.username = \''''self.username'''\' AND b.username = \''''username'''\'
-		DELETE r
-		'''
-		return graph.run(query)
 		# MATCH (a:User)-[r:Follows]-(b:User) 
 		# WHERE a.username = 'Maan' AND b.username = 'Patrick'
 		# DELETE r
 
-	def removeUpvoted(self, id):
-		query = '''
-		MATCH (a:User)-[r:Upvoted]-(b:Answer) 
-		WHERE a.username = \''''self.username'''\' AND b.id = \''''id'''\'
-		DELETE r
-		'''
-		return graph.run(query)
+    def removeUpvoted(self, id):
+        query = 'MATCH (a:User)-[r:Upvoted]-(b:Answer) WHERE a.username = \'' 
+        + self.username + '\' AND b.id = \'' + id + '\'DELETE r '
+		
+        graph.run(query)
 		# MATCH (a:User)-[r:Upvoted]-(b:Answer) 
 		# WHERE a.username = 'Maan' AND b.id = 'A5'
 		# DELETE r
 
     def find(self):
-        user = graph.find_one('User', 'username', self.username)
+        user = graph.exists(Node('User', 'username', self.username))
         return user
 
     def register(self, password):
@@ -115,11 +108,6 @@ class User:
 
             rel = Relationship(tag, 'TAGGED', post)
             graph.create(rel)
-
-    def like_post(self, post_id):
-        user = self.find()
-        post = graph.find_one('Post', 'id', post_id)
-        graph.merge(Relationship(user, 'LIKED', post))
 
     def get_recent_posts(self):
         query = '''
