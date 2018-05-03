@@ -37,3 +37,7 @@ def interest():
 @app.route('/searchpage')
 def searchpage():
 	return render_template('searchpage.html')
+
+@app.route('/profilepage')
+def profilepage():
+	return render_template('profilepage.html')
