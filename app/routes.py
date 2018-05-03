@@ -8,7 +8,7 @@ def login():
 	form = LoginForm()
 	if form.validate_on_submit():
 		#flash('Login requested for user {}'.format(form.username.data))
-		return redirect(url_for('home'))
+		return redirect(url_for('interest'))
 	return render_template('login.html',form=form)
 	
 @app.route('/register', methods=['GET','POST'])
@@ -28,3 +28,7 @@ def register():
 @app.route('/home')
 def home():
 	return render_template('home.html')
+
+@app.route('/interest')
+def interest():
+	return render_template('interest.html')
