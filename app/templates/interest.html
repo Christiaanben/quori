@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Quori</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>        
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <style>
+            .choicei {
+                float: left;
+                background-color: aqua;
+                margin: 1em;
+            }            
+        </style>
+    </head>
+    <body>
+        <nav class="container">
+            <div class="imgcontainer">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1"></div>
+                    <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" id="T1">
+                                <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" >
+                                <h3 class="panel-title"><span>Select your interest</span></h3>
+                                <form class="form-inline my-2 my-lg-0">
+                                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                                    <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
+                                </form>
+                            </div>
+                            <div class="panel-body" style="padding-left:1em">
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Math</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>IT</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Cheese and Wine</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Food</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Music</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Web design</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Teaching</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Space</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Accounting</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Philosophy</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Myths</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Machine learning</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Travel</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Anime</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Dragon Ball</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Sports</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Jokes</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Science</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Hunting</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Games</label>
+                                </div>
+                                
+                                <div class="choicei">
+                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
+                                    <label>Dancing</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-1 col-md-1"></div>
+                    <div class="col-xs-12 col-sm-10 col-md-10">
+                        <button type="button" class="btn btn-default" onclick="window.location.href='{{url_for('home')}}'">Submit</button>
+                    </div>
+                    <div class="col-xs-12 col-sm-1 col-md-1"></div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-1 col-md-2"></div>
+        </nav>
+    </body>
+</html>
