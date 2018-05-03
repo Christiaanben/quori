@@ -33,3 +33,7 @@ def home():
 @app.route('/interest')
 def interest():
 	return render_template('interest.html')
+
+@app.route('/searchpage')
+def searchpage():
+	return render_template('searchpage.html')
