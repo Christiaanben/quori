@@ -1,47 +1,48 @@
 {%extends "usertemplate.html" %}
 {% block body %}
 
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
-            <!-- ************************ Profile Pic *************************** -->
-            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+<div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+        <!-- ************************ Profile Pic *************************** -->
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                 <div class="centerp">
-                    <div class="pic one"></div>
-                    <form action="/action_page.php">
-                        <input type="file" name="pic" accept="image/*" style="margin-bottom:20px">
+                        <div class="pic one"></div>
+                        <form action="/action_page.php">
+                                <input type="file" name="pic" accept="image/*" style="margin-bottom:20px">
+                                <br>
+                                <input type="submit" class=" niceButts spaceme btn btn-default" value="Upload pic">
+                        </form>
                         <br>
-                        <input type="submit" class=" niceButts spaceme btn btn-default" value="Upload pic">
-                    </form>
-                    <br>
-                    <button onclick="showPassword()" class="niceButts spaceme btn btn-default">Change password</button>
-                    
-                    <div id="yeschange" display="none">
-                        <br>
-                        <label for="password"><b>Old Password</b></label><div class="loginlabel"></div>
-                        <input type="password" placeholder="Old Password" id="password" name="password"><br><br>
-                        <label for="password"><b>New Password</b></label><div class="loginlabel"></div>
-                        <input type="password" placeholder="New Password" id="password2" name="npassword"><br><br>
-                        <label for="password"><b>Retype</b></label><div class="loginlabel"></div>
-                        <input type="password" placeholder="Retype Password" id="retypePassword2" name="retypePassword"><br><br>
-                        <button type="submit" style="margin-bottom: 20px">Update password</button>
-                    </div>
+                        <button onclick="showPassword()" class="niceButts spaceme btn btn-default">Change password</button>
+                                    
+                        <div id="yeschange" display="none">
+                                <br>
+                                <label for="password"><b>Old Password</b></label><div class="loginlabel"></div>
+                                <input type="password" placeholder="Old Password" id="password" name="password"><br><br>
+                                <label for="password"><b>New Password</b></label><div class="loginlabel"></div>
+                                <input type="password" placeholder="New Password" id="password2" name="npassword"><br><br>
+                                <label for="password"><b>Retype</b></label><div class="loginlabel"></div>
+                                <input type="password" placeholder="Retype Password" id="retypePassword2" name="retypePassword"><br><br>
+                                <button type="submit" style="margin-bottom: 20px">Update password</button>
+                        </div>
                 </div>                
             </div>
-            <!-- %%%%%%%%%%%% Main column for the Bio%%%%%%%%%%%%%%%-->
-            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+        <!-- %%%%%%%%%%%% Main column for the Bio%%%%%%%%%%%%%%%-->
+        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
                 <div class="panel panel-default">
-                    <div class="panel-heading" id="T1">
-                        <h3 class="spaceme panel-title" style="margin-top:20px;"><span>Your Bio</span><button type="button" class=" niceButts spaceme btn btn-default" style="float:right;">Update bio</button></h3>     
-                    </div>
-                    <div class="bio panel-body">
-                        <textarea class="fits"></textarea>
-                    </div>
+                        <div class="panel-heading" id="T1">
+                                <h3 class="spaceme panel-title" style="margin-top:20px;"><span>Your Bio</span><button type="button" class=" niceButts spaceme btn btn-default" style="float:right;">Update bio</button></h3>     
+                        </div>
+                        <div class="bio panel-body">
+                                <textarea class="fits"></textarea>
+                        </div>
                 </div>
-            </div>    
-            <!--Space-->
-            <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
-            </div>
         </div>
+        
+        <!--Space-->
+        <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+        </div>
+</div>
 <script>
     $( document ).ready(function() {        
         $("#yeschange").hide(); 
