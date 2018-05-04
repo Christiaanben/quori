@@ -41,7 +41,8 @@ def logout():
 
 @app.route('/home')
 def home():
-	return render_template('home.html')
+    posts = get_posts()
+    return render_template('home.html', posts=posts)
 
 @app.route('/interest')
 def interest():
