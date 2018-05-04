@@ -48,6 +48,10 @@ def home():
 def interest():
 	return render_template('interest.html')
 
+@app.route('/otherprofile')
+def otherprofile():
+	return render_template('otherprofile.html')
+
 @app.route('/searchpage')
 def searchpage():
 	return render_template('searchpage.html')
