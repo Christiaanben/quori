@@ -25,7 +25,7 @@
         <form class="input-group" action="{{ url_for('add_question') }}" method="post">
             <input type = "text" class = "form-control" name = "title" placeholder="Title">
             <input type="textarea" class="form-control" name="question" placeholder="What is your question">
-            <input type="text" size="26" name="tags" placeholder="Add tags seperated by a comma">
+            <input type="text" class="form-control" size="26" name="tags" placeholder="Add tags separated by a comma">
             <span class="input-group-btn">
             <input type="submit" class="btn btn-secondary" value="Ask">
       </span>
@@ -34,8 +34,14 @@
         {% for row in posts %}
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title"><a href="#">{{ row.question.question }}</a></h5>
+                <h5 class="card-title"><a href="#">{{ row.question.title }}</a></h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{ ", ".join(row.tags) }}</h6>
+                <p>{{ row.question.question }}</p>
+                <div>
+
+                    <input type="button" class="btn btn-secondary" name="Answer" value="Answer"><input type="button" class="btn btn-secondary"  name="Upvote" value="Upvote">
+                </div>
+
             </div>
         </div>
         <br>
