@@ -117,84 +117,24 @@
     </div>
     <!-- Main column for the questions, id's need to be added to each card div depending on how much we want to display-->
     <div class="col-4">
-      <div class="input-group" id="card1">
-        <input type="text" class="form-control" placeholder="Submit question..">
-        <span class="input-group-btn">
-        <button class="btn btn-secondary" type="button">Submit</button>
+        <form class="input-group" action="{{ url_for('add_question') }}" method="post">
+
+            <input type="textarea" class="form-control" name="question" placeholder="What is your question">
+            <input type="text" size="30" name="tags" placeholder="Add tags seperated by a comma">
+            <span class="input-group-btn">
+            <input type="submit" class="btn btn-secondary" value="Ask">
       </span>
-      </div>
-      <br>
-      <div class="card" id="card1">
-        <div class="card-body">
-          <h5 class="card-title"><a href="#">Question Title</a></h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p>This is some text within a card body.</p>
+        </form>
+        <br>
+        <div class="card" id="card1">
+            <div class="card-body">
+                <h5 class="card-title"><a href="#">Question Title</a></h5>
+                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                <p>This is some text within a card body.</p>
+            </div>
         </div>
-      </div>
-      <br>
-      <div class="card" id="card1">
-        <div class="card-body">
-          <h5 class="card-title"><a href="#">Question Title</a></h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p>This is some text within a card body.</p>
-        </div>
-      </div>
-      <br>
-      <div class="card" id="card1">
-        <div class="card-body">
-          <h5 class="card-title"><a href="#">Question Title</a></h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p>This is some text within a card body.</p>
-        </div>
-      </div>
-      <br>
-      <div class="card" id="card1">
-        <div class="card-body">
-          <h5 class="card-title"><a href="#">Question Title</a></h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p>This is some text within a card body.</p>
-        </div>
-      </div>
-      <br>
-      <div class="card" id="card1">
-        <div class="card-body">
-          <h5 class="card-title"><a href="#">Question Title</a></h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p>This is some text within a card body.</p>
-        </div>
-      </div>
-      <br>
-      <div class="card" id="card1">
-        <div class="card-body">
-          <h5 class="card-title"><a href="#">Question Title</a></h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p>This is some text within a card body.</p>
-        </div>
-      </div>
-      <br>
-      <div class="card" id="card1">
-        <div class="card-body">
-          <h5 class="card-title"><a href="#">Question Title</a></h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p>This is some text within a card body.</p>
-        </div>
-      </div>
-      <br>
-      <div class="card" id="card1">
-        <div class="card-body">
-          <h5 class="card-title"><a href="#">Question Title</a></h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p>This is some text within a card body.</p>
-        </div>
-      </div>
-      <br>
-      <div class="card" id="card1">
-        <div class="card-body">
-          <h5 class="card-title"><a href="#">Question Title</a></h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p>This is some text within a card body.</p>
-        </div>
-      </div>
+        <br>
+
     </div>
     <!-- Column for the suggestions -->
     <div class="col-3">
