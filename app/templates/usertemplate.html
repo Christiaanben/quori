@@ -112,14 +112,13 @@
           <a class="nav-link" href="#">Answers</a>
         </li>
 
-        <li style="padding-left:15px">
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </li>
-       
-        <li style="padding-left:10px">
+          <li class="autocomplete" style="width:300px;">
+              <form class="form-inline my-2 my-lg-0" autocomplete="off">
+                  <input id="searchInput" class="form-control mr-sm-2" type="search" name="search" placeholder="Search">
+              </form>
+          </li>
+
+          <li style="padding-left:10px">
           <a class="nav-link" href="#" onclick="window.location.href='{{url_for('profilepage')}}'">
             <img alt="Profile" src='../static/profilepictures/temp.jpg' class = "user">
           </a>          

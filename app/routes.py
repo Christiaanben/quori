@@ -74,7 +74,7 @@ def add_question():
 
     return redirect(url_for('home'))
 
-NAMES = ["Bennie","Bernard","Heinri","Janno","Riccardo","Ryen","Wernich"]
+NAMES = ["BAAAAAAA","Bennie","Bernard","Heinri","Janno","Riccardo","Ryen","Wernich"]
 @app.route('/autocomplete',methods=['GET'])
 def autocomplete():
     search = request.args.get('term')
