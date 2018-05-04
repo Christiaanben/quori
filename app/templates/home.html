@@ -68,34 +68,38 @@
       <img alt="Quori" src="../static/logo.jpg" width="40px" height="40px" >
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="collapse navbar-collapse"id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
           <a class="nav-link" href="#" onclick="window.location.href='{{url_for('home')}}'">Home <span class="sr-only">(current)</span></a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" href="#">Questions</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" href="#">Answers</a>
+        </li>
 
-          <li style="padding-left:15px">
-            <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
-            </form>
-          </li>
-          <li style="padding-left:10px">
-            <div class="user one" onclick="window.location.href='{{url_for('profilepage')}}'"></div>
-          </li>
-    </div>
-    </li>
-    </ul>
-
+        <li style="padding-left:15px">
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </li>
+       
+        <li style="padding-left:10px">
+          <a class="nav-link" href="#" onclick="window.location.href='{{url_for('profilepage')}}'">
+            <img alt="Profile" src='../static/profilepictures/temp.jpg' class = "user">
+          </a>          
+        </li>
+      </ul>
     </div>
   </nav>
+  
   <div class="row">
     <div class="col-xs-0 col-sm-0 col-md-1 col-lg-1"></div>
     <!-- Column for the feeds -->
