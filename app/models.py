@@ -8,8 +8,9 @@ import uuid
 #username = os.environ.get('neo4j')
 #password = os.environ.get('password')
 
+graph = Graph("http://localhost:7474/db/data/") #connects to db when db authetication is off
 #graph = Graph(url + '/db/data/', username=username, password=password)
-graph = Graph('http://localhost:7474', username = 'neo4j', password = 'password')
+#graph = Graph('http://localhost:7474', username = 'neo4j', password = 'password')
 
 class User:
     def __init__(self, username):
