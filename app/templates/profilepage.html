@@ -40,6 +40,34 @@
                 background-size: cover;
             }
             
+            .spaceme {
+                margin-top: 1em;
+            }
+            
+            .fits{
+                width: 100%;
+                height: 100%;
+            }
+            
+            .centerp {
+                vertical-align: middle;
+            }
+            
+            .bio {
+                height: 400px;
+            }
+            
+            .pic {
+                display: inline-block;
+                width: 220px;
+                height: 220px;
+                border-radius: 50%;
+                
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: cover;
+            }
+            
             .one {
                 background-image: url('http://placehold.it/400x200');
             }
@@ -98,9 +126,24 @@
             <!-- ************************ Profile Pic *************************** -->
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                 <div class="centerp">
-                    <div class="pic one"></div>
-                    <input type="button" class=" btn btn-default" value="Update pic"><br>
-                    <button type="button" class="spaceme btn btn-default">Change password</button>
+                    <form action="/action_page.php">
+                        <input type="file" name="pic" accept="image/*">
+                        <input type="submit" class="spaceme btn btn-default" value="Upload pic">
+                    </form>
+
+                    <br>
+                    <button onclick="myFunction()" class="spaceme btn btn-default">Change password</button>
+                    
+                    <div id="yeschange" display="none">
+                        <br>
+                        <label for="password"><b>Old Password</b></label><div class="loginlabel"></div>
+                        <input type="password" placeholder="Old Password" id="password" name="password"><br><br>
+                        <label for="password"><b>New Password</b></label><div class="loginlabel"></div>
+                        <input type="password" placeholder="New Password" id="password2" name="npassword"><br><br>
+                        <label for="password"><b>Retype</b></label><div class="loginlabel"></div>
+                        <input type="password" placeholder="Retype Password" id="retypePassword2" name="retypePassword"><br><br>
+                        <button type="submit" style="margin-bottom: 20px">Update password</button>
+                    </div>
                 </div>
             </div>
             <!-- %%%%%%%%%%%% Main column for the Bio%%%%%%%%%%%%%%%-->
@@ -122,3 +165,13 @@
         </div>
     </body> 
 </html>
+<script>
+    function myFunction() {
+        var x = document.getElementById("yeschange");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
