@@ -54,3 +54,18 @@ def searchpage():
 @app.route('/profilepage')
 def profilepage():
 	return render_template('profilepage.html')
+
+@app.route('/add_question', methods=['POST'])
+def add_question():
+    question = request.form['question']
+    tags = request.form['tags']
+
+    if not question:
+        flash('You have not entered a question.')
+    elif not tags:
+        flash('You must give your post at least one tag.')
+    else:
+        User(session['username']).ask(question, tags)
+
+    return redirect(url_for('home'))
+
