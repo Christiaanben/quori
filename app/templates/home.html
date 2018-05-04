@@ -122,7 +122,7 @@
     <!-- Main column for the questions, id's need to be added to each card div depending on how much we want to display-->
     <div class="col-4">
         <form class="input-group" action="{{ url_for('add_question') }}" method="post">
-
+            <input type = "text" class = "form-control" name = "title" placeholder="Title">
             <input type="textarea" class="form-control" name="question" placeholder="What is your question">
             <input type="text" size="26" name="tags" placeholder="Add tags seperated by a comma">
             <span class="input-group-btn">
