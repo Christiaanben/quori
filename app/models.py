@@ -58,7 +58,7 @@ class User:
 
     def register(self, password):
         if not self.find():
-            user = Node('User', username=self.username, password=bcrypt.encrypt(password))
+            user = Node('User', username=self.username, password=bcrypt.encrypt(password), bio="I have questions!", pp = 'temp.jpg')
             graph.create(user)
             return True
         else:
