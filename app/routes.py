@@ -8,8 +8,16 @@ from .models import User
 def login():
 	form = LoginForm()
 	if form.validate_on_submit():
-		#flash('Login requested for user {}'.format(form.username.data))
-		return redirect(url_for('interest'))
+		username = request.form['username']		
+		password = request.form['password']
+		
+		if (not User(username).verify_password(password)):
+			print('invalid login')
+		else:
+			session['username'] = username
+			#flash('Login requested for user {}'.format(form.username.data))
+			return redirect(url_for('home'))
+
 	return render_template('login.html',form=form)
 	
 @app.route('/register', methods=['GET','POST'])
@@ -25,6 +33,11 @@ def register():
 			flash('Logged in')
 			return redirect(url_for('home'))
 	return render_template('register.html')
+
+@app.route('/logout')
+def logout():
+	session.pop('username', None)
+	return render_template('login.html')
 
 @app.route('/home')
 def home():
