@@ -81,7 +81,7 @@ class User:
 			+ self.username + '\' SET a.password = \''
 			+ bcrypt.encrypt(passwordNew) + '\''
 			graph.run(query)
-			return true
+			return True
 			# MATCH (a:User)
 			# WHERE a.username = 'Maan'
 			# SET a.password = 'badPassword42'
