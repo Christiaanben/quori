@@ -1,19 +1,19 @@
 {%extends "usertemplate.html" %}
 {% block body %}
 
-        <!--####################### NON NAVBAR STUFF ########################-->
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
             <!-- ************************ Profile Pic *************************** -->
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                 <div class="centerp">
+                    <div class="pic one"></div>
                     <form action="/action_page.php">
-                        <input type="file" name="pic" accept="image/*">
-                        <input type="submit" class="spaceme btn btn-default" value="Upload pic">
+                        <input type="file" name="pic" accept="image/*" style="margin-bottom:20px">
+                        <br>
+                        <input type="submit" class=" niceButts spaceme btn btn-default" value="Upload pic">
                     </form>
-
                     <br>
-                    <button onclick="myFunction()" class="spaceme btn btn-default">Change password</button>
+                    <button onclick="showPassword()" class="niceButts spaceme btn btn-default">Change password</button>
                     
                     <div id="yeschange" display="none">
                         <br>
@@ -25,15 +25,13 @@
                         <input type="password" placeholder="Retype Password" id="retypePassword2" name="retypePassword"><br><br>
                         <button type="submit" style="margin-bottom: 20px">Update password</button>
                     </div>
-                </div>
+                </div>                
             </div>
             <!-- %%%%%%%%%%%% Main column for the Bio%%%%%%%%%%%%%%%-->
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
                 <div class="panel panel-default">
                     <div class="panel-heading" id="T1">
-                        <h3 class="spaceme panel-title"><span>Your Bio</span></h3>
-                        <button type="button" class="spaceme btn btn-default">Update bio</button>
-                        
+                        <h3 class="spaceme panel-title" style="margin-top:20px;"><span>Your Bio</span><button type="button" class=" niceButts spaceme btn btn-default" style="float:right;">Update bio</button></h3>     
                     </div>
                     <div class="bio panel-body">
                         <textarea class="fits"></textarea>
@@ -45,14 +43,11 @@
             </div>
         </div>
 <script>
-    function myFunction() {
-        var x = document.getElementById("yeschange");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-    }
+    $( document ).ready(function() {        
+        $("#yeschange").hide(); 
+});
+    function showPassword(){
+        $("#yeschange").show(); 
+    };
 </script>
-
 {% endblock %}
