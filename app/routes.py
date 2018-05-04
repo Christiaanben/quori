@@ -81,3 +81,11 @@ def autocomplete():
 
     app.logger.debug(search)
     return jsonify(json_list=NAMES)
+
+
+@app.route('/question', methods=['GET'])
+def question():
+    questiontitle = request.args.get('title')
+    #question_answers = get_answers(questiontitle)
+    #return render_template('question.html', question_answers=question_answers)
+    return render_template('question.html', title=questiontitle)
