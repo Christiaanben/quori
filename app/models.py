@@ -91,7 +91,10 @@ class User:
         user = graph.find_one('User', 'username', self.username)
         return user
 
-    def register(self, password):
+    def register(self, password, repassword):
+		if (len(repassword) < 8):
+			return False
+		
         if not self.find():
             user = Node('User', username=self.username, password=bcrypt.encrypt(password), bio="I have questions!", pp = 'temp.jpg')
             graph.create(user)
