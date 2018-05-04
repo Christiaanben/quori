@@ -81,7 +81,7 @@ class User:
 			+ self.username + '\' SET a.password = \''
 			+ bcrypt.encrypt(passwordNew) + '\''
 			graph.run(query)
-			return True
+			return true
 			# MATCH (a:User)
 			# WHERE a.username = 'Maan'
 			# SET a.password = 'badPassword42'
@@ -93,15 +93,18 @@ class User:
         return user
 
     def register(self, password, repassword):
-		if (len(repassword) < 8):
+		if (len(password) < 8):
 			return False
-		
-        if not self.find():
-            user = Node('User', username=self.username, password=bcrypt.encrypt(password), bio="I have questions!", pp = 'temp.jpg')
-            graph.create(user)
-            return True
-        else:
-            return False
+		if (len(password) != len(repassword)):
+			return False
+		if (password != repassword):
+			return False
+		if not self.find():
+			user = Node('User', username=self.username, password=bcrypt.encrypt(password), bio="I have questions:)!", pp = 'temp.jpg')
+			graph.create(user)
+			return True
+		else:
+			return False
 
     def verify_password(self, password):
         user = self.find()
