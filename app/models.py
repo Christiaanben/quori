@@ -130,16 +130,18 @@ class User:
             rel = Relationship(tag, 'Tagged', q)
             graph.create(rel)
 
-    def ask(self, question, tags):
+    def ask(self, title, question, tags):
         user = self.find()
         question = Node(
             'Question',
+            title=title,
             id=str(uuid.uuid4()),
             question=question,
             timestamp=timestamp(),
-            date=date()
+            date=date(),
+            upvotes=0
         )
-        rel = Relationship(user, 'PUBLISHED', question)
+        rel = Relationship(user, 'Asked', question)
         graph.create(rel)
 
         tags = [x.strip() for x in tags.lower().split(',')]
@@ -147,7 +149,7 @@ class User:
             tag = Node('Tag', name=name)
             graph.merge(tag)
 
-            rel = Relationship(tag, 'TAGGED', question)
+            rel = Relationship(tag, 'Tagged', question)
             graph.create(rel)
 
     def add_post(self, title, tags, text):
@@ -208,11 +210,11 @@ class User:
         '''
 
         return graph.run(query, they=other.username, you=self.username).next
-
 def get_posts():
     query = '''
-        MATCH (username:User)-[:PUBLISHED]->(question:Question)<-[:TAGGED]-(name:Tag)
+        MATCH (username:User)-[:Asked]->(question:Question)<-[:Tagged]-(name:Tag)
         RETURN username.username AS username, question, COLLECT(name.name) AS tags
+        ORDER BY question.timestamp DESC LIMIT 10
         '''
     return graph.run(query)
 
