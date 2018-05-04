@@ -227,6 +227,17 @@
     /*initiate the autocomplete function on the "searchInput" element, and pass along the names array as possible autocomplete values:*/
     autocomplete(document.getElementById("searchInput"), names);
 </script>
+<script>
+$.ajax({
+        url: '{{ url_for("autocomplete") }}'
+        }).done(function (data) {
+            $('#autocomplete').autocomplete({
+                source: data.json_list,
+                minLength: 2
+            });
+        });
+    });
+</script>
 </body>
 
 </html>
