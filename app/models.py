@@ -167,6 +167,13 @@ class User:
 
         return graph.run(query, they=other.username, you=self.username).next
 
+def get_posts():
+    query = '''
+        MATCH (username:User)-[:PUBLISHED]->(question:Question)<-[:TAGGED]-(name:Tag)
+        RETURN username.username AS username, question, COLLECT(name.name) AS tags
+        '''
+    return graph.run(query)
+
 def get_todays_recent_posts():
     query = '''
     MATCH (user:User)-[:PUBLISHED]->(post:Post)<-[:TAGGED]-(tag:Tag)
