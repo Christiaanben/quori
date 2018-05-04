@@ -138,8 +138,7 @@ class User:
             id=str(uuid.uuid4()),
             question=question,
             timestamp=timestamp(),
-            date=date(),
-            upvotes=0
+            date=date()
         )
         rel = Relationship(user, 'Asked', question)
         graph.create(rel)
