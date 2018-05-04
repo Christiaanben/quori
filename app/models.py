@@ -75,7 +75,7 @@ class User:
 		# SET a.bio = 'My new bio!'
 
 	def editPassword(self, passwordOld, passwordNew):
-		if (verify_password(self, passwordOld):
+		if (verify_password(self, passwordOld)):
 			query = 'MATCH (a:User) WHERE a.username = \''
 			+ self.username + '\' SET a.password = \''
 			+ bcrypt.encrypt(passwordNew) + '\''
