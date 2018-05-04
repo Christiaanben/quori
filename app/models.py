@@ -53,7 +53,7 @@ class User:
 		# DELETE r
 
     def find(self):
-        user = graph.exists(Node('User', 'username', self.username))
+        user = graph.find_one('User', 'username', self.username)
         return user
 
     def register(self, password):
