@@ -33,10 +33,10 @@ class User:
 		# WHERE a.username = 'Ricky' AND b.id = 'A2'
 		# CREATE (a)-[r:Upvoted]->(b)
 
-	def addPP(self):
-		query = 'MATCH (a:User) WHERE a.username = \''
-		+ self.username + '\' SET a.pp = a.username + \'.jpg\'' 
-		graph.run(query)
+    def addPP(self):
+        query = 'MATCH (a:User) WHERE a.username = \''
+        + self.username + '\' SET a.pp = a.username + \'.jpg\'' 
+        graph.run(query)
 		# MATCH (a:User)
 		# WHERE a.username = 'Maan'
 		# SET a.pp = a.username
@@ -57,22 +57,23 @@ class User:
 		# WHERE a.username = 'Maan' AND b.id = 'A5'
 		# DELETE r
 
-	def removePP(self):
-		query = 'MATCH (a:User) WHERE a.username = \''
-		+ self.username + '\' SET a.pp = \'temp.jpg\'' 
-		graph.run(query)
+    def removePP(self):
+        query = 'MATCH (a:User) WHERE a.username = \''
+        + self.username + '\' SET a.pp = \'temp.jpg\'' 
+        graph.run(query)
 		# MATCH (a:User)
 		# WHERE a.username = 'Maan'
 		# SET a.pp = 'temp.jpg'
 
-	def editBio(self, bio):
-		query = 'MATCH (a:User) WHERE a.username = \''
-		+ self.username + '\' SET a.bio = \''
-		+ bio + '\''
-		graph.run(query)
+    def editBio(self, bio):
+        query = 'MATCH (a:User) WHERE a.username = \''
+        + self.username + '\' SET a.bio = \''
+        + bio + '\''
+        graph.run(query)
 		# MATCH (a:User)
 		# WHERE a.username = 'Maan'
 		# SET a.bio = 'My new bio!'
+
 
 	def editPassword(self, passwordOld, passwordNew):
 		if (verify_password(self, passwordOld)):
