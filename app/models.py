@@ -88,6 +88,25 @@ class User:
             rel = Relationship(tag, 'Tagged', q)
             graph.create(rel)
 
+    def ask(self, question, tags):
+        user = self.find()
+        question = Node(
+            'Question',
+            id=str(uuid.uuid4()),
+            question=question,
+            timestamp=timestamp(),
+            date=date()
+        )
+        rel = Relationship(user, 'PUBLISHED', question)
+        graph.create(rel)
+
+        tags = [x.strip() for x in tags.lower().split(',')]
+        for name in set(tags):
+            tag = Node('Tag', name=name)
+            graph.merge(tag)
+
+            rel = Relationship(tag, 'TAGGED', question)
+            graph.create(rel)
 
     def add_post(self, title, tags, text):
         user = self.find()
