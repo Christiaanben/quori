@@ -2,129 +2,231 @@
 <html lang="en">
 
 <head>
-  <title>Quori</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-  <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <!-- Inline style -->
-  <style>
-    body {
-      padding-top: 70px;
-    }
+    <title>Quori</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
+    <!-- Inline style -->
+    <style>
+        body {
+            padding-top: 70px;
+        }
 
-    .navbar-nav .navbar-brand {
-      float: none;
-      margin: 0 auto;
-      display: block;
-      text-align: center;
-    }
+        .navbar-nav .navbar-brand {
+            float: none;
+            margin: 0 auto;
+            display: block;
+            text-align: center;
+        }
 
-    .navbar-nav>li {
-      display: inline-block;
-      float: none;
-    }
+        .navbar-nav>li {
+            display: inline-block;
+            float: none;
+        }
 
-    .user {
-      display: inline-block;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
+        .user {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
 
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
-    }
-    
-    .spaceme {
-      margin-top: 1em;
-    }
-    
-    .fits{
-      width: 100%;
-      height: 100%;
-    }
-    
-    .centerp {
-      vertical-align: middle;
-    }
-    
-    .bio {
-      height: 400px;
-    }
-    
-    .pic {
-      display: inline-block;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
-    }
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+        }
 
-    .one {
-      background-image: url('http://placehold.it/400x200');
-    }
+        .spaceme {
+            margin-top: 1em;
+        }
 
-    .two {
-      background-image: url('http://placehold.it/200x200');
-    }
+        .fits{
+            width: 100%;
+            height: 100%;
+        }
 
-    .three {
-      background-image: url('http://placehold.it/200x400');
-    }
+        .centerp {
+            vertical-align: middle;
+        }
 
-    a:link {
-      text-decoration: none;
-      color: Grey;
-    }
-  </style>
+        .bio {
+            height: 400px;
+        }
+
+        .pic {
+            display: inline-block;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+        }
+
+        .one {
+            background-image: url('http://placehold.it/400x200');
+        }
+
+        .two {
+            background-image: url('http://placehold.it/200x200');
+        }
+
+        .three {
+            background-image: url('http://placehold.it/200x400');
+        }
+
+        a:link {
+            text-decoration: none;
+            color: Grey;
+        }
+    </style>
 </head>
 <!-- Code for the navbar -->
 
 <body>
-  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#" style="padding-left:25%">
-      <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" >
+        <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" >
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Questions</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Answers</a>
-
-          <li style="padding-left:15px">
-            <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
-            </form>
-          </li>
-          <li style="padding-left:10px">
-            <div class="user one"></div>
-          </li>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Questions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Answers</a>
+            <li class="autocomplete" style="width:300px;">
+                <form class="form-inline my-2 my-lg-0" autocomplete="off">
+                    <input id="searchInput" class="form-control mr-sm-2" type="search" name="search" placeholder="Search">
+                </form>
+            <li style="padding-left:10px">
+                <div class="user one"></div>
+            </li>
     </div>
     </li>
     </ul>
 
     </div>
-  </nav>
-  {%block body%}{%endblock%}
-  
+</nav>
+{%block body%}{%endblock%}
+
+<script>
+    function autocomplete(inp, arr) {
+        /*the autocomplete function takes two arguments,
+         the text field element and an array of possible autocompleted values:*/
+        var currentFocus;
+        /*execute a function when someone writes in the text field:*/
+        inp.addEventListener("input", function(e) {
+            var a, b, i, val = this.value;
+            /*close any already open lists of autocompleted values*/
+            closeAllLists();
+            if (!val) { return false;}
+            currentFocus = -1;
+            /*create a DIV element that will contain the items (values):*/
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
+            /*append the DIV element as a child of the autocomplete container:*/
+            this.parentNode.appendChild(a);
+            /*for each item in the array...*/
+            for (i = 0; i < arr.length; i++) {
+                /*check if the item starts with the same letters as the text field value:*/
+                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    /*create a DIV element for each matching element:*/
+                    b = document.createElement("DIV");
+                    /*make the matching letters bold:*/
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
+                    /*insert a input field that will hold the current array item's value:*/
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                    /*execute a function when someone clicks on the item value (DIV element):*/
+                    b.addEventListener("click", function(e) {
+                        /*insert the value for the autocomplete text field:*/
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        /*close the list of autocompleted values,
+                         (or any other open lists of autocompleted values:*/
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
+                }
+            }
+        });
+        /*execute a function presses a key on the keyboard:*/
+        inp.addEventListener("keydown", function(e) {
+            var x = document.getElementById(this.id + "autocomplete-list");
+            if (x) x = x.getElementsByTagName("div");
+            if (e.keyCode == 40) {
+                /*If the arrow DOWN key is pressed,
+                 increase the currentFocus variable:*/
+                currentFocus++;
+                /*and and make the current item more visible:*/
+                addActive(x);
+            } else if (e.keyCode == 38) { //up
+                /*If the arrow UP key is pressed,
+                 decrease the currentFocus variable:*/
+                currentFocus--;
+                /*and and make the current item more visible:*/
+                addActive(x);
+            } else if (e.keyCode == 13) {
+                /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                e.preventDefault();
+                if (currentFocus > -1) {
+                    /*and simulate a click on the "active" item:*/
+                    if (x) x[currentFocus].click();
+                }
+            }
+        });
+        function addActive(x) {
+            /*a function to classify an item as "active":*/
+            if (!x) return false;
+            /*start by removing the "active" class on all items:*/
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+            /*add class "autocomplete-active":*/
+            x[currentFocus].classList.add("autocomplete-active");
+        }
+        function removeActive(x) {
+            /*a function to remove the "active" class from all autocomplete items:*/
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
+            }
+        }
+        function closeAllLists(elmnt) {
+            /*close all autocomplete lists in the document,
+             except the one passed as an argument:*/
+            var x = document.getElementsByClassName("autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
+            }
+        }
+        /*execute a function when someone clicks in the document:*/
+        document.addEventListener("click", function (e) {
+            closeAllLists(e.target);
+        });
+    }
+
+    /*An array containing all the names */
+    var names = ["Bennie","Bernard","Heinri","Janno","Riccardo","Ryen","Wernich"];
+
+    /*initiate the autocomplete function on the "searchInput" element, and pass along the names array as possible autocomplete values:*/
+    autocomplete(document.getElementById("searchInput"), names);
+</script>
 </body>
 
 </html>

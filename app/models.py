@@ -15,96 +15,96 @@ graph = Graph("http://localhost:7474/db/data/") #connects to db when db authetic
 class User:
     def __init__(self, username):
         self.username = username
-        
+
     def addFollows(self, username):
         query = '''MATCH (a:User),(b:User)
         WHERE a.username = \' ''' + self.username + '''\' AND b.username = \'''' + username + '''\'
 		CREATE (a)-[r:Follows]->(b)'''
         graph.run(query)
         # MATCH (a:User),(b:User)
-		# WHERE a.username = 'Ricky' AND b.username = 'Maan'
-		# CREATE (a)-[r:Follows]->(b)
-        
+    # WHERE a.username = 'Ricky' AND b.username = 'Maan'
+    # CREATE (a)-[r:Follows]->(b)
+
     def addUpvoted(self, id):
         query = 'MATCH (a:User), (b:Answer) WHERE a.username = \''
-        self.username + '\' AND b.id = \' ' + id + '\' CREATE (a)-[r:Upvoted]->(b)'    	
+        self.username + '\' AND b.id = \' ' + id + '\' CREATE (a)-[r:Upvoted]->(b)'
         graph.run(query)
         # MATCH (a:User),(b:User)
-		# WHERE a.username = 'Ricky' AND b.id = 'A2'
-		# CREATE (a)-[r:Upvoted]->(b)
+    # WHERE a.username = 'Ricky' AND b.id = 'A2'
+    # CREATE (a)-[r:Upvoted]->(b)
 
     def addPP(self):
         query = 'MATCH (a:User) WHERE a.username = \''
-        + self.username + '\' SET a.pp = a.username + \'.jpg\'' 
+        + self.username + '\' SET a.pp = a.username + \'.jpg\''
         graph.run(query)
-		# MATCH (a:User)
-		# WHERE a.username = 'Maan'
-		# SET a.pp = a.username
-        
+    # MATCH (a:User)
+    # WHERE a.username = 'Maan'
+    # SET a.pp = a.username
+
     def removeFollows(self, username):
         query = 'MATCH (a:User)-[r:Follows]-(b:User) WHERE a.username = \''
         +self.username +'\' AND b.username = \'' + username +'\' DELETE r'
         graph.run(query)
-		# MATCH (a:User)-[r:Follows]-(b:User) 
-		# WHERE a.username = 'Maan' AND b.username = 'Patrick'
-		# DELETE r
+    # MATCH (a:User)-[r:Follows]-(b:User)
+    # WHERE a.username = 'Maan' AND b.username = 'Patrick'
+    # DELETE r
 
     def removeUpvoted(self, id):
-        query = 'MATCH (a:User)-[r:Upvoted]-(b:Answer) WHERE a.username = \'' 
-        + self.username + '\' AND b.id = \'' + id + '\'DELETE r '	
+        query = 'MATCH (a:User)-[r:Upvoted]-(b:Answer) WHERE a.username = \''
+        + self.username + '\' AND b.id = \'' + id + '\'DELETE r '
         graph.run(query)
-		# MATCH (a:User)-[r:Upvoted]-(b:Answer) 
-		# WHERE a.username = 'Maan' AND b.id = 'A5'
-		# DELETE r
+    # MATCH (a:User)-[r:Upvoted]-(b:Answer)
+    # WHERE a.username = 'Maan' AND b.id = 'A5'
+    # DELETE r
 
     def removePP(self):
         query = 'MATCH (a:User) WHERE a.username = \''
-        + self.username + '\' SET a.pp = \'temp.jpg\'' 
+        + self.username + '\' SET a.pp = \'temp.jpg\''
         graph.run(query)
-		# MATCH (a:User)
-		# WHERE a.username = 'Maan'
-		# SET a.pp = 'temp.jpg'
+    # MATCH (a:User)
+    # WHERE a.username = 'Maan'
+    # SET a.pp = 'temp.jpg'
 
     def editBio(self, bio):
         query = 'MATCH (a:User) WHERE a.username = \''
         + self.username + '\' SET a.bio = \''
         + bio + '\''
         graph.run(query)
-		# MATCH (a:User)
-		# WHERE a.username = 'Maan'
-		# SET a.bio = 'My new bio!'
+        # MATCH (a:User)
+        # WHERE a.username = 'Maan'
+        # SET a.bio = 'My new bio!'
 
 
-	def editPassword(self, passwordOld, passwordNew):
-		if (verify_password(self, passwordOld)):
-			query = 'MATCH (a:User) WHERE a.username = \''
-			+ self.username + '\' SET a.password = \''
-			+ bcrypt.encrypt(passwordNew) + '\''
-			graph.run(query)
-			return true
-			# MATCH (a:User)
-			# WHERE a.username = 'Maan'
-			# SET a.password = 'badPassword42'
-		else:
-			return False
+        def editPassword(self, passwordOld, passwordNew):
+            if (verify_password(self, passwordOld)):
+                query = 'MATCH (a:User) WHERE a.username = \''
+                + self.username + '\' SET a.password = \''
+                + bcrypt.encrypt(passwordNew) + '\''
+                graph.run(query)
+                return true
+            # MATCH (a:User)
+            # WHERE a.username = 'Maan'
+            # SET a.password = 'badPassword42'
+            else:
+                return False
 
     def find(self):
         user = graph.find_one('User', 'username', self.username)
         return user
 
     def register(self, password, repassword):
-		if (len(password) < 8):
-			return False
-		if (len(password) != len(repassword)):
-			return False
-		if (password != repassword):
-			return False
-		if not self.find():
-			user = Node('User', username=self.username, password=bcrypt.encrypt(password), bio="I have questions:)!", pp = 'temp.jpg')
-			graph.create(user)
-			return True
-		else:
-			return False
+        if (len(password) < 8):
+            return False
+        if (len(password) != len(repassword)):
+            return False
+        if (password != repassword):
+            return False
+        if not self.find():
+            user = Node('User', username=self.username, password=bcrypt.encrypt(password), bio="I have questions:)!", pp = 'temp.jpg')
+            graph.create(user)
+            return True
+        else:
+            return False
 
     def verify_password(self, password):
         user = self.find()
@@ -115,12 +115,12 @@ class User:
 
     def ask_question(self, id, title, description, tags):
         user = self.find()
-        q = Node('Question', 
-            id=id, 
-            title = title, 
-            description = description, 
-            timestamp=timestamp(), 
-            date=date())
+        q = Node('Question',
+                 id=id,
+                 title = title,
+                 description = description,
+                 timestamp=timestamp(),
+                 date=date())
         rel = Relationship(user, 'Asked', q)
         graph.create(rel)
         for name in tags:
