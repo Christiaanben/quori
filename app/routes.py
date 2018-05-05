@@ -41,11 +41,10 @@ def logout():
     session.pop('username', None)
     return render_template('login.html')
 
-@app.route('/home')
+@app.route('/home', methods=['GET','POST'])
 def home():
     questions = User(session['username']).get_questions()
     searching = SearchForm(request.form)
-    # questions = ['why']
     return render_template('home.html', posts=questions, search=searching)
 
 @app.route('/interest')
@@ -62,7 +61,8 @@ def searchpage():
 
 @app.route('/profilepage')
 def profilepage():
-    return render_template('profilepage.html')
+    searching = SearchForm(request.form)
+    return render_template('profilepage.html', search=searching)
 
 @app.route('/add_question', methods=['POST'])
 def add_question():
@@ -86,12 +86,14 @@ def question():
     #return render_template('question.html', question_answers=question_answers)
     return render_template('question.html', title=questiontitle)
 
-@app.route('/autocomplete',methods=['GET'])
-def autocomplete():
-    search = request.args.get('term')
-    app.logger.debug(search)
+@app.route('/autocomplete/<prefix>',methods=['GET'])
+def autocomplete(prefix):
+    # search = request.args
+    # print(search)
+    # app.logger.debug(search)
+    print(prefix)
     NAMES = []
-    searchResult = getUsersStartingWith('sa')
+    searchResult = getUsersStartingWith(prefix)
     for user in searchResult:
         NAMES.append(user['username'])
     print(NAMES)
