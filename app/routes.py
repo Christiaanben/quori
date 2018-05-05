@@ -62,7 +62,9 @@ def searchpage():
 @app.route('/profilepage')
 def profilepage():
     searching = SearchForm(request.form)
-    return render_template('profilepage.html', search=searching)
+    user = User(session['username']);
+    print(user.getBio())
+    return render_template('profilepage.html', search=searching, user=user)
 
 @app.route('/add_question', methods=['POST'])
 def add_question():

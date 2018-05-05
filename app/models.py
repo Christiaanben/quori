@@ -71,13 +71,25 @@ class User:
     # MATCH (a:User)
     # WHERE a.username = 'Maan'
     # SET a.pp = 'temp.jpg'
+        return 0
 
-        def editBio(self, bio):
-            query = 'MATCH (a:User) WHERE a.username = {username} SET a.bio = {bio}'
-            graph.run(query, username=self.username, bio=bio)
+    def getBio(self):
+        query = 'MATCH (a:User) WHERE a.username = {username} RETURN a.bio'
+        result = graph.run(query, username=self.username)
+        try:
+            bio = result.next()
+            return bio
+        except StopIteration:
+            return 'No bio...'
+
+    def editBio(self, bio):
+        query = 'MATCH (a:User) WHERE a.username = {username} SET a.bio = {bio}'
+        graph.run(query, username=self.username, bio=bio)
         # MATCH (a:User)
         # WHERE a.username = 'Maan'
         # SET a.bio = 'My new bio!'
+
+
 
     def editPassword(self, passwordOld, passwordNew, passwordRetype):
         if (self.verify_password(passwordOld)):
