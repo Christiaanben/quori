@@ -134,8 +134,8 @@ class User:
             rel = Relationship(tag, 'Tagged', question)
             graph.create(rel)
 
-   def get_questions(self):
-        query = '''
+	def get_questions(self):
+		query = '''
             MATCH (user:User)-[:Follows]->(:Tag)-[:Tagged]->(question:Question)
             WHERE user.username = {username}
             RETURN question ORDER BY question.timestamp
@@ -145,7 +145,7 @@ class User:
             RETURN question ORDER BY question.timestamp
             LIMIT 5
         '''
-        return graph.run(query, username = self.username)
+		return graph.run(query, username = self.username)
 
     def get_similar_users(self):
         # Find three users who are most similar to the logged-in user
