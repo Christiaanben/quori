@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request, session, jsonify
 from app import app
-from app.forms import LoginForm
-from .models import User
+from app.forms import LoginForm, SearchForm
+from .models import User, getUsersStartingWith
 
 @app.route('/',methods=['GET','POST'])
 @app.route('/login',methods=['GET','POST'])
@@ -42,8 +42,9 @@ def logout():
 @app.route('/home')
 def home():
     questions = User(session['username']).get_questions()
+    searching = SearchForm(request.form)
     # questions = ['why']
-    return render_template('home.html', posts=questions)
+    return render_template('home.html', posts=questions, search=searching)
 
 @app.route('/interest')
 def interest():
@@ -93,6 +94,7 @@ def autocomplete():
         NAMES.append(user['username'])
     print(NAMES)
     return jsonify(json_list=NAMES)
+
 @app.route('/updateBio', methods=['POST'])
 def updateBio():
     if request.method == 'POST':
