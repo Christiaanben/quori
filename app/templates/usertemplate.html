@@ -17,10 +17,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--Import fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Numans' rel='stylesheet'>
     <!-- Inline style -->
     <style>
         body {
-            padding-top: 70px;
+            font-family: 'Numans';
+            cursor: pointer;
         }
 
         .navbar-nav .navbar-brand {
@@ -112,29 +115,32 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">
-                    <img alt="Quori" src="../static/logo.jpg" width="40px" height="40px">
+                    <img alt="Quori" src="../static/quoriLogo.png" width="100%" height="90px" style="width: 130px; margin-top: -18px; height: 65px;">
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav">
-                    <li class="active">
-                        <a class="nav-link" href="#" onclick="window.location.href='{{url_for('home')}}'">Home
+                    <li>
+                        <a href="#" onclick="window.location.href='{{url_for('home')}}'">Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="#" onclick="window.location.href='{{url_for('otherprofile')}}'">Questions</a>
+                        <a class="" href="#" onclick="window.location.href='{{url_for('otherprofile')}}'">Questions</a>
                     </li>
                     <li>
-                        <a class="nav-link" href="#">Answers</a>
+                        <a class="" href="#">Answers</a>
                     </li>
                     <li class="autocomplete">
                         <form class="form-inline my-2 my-lg-0">
                             {{ search.autocomp }}
                         </form>
                     </li>
+                    <li style="color: Grey;">
+                        usernameHere
+                    </li>
                     <li>
-                        <a class="nav-link" href="#" onclick="window.location.href='{{url_for('profilepage')}}'">
+                        <a class="" href="#" onclick="window.location.href='{{url_for('profilepage')}}'">
                             <img alt="Profile" src='../static/profilepictures/temp.jpg' class="user">
                         </a>
                     </li>
