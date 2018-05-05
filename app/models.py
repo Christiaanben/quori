@@ -75,18 +75,18 @@ class User:
         # SET a.bio = 'My new bio!'
 
 
-        def editPassword(self, passwordOld, passwordNew):
-            if (verify_password(self, passwordOld)):
-                query = 'MATCH (a:User) WHERE a.username = \''
-                + self.username + '\' SET a.password = \''
-                + bcrypt.encrypt(passwordNew) + '\''
-                graph.run(query)
-                return true
-            # MATCH (a:User)
-            # WHERE a.username = 'Maan'
-            # SET a.password = 'badPassword42'
-            else:
-                return False
+	def editPassword(self, passwordOld, passwordNew):
+		if (verify_password(self, passwordOld)):
+			query = 'MATCH (a:User) WHERE a.username = \''
+			+ self.username + '\' SET a.password = \''
+			+ bcrypt.encrypt(passwordNew) + '\''
+			graph.run(query)
+			return true
+		# MATCH (a:User)
+		# WHERE a.username = 'Maan'
+		# SET a.password = 'badPassword42'
+		else:
+			return False
 
     def find(self):
         user = graph.find_one('User', 'username', self.username)
@@ -113,23 +113,6 @@ class User:
         else:
             return False
 
-    def ask_question(self, id, title, description, tags):
-        user = self.find()
-        q = Node('Question',
-                 id=id,
-                 title = title,
-                 description = description,
-                 timestamp=timestamp(),
-                 date=date())
-        rel = Relationship(user, 'Asked', q)
-        graph.create(rel)
-        for name in tags:
-            tag = Node('Tag', title=name)
-            graph.merge(tag)
-
-            rel = Relationship(tag, 'Tagged', q)
-            graph.create(rel)
-
     def ask(self, title, question, tags):
         user = self.find()
         question = Node(
@@ -151,36 +134,18 @@ class User:
             rel = Relationship(tag, 'Tagged', question)
             graph.create(rel)
 
-    def add_post(self, title, tags, text):
-        user = self.find()
-        post = Node(
-            'Post',
-            id=str(uuid.uuid4()),
-            title=title,
-            text=text,
-            timestamp=timestamp(),
-            date=date()
-        )
-        rel = Relationship(user, 'PUBLISHED', post)
-        graph.create(rel)
-
-        tags = [x.strip() for x in tags.lower().split(',')]
-        for name in set(tags):
-            tag = Node('Tag', name=name)
-            graph.merge(tag)
-
-            rel = Relationship(tag, 'TAGGED', post)
-            graph.create(rel)
-
-    def get_recent_posts(self):
+   def get_questions(self):
         query = '''
-        MATCH (user:User)-[:PUBLISHED]->(post:Post)<-[:TAGGED]-(tag:Tag)
-        WHERE user.username = {username}
-        RETURN post, COLLECT(tag.name) AS tags
-        ORDER BY post.timestamp DESC LIMIT 5
+            MATCH (user:User)-[:Follows]->(:Tag)-[:Tagged]->(question:Question)
+            WHERE user.username = {username}
+            RETURN question ORDER BY question.timestamp
+            LIMIT 5
+            UNION  MATCH (user:User)-[:Follows]->(p:User)-[:Asked]->(question:Question)
+            WHERE user.username = {username}
+            RETURN question ORDER BY question.timestamp
+            LIMIT 5
         '''
-
-        return graph.run(query, username=self.username)
+        return graph.run(query, username = self.username)
 
     def get_similar_users(self):
         # Find three users who are most similar to the logged-in user
@@ -209,13 +174,6 @@ class User:
         '''
 
         return graph.run(query, they=other.username, you=self.username).next
-def get_posts():
-    query = '''
-        MATCH (username:User)-[:Asked]->(question:Question)<-[:Tagged]-(name:Tag)
-        RETURN username.username AS username, question, COLLECT(name.name) AS tags
-        ORDER BY question.timestamp DESC LIMIT 10
-        '''
-    return graph.run(query)
 
 def get_todays_recent_posts():
     query = '''
