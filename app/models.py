@@ -94,7 +94,7 @@ class User:
             return False
 
         def uploadIMG(self, pic):
-        pic.save(self.username + ".jpg")
+            pic.save(self.username + ".jpg")
 
     def find(self):
         user = graph.find_one('User', 'username', self.username)
