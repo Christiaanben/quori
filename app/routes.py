@@ -75,13 +75,6 @@ def add_question():
 
     return redirect(url_for('home'))
 
-NAMES = ["BAAAAAAA","Bennie","Bernard","Heinri","Janno","Riccardo","Ryen","Wernich"]
-@app.route('/autocomplete',methods=['GET'])
-def autocomplete():
-    search = request.args.get('term')
-    app.logger.debug(search)
-    return jsonify(json_list=NAMES)
-
 
 @app.route('/question', methods=['GET'])
 def question():
@@ -89,3 +82,22 @@ def question():
     #question_answers = get_answers(questiontitle)
     #return render_template('question.html', question_answers=question_answers)
     return render_template('question.html', title=questiontitle)
+
+@app.route('/autocomplete',methods=['GET'])
+def autocomplete():
+    search = request.args.get('term')
+    app.logger.debug(search)
+    NAMES = []
+    searchResult = getUsersStartingWith('sa')
+    for user in searchResult:
+        NAMES.append(user['username'])
+    print(NAMES)
+    return jsonify(json_list=NAMES)
+@app.route('/updateBio', methods=['POST'])
+def updateBio():
+    if request.method == 'POST':
+        bio = request.form['txtFieldBio']
+        print(bio)
+        User(session['username']).editBio(bio)
+        return redirect(url_for('profilepage'))
+
