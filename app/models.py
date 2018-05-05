@@ -16,6 +16,10 @@ class User:
     def __init__(self, username):
         self.username = username
 
+    def getSelf(self):
+        u = graph.find_one('User', 'username', self.username)
+        return u
+
     def addFollows(self, username):
         query = '''MATCH (a:User),(b:User)
         WHERE a.username = \' ''' + self.username + '''\' AND b.username = \'''' + username + '''\'
@@ -65,15 +69,12 @@ class User:
     # WHERE a.username = 'Maan'
     # SET a.pp = 'temp.jpg'
 
-    def editBio(self, bio):
-        query = 'MATCH (a:User) WHERE a.username = \''
-        + self.username + '\' SET a.bio = \''
-        + bio + '\''
-        graph.run(query)
-        # MATCH (a:User)
-        # WHERE a.username = 'Maan'
-        # SET a.bio = 'My new bio!'
-
+	def editBio(self, bio):
+		query = 'MATCH (a:User) WHERE a.username = {username} SET a.bio = {bio}'
+		graph.run(query, username=self.username, bio=bio)
+		# MATCH (a:User)
+		# WHERE a.username = 'Maan'
+		# SET a.bio = 'My new bio!'
 
         def editPassword(self, passwordOld, passwordNew):
             if (verify_password(self, passwordOld)):
