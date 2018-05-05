@@ -113,23 +113,23 @@ class User:
         else:
             return False
 
+    
     def ask(self, title, question, tags):
         user = self.find()
         question = Node(
             'Question',
             title=title,
             id=str(uuid.uuid4()),
-            question=question,
+            description=question,
             timestamp=timestamp(),
             date=date()
         )
         rel = Relationship(user, 'Asked', question)
         graph.create(rel)
 
-        tags = [x.strip() for x in tags.lower().split(',')]
+        tags = [x.strip() for x in tags.split(',')]
         for name in set(tags):
-            tag = Node('Tag', name=name)
-            graph.merge(tag)
+            tag = graph.find_one('Tag', 'title', name)
 
             rel = Relationship(tag, 'Tagged', question)
             graph.create(rel)
