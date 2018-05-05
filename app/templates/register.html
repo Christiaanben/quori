@@ -16,9 +16,10 @@
         <input type="password" placeholder="Enter Password" id="password" name="password"><br><br>
         <label for="password"><b>Retype</b></label><div class="loginlabel"></div><br>
         <input type="password" placeholder="Rtype Password" id="retypePassword" name="retypePassword"><br><br>
-          
-        <label for="username"><b>Email</b></label><div class="loginlabel"></div><br>
-        <input type="text" placeholder="Enter Email" id="email" name="email"><br><br>
+       
+        {% if error %}
+        <p style = "color:red;"><strong>Error:</strong> {{ error }}
+        {% endif %}
           
         <div class="row">
           <div class="col-xs-12 col-sm-3 col-md-3"></div>
