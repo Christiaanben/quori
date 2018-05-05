@@ -89,3 +89,12 @@ def question():
     #question_answers = get_answers(questiontitle)
     #return render_template('question.html', question_answers=question_answers)
     return render_template('question.html', title=questiontitle)
+
+@app.route('/updateBio', methods=['POST'])
+def updateBio():
+    if request.method == 'POST':
+        bio = request.form['txtFieldBio']
+        print(bio)
+        User(session['username']).editBio(bio)
+        return redirect(url_for('profilepage'))
+    
