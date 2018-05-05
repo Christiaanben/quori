@@ -36,7 +36,7 @@
             <div class="card-body">
                 <h5 class="card-title"><a href="question?title={{ row.question.title }}">{{ row.question.title }}</a></h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{ ", ".join(row.tags) }}</h6>
-                <p>{{ row.question.question }}</p>
+                <p>{{row.question.description}}</p>
                 <div>
                     <a class="btn btn-secondary" href="question?title={{ row.question.title }}" role="button">Answer</a>
                 </div>
