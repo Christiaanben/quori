@@ -78,7 +78,6 @@ NAMES = ["BAAAAAAA","Bennie","Bernard","Heinri","Janno","Riccardo","Ryen","Werni
 @app.route('/autocomplete',methods=['GET'])
 def autocomplete():
     search = request.args.get('term')
-
     app.logger.debug(search)
     return jsonify(json_list=NAMES)
 

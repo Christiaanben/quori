@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -121,7 +122,8 @@
         </li>
 
           <li class="autocomplete" style="width:300px;">
-              <form class="form-inline my-2 my-lg-0" autocomplete="off">
+              <form class="form-inline my-2 my-lg-0">
+{#                  {{ search.autocomp(id="searchInput", class="form-control mr-sm-2",type="search",placeholder="Search..") }}#}
                   <input id="searchInput" class="form-control mr-sm-2" type="search" name="search" placeholder="Search">
               </form>
           </li>
@@ -235,21 +237,10 @@
     }
 
     /*An array containing all the names */
-    var names = ["Bennie","Bernard","Heinri","Janno","Riccardo","Ryen","Wernich"];
+    var names = ["BenFout","Bernard", "Danielle", "Heinri","Janno","Riccardo","Ryen","Wernich"];
 
-    /*initiate the autocomplete function on the "searchInput" element, and pass along the names array as possible autocomplete values:*/
+/*initiate the autocomplete function on the "searchInput" element, and pass along the names array as possible autocomplete values:*/
     autocomplete(document.getElementById("searchInput"), names);
-</script>
-<script>
-$.ajax({
-        url: '{{ url_for("autocomplete") }}'
-        }).done(function (data) {
-            $('#autocomplete').autocomplete({
-                source: data.json_list,
-                minLength: 2
-            });
-        });
-    });
 </script>
 </body>
 
