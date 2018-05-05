@@ -75,18 +75,18 @@ class User:
         # SET a.bio = 'My new bio!'
 
 
-	def editPassword(self, passwordOld, passwordNew):
-		if (verify_password(self, passwordOld)):
-			query = 'MATCH (a:User) WHERE a.username = \''
-			+ self.username + '\' SET a.password = \''
-			+ bcrypt.encrypt(passwordNew) + '\''
-			graph.run(query)
-			return true
-		# MATCH (a:User)
-		# WHERE a.username = 'Maan'
-		# SET a.password = 'badPassword42'
-		else:
-			return False
+        def editPassword(self, passwordOld, passwordNew):
+            if (verify_password(self, passwordOld)):
+                query = 'MATCH (a:User) WHERE a.username = \''
+                + self.username + '\' SET a.password = \''
+                + bcrypt.encrypt(passwordNew) + '\''
+                graph.run(query)
+                return true
+            # MATCH (a:User)
+            # WHERE a.username = 'Maan'
+            # SET a.password = 'badPassword42'
+            else:
+                return False
 
     def find(self):
         user = graph.find_one('User', 'username', self.username)
@@ -113,7 +113,7 @@ class User:
         else:
             return False
 
-    
+
     def ask(self, title, question, tags):
         user = self.find()
         question = Node(
@@ -134,8 +134,8 @@ class User:
             rel = Relationship(tag, 'Tagged', question)
             graph.create(rel)
 
-   def get_questions(self):
-        query = '''
+def get_questions(self):
+    query = '''
             MATCH (user:User)-[:Follows]->(:Tag)-[:Tagged]->(question:Question)
             WHERE user.username = {username}
             RETURN question ORDER BY question.timestamp
@@ -145,12 +145,12 @@ class User:
             RETURN question ORDER BY question.timestamp
             LIMIT 5
         '''
-        return graph.run(query, username = self.username)
+    return graph.run(query, username = self.username)
 
-    def get_similar_users(self):
-        # Find three users who are most similar to the logged-in user
-        # based on tags they've both blogged about.
-        query = '''
+def get_similar_users(self):
+    # Find three users who are most similar to the logged-in user
+    # based on tags they've both blogged about.
+    query = '''
         MATCH (you:User)-[:PUBLISHED]->(:Post)<-[:TAGGED]-(tag:Tag),
               (they:User)-[:PUBLISHED]->(:Post)<-[:TAGGED]-(tag)
         WHERE you.username = {username} AND you <> they
@@ -159,12 +159,12 @@ class User:
         RETURN they.username AS similar_user, tags
         '''
 
-        return graph.run(query, username=self.username)
+    return graph.run(query, username=self.username)
 
-    def get_commonality_of_user(self, other):
-        # Find how many of the logged-in user's posts the other user
-        # has liked and which tags they've both blogged about.
-        query = '''
+def get_commonality_of_user(self, other):
+    # Find how many of the logged-in user's posts the other user
+    # has liked and which tags they've both blogged about.
+    query = '''
         MATCH (they:User {username: {they} })
         MATCH (you:User {username: {you} })
         OPTIONAL MATCH (they)-[:PUBLISHED]->(:Post)<-[:TAGGED]-(tag:Tag),
@@ -173,7 +173,7 @@ class User:
                COLLECT(DISTINCT tag.name) AS tags
         '''
 
-        return graph.run(query, they=other.username, you=self.username).next
+    return graph.run(query, they=other.username, you=self.username).next
 
 def get_todays_recent_posts():
     query = '''

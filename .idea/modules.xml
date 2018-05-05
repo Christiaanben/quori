@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../microblog/.idea/untitled.iml" filepath="$PROJECT_DIR$/../microblog/.idea/untitled.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/quori.iml" filepath="$PROJECT_DIR$/.idea/quori.iml" />
       <module fileurl="file://$PROJECT_DIR$/../search/.idea/search.iml" filepath="$PROJECT_DIR$/../search/.idea/search.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../microblog/.idea/untitled.iml" filepath="$PROJECT_DIR$/../microblog/.idea/untitled.iml" />
     </modules>
   </component>
 </project>
