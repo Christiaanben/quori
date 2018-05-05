@@ -69,12 +69,12 @@ class User:
     # WHERE a.username = 'Maan'
     # SET a.pp = 'temp.jpg'
 
-	def editBio(self, bio):
-		query = 'MATCH (a:User) WHERE a.username = {username} SET a.bio = {bio}'
-		graph.run(query, username=self.username, bio=bio)
-		# MATCH (a:User)
-		# WHERE a.username = 'Maan'
-		# SET a.bio = 'My new bio!'
+        def editBio(self, bio):
+            query = 'MATCH (a:User) WHERE a.username = {username} SET a.bio = {bio}'
+            graph.run(query, username=self.username, bio=bio)
+        # MATCH (a:User)
+        # WHERE a.username = 'Maan'
+        # SET a.bio = 'My new bio!'
 
     def editPassword(self, passwordOld, passwordNew):
         if (verify_password(self, passwordOld)):
