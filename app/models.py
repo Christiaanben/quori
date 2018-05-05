@@ -69,25 +69,28 @@ class User:
     # WHERE a.username = 'Maan'
     # SET a.pp = 'temp.jpg'
 
-        def editBio(self, bio):
-            query = 'MATCH (a:User) WHERE a.username = {username} SET a.bio = {bio}'
-            graph.run(query, username=self.username, bio=bio)
+	def editBio(self, bio):
+		query = 'MATCH (a:User) WHERE a.username = {username} SET a.bio = {bio}'
+		graph.run(query, username=self.username, bio=bio)
         # MATCH (a:User)
         # WHERE a.username = 'Maan'
         # SET a.bio = 'My new bio!'
 
-    def editPassword(self, passwordOld, passwordNew):
-        if (verify_password(self, passwordOld)):
-            query = 'MATCH (a:User) WHERE a.username = \''
-            + self.username + '\' SET a.password = \''
-            + bcrypt.encrypt(passwordNew) + '\''
-            graph.run(query)
-            return true
+    def editPassword(self, passwordOld, passwordNew, passwordRetype):
+        if (self.verify_password(passwordOld)):
+            if (passwordNew != passwordRetype):
+                return False
+            query = 'MATCH (a:User) WHERE a.username = {username} SET a.password = {passwordNew}'
+            graph.run(query, username=self.username, passwordNew=bcrypt.encrypt(passwordNew))
+            return True
         # MATCH (a:User)
         # WHERE a.username = 'Maan'
         # SET a.password = 'badPassword42'
         else:
             return False
+		
+	def uploadIMG(self, pic):
+    	pic.save(self.username + ".jpg")
 
     def find(self):
         user = graph.find_one('User', 'username', self.username)
