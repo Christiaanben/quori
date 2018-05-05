@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request, session, jsonify
 from app import app
 from app.forms import LoginForm
-from .models import User, get_posts
+from .models import User
 
 @app.route('/',methods=['GET','POST'])
 @app.route('/login',methods=['GET','POST'])
@@ -41,8 +41,8 @@ def logout():
 
 @app.route('/home')
 def home():
-    posts = get_posts()
-    return render_template('home.html', posts=posts)
+    questions = User(session['username']).get_questions()
+    return render_template('home.html', posts=questions)
 
 @app.route('/interest')
 def interest():
