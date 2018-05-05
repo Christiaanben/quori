@@ -42,6 +42,7 @@ def logout():
 @app.route('/home')
 def home():
     questions = User(session['username']).get_questions()
+    # questions = ['why']
     return render_template('home.html', posts=questions)
 
 @app.route('/interest')
