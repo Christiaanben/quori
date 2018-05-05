@@ -6,7 +6,7 @@
         <!-- ************************ Profile Pic *************************** -->
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                 <div class="centerp">
-                        <div class="pic one"></div>
+                        <img class="pic" src="../static/profilepictures/{{ user.pp }}">
                         <form action="/action_page.php">
                                 <input type="file" name="pic" accept="image/*" style="margin-bottom:20px">
                                 <br>
@@ -30,12 +30,20 @@
         <!-- %%%%%%%%%%%% Main column for the Bio%%%%%%%%%%%%%%%-->
         <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
                 <div class="panel panel-default">
+                    <h2 STYLE="margin-top: 1em;">Welcome {{ user.username }}!</h2>
+                    <form action="{{url_for('updateBio')}}" method="post">
                         <div class="panel-heading" id="T1">
-                                <h3 class="spaceme panel-title" style="margin-top:20px;"><span>Your Bio</span><button type="button" class=" niceButts spaceme btn btn-default" style="float:right;">Update bio</button></h3>     
+                                <h3 class="spaceme panel-title" style="margin-top:20px;">
+                                    <span>Your Bio</span>
+
+                                    <button type="submit" class=" niceButts spaceme btn btn-default" style="float:right;">Update bio</button>
+
+                                </h3>
                         </div>
                         <div class="bio panel-body">
-                                <textarea class="fits"></textarea>
+                            <textarea name="txtFieldBio" class="fits" value="">{{ user.bio }}</textarea>
                         </div>
+                    </form>
                 </div>
         </div>
         
