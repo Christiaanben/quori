@@ -99,7 +99,25 @@ def autocomplete():
 def updateBio():
     if request.method == 'POST':
         bio = request.form['txtFieldBio']
-        print(bio)
         User(session['username']).editBio(bio)
         return redirect(url_for('profilepage'))
 
+@app.route('/updatePassword', methods=['POST'])
+def updatePassword():
+    if request.method == 'POST':
+        oldPassword = request.form['passwordOld']
+        newPassword = request.form['passwordNew']
+        retypePassword = request.form['passwordRetype']
+        User(session['username']).editPassword(oldPassword, newPassword, retypePassword)
+        return redirect(url_for('profilepage'))
+
+@app.route('/uploader', methods=['GET', 'POST'])
+def uploader():
+    if request.method == 'POST':
+        f = request.files['pic']
+        f.save(f.filename)
+        #pic.save(".jpg")
+        #User(session['username']).uploadIMG(pic)
+        return 'file uploaded successfully'
+
+        #return redirect(url_for('profilepage'))
