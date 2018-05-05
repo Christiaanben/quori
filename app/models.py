@@ -76,18 +76,18 @@ class User:
 		# WHERE a.username = 'Maan'
 		# SET a.bio = 'My new bio!'
 
-        def editPassword(self, passwordOld, passwordNew):
-            if (verify_password(self, passwordOld)):
-                query = 'MATCH (a:User) WHERE a.username = \''
-                + self.username + '\' SET a.password = \''
-                + bcrypt.encrypt(passwordNew) + '\''
-                graph.run(query)
-                return true
-            # MATCH (a:User)
-            # WHERE a.username = 'Maan'
-            # SET a.password = 'badPassword42'
-            else:
-                return False
+    def editPassword(self, passwordOld, passwordNew):
+        if (verify_password(self, passwordOld)):
+            query = 'MATCH (a:User) WHERE a.username = \''
+            + self.username + '\' SET a.password = \''
+            + bcrypt.encrypt(passwordNew) + '\''
+            graph.run(query)
+            return true
+        # MATCH (a:User)
+        # WHERE a.username = 'Maan'
+        # SET a.password = 'badPassword42'
+        else:
+            return False
 
     def find(self):
         user = graph.find_one('User', 'username', self.username)
@@ -194,3 +194,11 @@ def timestamp():
 
 def date():
     return datetime.now().strftime('%Y-%m-%d')
+
+def getUsersStartingWith(prefix):
+    query = '''
+    MATCH (u:User)
+    WHERE u.username STARTS WITH 'M'
+    RETURN u.username AS username
+    '''
+    return graph.run(query)
