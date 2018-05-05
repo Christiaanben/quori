@@ -14,6 +14,32 @@
         <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <style>
+            table {
+                font-family: "Lucida Sans", Verdana, Arial, sans-serif;
+                font-size: 1em;
+                width: 100%;
+                text-align: left;
+            }   
+            tbody {  
+                background-color: #F1F1F1;
+            }
+            td, th {
+                padding: 0.5em;
+                width: 30%;
+            }
+            thead {
+                background-color: #CACACA;
+            }
+            caption {
+               font-size: 1.2em;
+               font-weight: bold;
+               background-color: #DCA806;
+               padding: 0.5em;
+            }
+            tbody tr:nth-child(odd) {
+                background-color: white;
+            }
+            
             .choicei {
                 float: left;
                 background-color: aqua;
@@ -37,110 +63,45 @@
                                 </form>
                             </div>
                             <div class="panel-body" style="padding-left:1em">
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Math</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>IT</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Cheese and Wine</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Food</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Music</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Web design</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Teaching</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Space</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Accounting</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Philosophy</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Myths</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Machine learning</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Travel</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Anime</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Dragon Ball</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Sports</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Jokes</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Science</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Hunting</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Games</label>
-                                </div>
-                                
-                                <div class="choicei">
-                                    <img alt="Quori" src="resources/quorilogo.png" width="40px" height="40px" ><br>
-                                    <label>Dancing</label>
-                                </div>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td><input style="margin-right:1em" type="checkbox" name="1" value="Math">Math</td>
+                                            <td><input type="checkbox" style="margin-right:1em" name="2" value="IT">IT</td>
+                                            <td><input type="checkbox" style="margin-right:1em" name="3" value="Cheese and Whine">Cheese and Whine</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input style="margin-right:1em" type="checkbox" name="1" value="Math">Food</td>
+                                            <td><input type="checkbox" style="margin-right:1em" name="2" value="IT">Music</td>
+                                            <td><input type="checkbox" style="margin-right:1em" name="3" value="Cheese and Whine">Web design</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input style="margin-right:1em" type="checkbox" name="1" value="Math">Teaching</td>
+                                            <td><input type="checkbox" style="margin-right:1em" name="2" value="IT">Space</td>
+                                            <td><input type="checkbox" style="margin-right:1em" name="3" value="Cheese and Whine">Accounting</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input style="margin-right:1em" type="checkbox" name="1" value="Math">Philosophy</td>
+                                            <td><input type="checkbox" style="margin-right:1em" name="2" value="IT">Myths</td>
+                                            <td><input type="checkbox" style="margin-right:1em" name="3" value="Cheese and Whine">Travel</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input style="margin-right:1em" type="checkbox" name="1" value="Math">Machine Learning</td>
+                                            <td><input type="checkbox" style="margin-right:1em" name="2" value="IT">Anime</td>
+                                            <td><input type="checkbox" style="margin-right:1em" name="3" value="Cheese and Whine">Dragon Ball</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input style="margin-right:1em" type="checkbox" name="1" value="Math">Sports</td>
+                                            <td><input type="checkbox" style="margin-right:1em" name="2" value="IT">Jokes</td>
+                                            <td><input type="checkbox" style="margin-right:1em" name="3" value="Cheese and Whine">Science</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input style="margin-right:1em" type="checkbox" name="1" value="Math">Hunting</td>
+                                            <td><input type="checkbox" style="margin-right:1em" name="2" value="IT">Games</td>
+                                            <td><input type="checkbox" style="margin-right:1em" name="3" value="Cheese and Whine">Dancing</td>
+                                        </tr>
+                                    </tbody>
+                                </table>   
                             </div>
                         </div>
                     </div>
