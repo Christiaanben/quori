@@ -6,7 +6,7 @@
         <!-- ************************ Profile Pic *************************** -->
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                 <div class="centerp">
-                        <img class="pic" src="../static/profilepictures/{{ user.pp }}">
+                        <img class="pic" src="{{url_for('static',filename='profilepictures/'+session.username+'.jpg')}}">
                         <form action="{{url_for('uploader')}}" method="post" enctype = "multipart/form-data">
                                 <input type="file" name="pic" style="margin-bottom:20px">
                                 <br>
@@ -32,7 +32,7 @@
         <!-- %%%%%%%%%%%% Main column for the Bio%%%%%%%%%%%%%%%-->
         <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
                 <div class="panel panel-default">
-                    <h2 STYLE="margin-top: 1em;">Welcome {{ user.username }}!</h2>
+                    <h2 STYLE="margin-top: 1em;">Welcome {{ session.username }}!</h2>
                     <form action="{{url_for('updateBio')}}" method="post">
                         <div class="panel-heading" id="T1">
                                 <h3 class="spaceme panel-title" style="margin-top:20px;">
@@ -43,7 +43,7 @@
                                 </h3>
                         </div>
                         <div class="bio panel-body">
-                            <textarea name="txtFieldBio" class="fits" value="">{{ user.bio }}</textarea>
+                            <textarea name="txtFieldBio" class="fits" value="">{{ user.getBio()['a.bio'] }}</textarea>
                         </div>
                     </form>
                 </div>

@@ -177,23 +177,21 @@
                         </a>
                     </li>
                     <li>
-                        <a class="" href="#" onclick="window.location.href='{{url_for('otherprofile')}}'">Questions</a>
+                        <a  href="#" onclick="window.location.href='{{url_for('otherprofile')}}'">Questions</a>
                     </li>
                     <li>
-                        <a class="" href="#">Answers</a>
-                    </li>
-                    <li class="autocomplete">
-                        <form class="form-inline my-2 my-lg-0">
-                            {{ search.autocomp }}
-                        </form>
+                        <a href="#">Answers</a>
                     </li>
                     <li>
-                        <a class="" href="#" onclick="window.location.href='{{url_for('profilepage')}}'">
+                            <input id="search" />
+                    </li>
+                    <li>
+                        <a href="#" onclick="window.location.href='{{url_for('profilepage')}}'">
                             <img alt="Profile" src='../static/profilepictures/temp.jpg' class="user">
                         </a>
                     </li>
-                    <li style="color: Grey;">
-                        usernameHere
+                    <li style="color: Grey; onclick="window.location.href='{{url_for('profilepage')}}'">
+                            {{ session.username }}
                     </li>
                 </ul>
             </div>
@@ -203,38 +201,6 @@
     <footer>
         All Rights Reserved
     </footer>
-    <script>
-        var prefix = 'abc';
-        $('input').each(function () {
-            var elem = $(this);
-
-            // Save current value of element
-            elem.data('oldVal', elem.val());
-
-            // Look for changes in the value
-            elem.bind("propertychange change click keyup input paste", function (event) {
-                // If value has changed...
-                if (elem.data('oldVal') != elem.val()) {
-                    // Updated stored value
-                    elem.data('oldVal', elem.val());
-                    // Do action
-                    $(function () {
-                        prefix = elem.val();
-                        var searchURL = {{ url_for("autocomplete", prefix = 'r')
-                    }};
-                alert(searchURL);
-                $.ajax({
-                    url: searchURL;
-                }).done(function (data) {
-                    $('#autocomplete').autocomplete({
-                        source: data.json_list,
-                        minLength: 2
-                    });
-                });
-            });
-        }});
-            });
-    </script>
 </body>
 
 </html>

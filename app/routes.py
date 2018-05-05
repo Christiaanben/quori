@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request, session, jsonify
 from app import app
-from app.forms import LoginForm, SearchForm
+from app.forms import LoginForm
 from .models import User, getUsersStartingWith
 
 @app.route('/',methods=['GET','POST'])
@@ -44,8 +44,7 @@ def logout():
 @app.route('/home', methods=['GET','POST'])
 def home():
     questions = User(session['username']).get_questions()
-    searching = SearchForm(request.form)
-    return render_template('home.html', posts=questions, search=searching)
+    return render_template('home.html', posts=questions)
 
 @app.route('/interest')
 def interest():
@@ -61,8 +60,8 @@ def searchpage():
 
 @app.route('/profilepage')
 def profilepage():
-    searching = SearchForm(request.form)
-    return render_template('profilepage.html', search=searching)
+    user = User(session['username']);
+    return render_template('profilepage.html', user=user)
 
 @app.route('/add_question', methods=['POST'])
 def add_question():
@@ -86,18 +85,7 @@ def question():
     #return render_template('question.html', question_answers=question_answers)
     return render_template('question.html', title=questiontitle)
 
-@app.route('/autocomplete/<prefix>',methods=['GET'])
-def autocomplete(prefix):
-    # search = request.args
-    # print(search)
-    # app.logger.debug(search)
-    print(prefix)
-    NAMES = []
-    searchResult = getUsersStartingWith(prefix)
-    for user in searchResult:
-        NAMES.append(user['username'])
-    print(NAMES)
-    return jsonify(json_list=NAMES)
+
 
 @app.route('/updateBio', methods=['POST'])
 def updateBio():
@@ -125,3 +113,13 @@ def uploader():
         return 'file uploaded successfully'
 
         #return redirect(url_for('profilepage'))
+
+@app.route('/search/<prefix>')
+def search(prefix):
+    print(prefix)
+    searchResult = getUsersStartingWith(prefix)
+    names = ['Basic','Ben']
+    for user in searchResult:
+        names.append(user['username'])
+    print(names)
+    return jsonify({'suggestions':names})

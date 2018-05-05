@@ -8,5 +8,5 @@ class LoginForm(FlaskForm):
 	submit = SubmitField('Sign In')
 
 
-class SearchForm(Form):
-    autocomp= StringField('autocomp',id='autocomplete')
+# class SearchForm(Form):
+#     autocomp= StringField('autocomp',id='autocomplete')
