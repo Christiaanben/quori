@@ -6,33 +6,35 @@ from .models import User, getUsersStartingWith
 @app.route('/',methods=['GET','POST'])
 @app.route('/login',methods=['GET','POST'])
 def login():
+    error = None
     form = LoginForm()
     if form.validate_on_submit():
         username = request.form['username']
         password = request.form['password']
 
-        if (not User(username).verify_password(password)):
-            print('invalid login')
+        if not (User(username)).find():
+            error = "Username was not found."
+        elif (not User(username).verify_password(password)):
+            error = "Password is incorrect."  
         else:
             session['username'] = username
-            #flash('Login requested for user {}'.format(form.username.data))
             return redirect(url_for('home'))
 
-    return render_template('login.html',form=form)
+    return render_template('login.html',form=form, error = error)
 
 @app.route('/register', methods=['GET','POST'])
 def register():
     if request.method == 'POST':
+        error = None
         username = request.form['username']
         password = request.form['password']
         repassword = request.form['retypePassword']
         if (not User(username).register(password, repassword)):
-            flash('A user with this username already exists.')
+             error = 'A user with this username already exists.' 
         else:
             session['username'] = username
-            flash('Logged in')
             return redirect(url_for('home'))
-    return render_template('register.html')
+    return render_template('register.html', error = error)
 
 @app.route('/logout')
 def logout():
