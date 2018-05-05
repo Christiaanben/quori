@@ -115,7 +115,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">
-                    <img alt="Quori" src="../static/quoriLogo.png" width="100%" height="90px" style="width: 130px; margin-top: -18px; height: 65px;">
+                    <img alt="Quori" src="{{url_for('static',filename='quoriLogo.png')}}" width="100%" height="90px" style="width: 130px; margin-top: -18px; height: 65px;">
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -151,16 +151,36 @@
     {%block body%}{%endblock%}
 
     <script>
-        $(function () {
-            $.ajax({
-                url: '{{ url_for("autocomplete") }}'
-            }).done(function (data) {
-                $('#autocomplete').autocomplete({
-                    source: data.json_list,
-                    minLength: 2
+       var prefix='abc';
+$('input').each(function() {
+    var elem = $(this);
+
+    // Save current value of element
+    elem.data('oldVal', elem.val());
+
+    // Look for changes in the value
+    elem.bind("propertychange change click keyup input paste", function(event){
+        // If value has changed...
+        if (elem.data('oldVal') != elem.val()) {
+            // Updated stored value
+            elem.data('oldVal', elem.val());
+            // Do action
+            $(function() {
+                prefix = elem.val();
+                var searchURL = {{ url_for("autocomplete",prefix='r') }};
+                alert(searchURL);
+                $.ajax({
+                    url: searchURL;
+                }).done(function (data) {
+                    $('#autocomplete').autocomplete({
+                        source: data.json_list,
+                        minLength: 2
+                    });
                 });
             });
-        });
+        }
+    });
+});
     </script>
 </body>
 

@@ -8,9 +8,11 @@ import uuid
 #username = os.environ.get('neo4j')
 #password = os.environ.get('password')
 
-graph = Graph("http://localhost:7474/db/data/",user='neo4j', password='1234') #connects to db when db authetication is off
+# connects to db when db authetication is off
+graph = Graph("http://localhost:7474/db/data/", user='neo4j', password='1234')
 #graph = Graph(url + '/db/data/', username=username, password=password)
 #graph = Graph('http://localhost:7474', username = 'neo4j', password = 'password')
+
 
 class User:
     def __init__(self, username):
@@ -31,7 +33,8 @@ class User:
 
     def addUpvoted(self, id):
         query = 'MATCH (a:User), (b:Answer) WHERE a.username = \''
-        self.username + '\' AND b.id = \' ' + id + '\' CREATE (a)-[r:Upvoted]->(b)'
+        self.username + '\' AND b.id = \' ' + \
+            id + '\' CREATE (a)-[r:Upvoted]->(b)'
         graph.run(query)
         # MATCH (a:User),(b:User)
     # WHERE a.username = 'Ricky' AND b.id = 'A2'
@@ -47,7 +50,7 @@ class User:
 
     def removeFollows(self, username):
         query = 'MATCH (a:User)-[r:Follows]-(b:User) WHERE a.username = \''
-        +self.username +'\' AND b.username = \'' + username +'\' DELETE r'
+        +self.username + '\' AND b.username = \'' + username + '\' DELETE r'
         graph.run(query)
     # MATCH (a:User)-[r:Follows]-(b:User)
     # WHERE a.username = 'Maan' AND b.username = 'Patrick'
@@ -76,18 +79,22 @@ class User:
         # WHERE a.username = 'Maan'
         # SET a.bio = 'My new bio!'
 
-    def editPassword(self, passwordOld, passwordNew):
-        if (verify_password(self, passwordOld)):
-            query = 'MATCH (a:User) WHERE a.username = \''
-            + self.username + '\' SET a.password = \''
-            + bcrypt.encrypt(passwordNew) + '\''
-            graph.run(query)
-            return true
+    def editPassword(self, passwordOld, passwordNew, passwordRetype):
+        if (self.verify_password(passwordOld)):
+            if (passwordNew != passwordRetype):
+                return False
+            query = 'MATCH (a:User) WHERE a.username = {username} SET a.password = {passwordNew}'
+            graph.run(query, username=self.username,
+                      passwordNew=bcrypt.encrypt(passwordNew))
+            return True
         # MATCH (a:User)
         # WHERE a.username = 'Maan'
         # SET a.password = 'badPassword42'
         else:
             return False
+
+        def uploadIMG(self, pic):
+        pic.save(self.username + ".jpg")
 
     def find(self):
         user = graph.find_one('User', 'username', self.username)
@@ -101,7 +108,8 @@ class User:
         if (password != repassword):
             return False
         if not self.find():
-            user = Node('User', username=self.username, password=bcrypt.encrypt(password), bio="I have questions:)!", pp = 'temp.jpg')
+            user = Node('User', username=self.username, password=bcrypt.encrypt(
+                password), bio="I have questions:)!", pp='temp.jpg')
             graph.create(user)
             return True
         else:
@@ -113,7 +121,6 @@ class User:
             return bcrypt.verify(password, user['password'])
         else:
             return False
-
 
     def ask(self, title, question, tags):
         user = self.find()
@@ -146,7 +153,8 @@ class User:
             RETURN question ORDER BY question.timestamp
             LIMIT 5
         '''
-        return graph.run(query, username = self.username)
+        return graph.run(query, username=self.username)
+
 
 def get_similar_users(self):
     # Find three users who are most similar to the logged-in user
@@ -162,6 +170,7 @@ def get_similar_users(self):
 
     return graph.run(query, username=self.username)
 
+
 def get_commonality_of_user(self, other):
     # Find how many of the logged-in user's posts the other user
     # has liked and which tags they've both blogged about.
@@ -176,6 +185,7 @@ def get_commonality_of_user(self, other):
 
     return graph.run(query, they=other.username, you=self.username).next
 
+
 def get_todays_recent_posts():
     query = '''
     MATCH (user:User)-[:PUBLISHED]->(post:Post)<-[:TAGGED]-(tag:Tag)
@@ -186,19 +196,22 @@ def get_todays_recent_posts():
 
     return graph.run(query, today=date())
 
+
 def timestamp():
     epoch = datetime.utcfromtimestamp(0)
     now = datetime.now()
     delta = now - epoch
     return delta.total_seconds()
 
+
 def date():
     return datetime.now().strftime('%Y-%m-%d')
+
 
 def getUsersStartingWith(prefix):
     query = '''
     MATCH (u:User)
-    WHERE u.username STARTS WITH 'M'
+    WHERE LOWER(u.username) STARTS WITH LOWER("'''+prefix+'''")
     RETURN u.username AS username
     '''
     return graph.run(query)

@@ -8,6 +8,9 @@
         <img src="{{url_for('static',filename='logo.jpg')}}" alt="Welcome to Quori!" class="logo">
       </div>
       <form style="text-align: center" method="post">
+	{% if error %}
+      <p style = "color: red;"><strong>Error:</strong> {{ error }}</p>
+      {% endif %}
 		{{form.hidden_tag()}}
         <label for="username"><b>Username</b></label><div class="loginlabel"></div><br>
         {{form.username(size=32,placeholder="Enter Username")}}<br>

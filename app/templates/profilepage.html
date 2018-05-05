@@ -7,24 +7,26 @@
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                 <div class="centerp">
                         <img class="pic" src="../static/profilepictures/{{ user.pp }}">
-                        <form action="/action_page.php">
-                                <input type="file" name="pic" accept="image/*" style="margin-bottom:20px">
+                        <form action="{{url_for('uploader')}}" method="post" enctype = "multipart/form-data">
+                                <input type="file" name="pic" style="margin-bottom:20px">
                                 <br>
                                 <input type="submit" class=" niceButts spaceme btn btn-default" value="Upload pic">
                         </form>
                         <br>
                         <button onclick="showPassword()" class="niceButts spaceme btn btn-default">Change password</button>
-                                    
+
+                        <form action="{{url_for('updatePassword')}}" method="post">
                         <div id="yeschange" display="none">
                                 <br>
-                                <label for="password"><b>Old Password</b></label><div class="loginlabel"></div>
-                                <input type="password" placeholder="Old Password" id="password" name="password"><br><br>
-                                <label for="password"><b>New Password</b></label><div class="loginlabel"></div>
-                                <input type="password" placeholder="New Password" id="password2" name="npassword"><br><br>
-                                <label for="password"><b>Retype</b></label><div class="loginlabel"></div>
-                                <input type="password" placeholder="Retype Password" id="retypePassword2" name="retypePassword"><br><br>
+                                <label for="passwordOld"><b>Old Password</b></label><div class="loginlabel"></div>
+                                <input type="password" placeholder="Old Password" id="password" name="passwordOld"><br><br>
+                                <label for="passwordNew"><b>New Password</b></label><div class="loginlabel"></div>
+                                <input type="password" placeholder="New Password" id="password2" name="passwordNew"><br><br>
+                                <label for="passwordRetype"><b>Retype</b></label><div class="loginlabel"></div>
+                                <input type="password" placeholder="Retype Password" id="retypePassword2" name="passwordRetype"><br><br>
                                 <button type="submit" style="margin-bottom: 20px">Update password</button>
                         </div>
+                        </form>
                 </div>                
             </div>
         <!-- %%%%%%%%%%%% Main column for the Bio%%%%%%%%%%%%%%%-->
