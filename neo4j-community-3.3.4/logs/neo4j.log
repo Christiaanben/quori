@@ -1,0 +1,135 @@
+nohup: ignoring input
+2018-04-11 12:52:38.245+0000 INFO  ======== Neo4j 3.3.4 ========
+2018-04-11 12:52:38.310+0000 INFO  Starting...
+2018-04-11 12:52:39.823+0000 INFO  Bolt enabled on 127.0.0.1:7687.
+2018-04-11 12:52:43.160+0000 INFO  Started.
+2018-04-11 12:52:44.223+0000 INFO  Remote interface available at http://localhost:7474/
+2018-04-12 05:30:49.867+0000 INFO  Neo4j Server shutdown initiated by request
+2018-04-12 05:30:50.008+0000 INFO  Stopping...
+2018-04-12 05:30:50.162+0000 INFO  Stopped.
+nohup: ignoring input
+2018-05-02 12:30:21.253+0000 INFO  ======== Neo4j 3.3.4 ========
+2018-05-02 12:30:21.329+0000 INFO  Starting...
+2018-05-02 12:30:22.599+0000 INFO  Bolt enabled on 127.0.0.1:7687.
+2018-05-02 12:30:26.632+0000 INFO  Started.
+2018-05-02 12:30:27.676+0000 INFO  Remote interface available at http://localhost:7474/
+2018-05-02 14:51:12.105+0000 INFO  Neo4j Server shutdown initiated by request
+2018-05-02 14:51:12.125+0000 INFO  Stopping...
+2018-05-02 14:51:12.250+0000 INFO  Stopped.
+nohup: ignoring input
+2018-05-04 15:15:47.853+0000 INFO  ======== Neo4j 3.3.4 ========
+2018-05-04 15:15:47.888+0000 INFO  Starting...
+2018-05-04 15:15:48.735+0000 INFO  Bolt enabled on 127.0.0.1:7687.
+2018-05-04 15:15:50.509+0000 ERROR Failed to start Neo4j: Starting Neo4j failed: Component 'org.neo4j.server.database.LifecycleManagingDatabase@2b037cfc' was successfully initialized, but failed to start. Please see the attached cause exception "Address 127.0.0.1:7687 is already in use, cannot bind to it.". Starting Neo4j failed: Component 'org.neo4j.server.database.LifecycleManagingDatabase@2b037cfc' was successfully initialized, but failed to start. Please see the attached cause exception "Address 127.0.0.1:7687 is already in use, cannot bind to it.".
+org.neo4j.server.ServerStartupException: Starting Neo4j failed: Component 'org.neo4j.server.database.LifecycleManagingDatabase@2b037cfc' was successfully initialized, but failed to start. Please see the attached cause exception "Address 127.0.0.1:7687 is already in use, cannot bind to it.".
+	at org.neo4j.server.exception.ServerStartupErrors.translateToServerStartupError(ServerStartupErrors.java:68)
+	at org.neo4j.server.AbstractNeoServer.start(AbstractNeoServer.java:220)
+	at org.neo4j.server.ServerBootstrapper.start(ServerBootstrapper.java:111)
+	at org.neo4j.server.ServerBootstrapper.start(ServerBootstrapper.java:79)
+	at org.neo4j.server.CommunityEntryPoint.main(CommunityEntryPoint.java:32)
+Caused by: org.neo4j.kernel.lifecycle.LifecycleException: Component 'org.neo4j.server.database.LifecycleManagingDatabase@2b037cfc' was successfully initialized, but failed to start. Please see the attached cause exception "Address 127.0.0.1:7687 is already in use, cannot bind to it.".
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:466)
+	at org.neo4j.kernel.lifecycle.LifeSupport.start(LifeSupport.java:107)
+	at org.neo4j.server.AbstractNeoServer.start(AbstractNeoServer.java:212)
+	... 3 more
+Caused by: java.lang.RuntimeException: Error starting org.neo4j.kernel.impl.factory.GraphDatabaseFacadeFactory, /home/19896913/Documents/RW334/neo4j/neo4j-community-3.3.4/data/databases/graph.db
+	at org.neo4j.kernel.impl.factory.GraphDatabaseFacadeFactory.initFacade(GraphDatabaseFacadeFactory.java:211)
+	at org.neo4j.kernel.impl.factory.GraphDatabaseFacadeFactory.newFacade(GraphDatabaseFacadeFactory.java:126)
+	at org.neo4j.server.CommunityNeoServer.lambda$static$0(CommunityNeoServer.java:58)
+	at org.neo4j.server.database.LifecycleManagingDatabase.start(LifecycleManagingDatabase.java:88)
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:445)
+	... 5 more
+Caused by: org.neo4j.kernel.lifecycle.LifecycleException: Component 'org.neo4j.bolt.transport.NettyServer@4cb40e3b' was successfully initialized, but failed to start. Please see the attached cause exception "Address 127.0.0.1:7687 is already in use, cannot bind to it.".
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:466)
+	at org.neo4j.kernel.lifecycle.LifeSupport.start(LifeSupport.java:107)
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:445)
+	at org.neo4j.kernel.lifecycle.LifeSupport.start(LifeSupport.java:107)
+	at org.neo4j.kernel.extension.KernelExtensions.start(KernelExtensions.java:84)
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:445)
+	at org.neo4j.kernel.lifecycle.LifeSupport.start(LifeSupport.java:107)
+	at org.neo4j.kernel.impl.factory.GraphDatabaseFacadeFactory.initFacade(GraphDatabaseFacadeFactory.java:207)
+	... 9 more
+Caused by: org.neo4j.helpers.PortBindException: Address 127.0.0.1:7687 is already in use, cannot bind to it.
+	at io.netty.channel.unix.Errors.newIOException(Errors.java:122)
+	at io.netty.channel.unix.Socket.bind(Socket.java:287)
+	at io.netty.channel.epoll.AbstractEpollChannel.doBind(AbstractEpollChannel.java:688)
+	at io.netty.channel.epoll.EpollServerSocketChannel.doBind(EpollServerSocketChannel.java:70)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.bind(AbstractChannel.java:558)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.bind(DefaultChannelPipeline.java:1338)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeBind(AbstractChannelHandlerContext.java:501)
+	at io.netty.channel.AbstractChannelHandlerContext.bind(AbstractChannelHandlerContext.java:486)
+	at io.netty.channel.DefaultChannelPipeline.bind(DefaultChannelPipeline.java:999)
+	at io.netty.channel.AbstractChannel.bind(AbstractChannel.java:254)
+	at io.netty.bootstrap.AbstractBootstrap$2.run(AbstractBootstrap.java:366)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:163)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:404)
+	at io.netty.channel.epoll.EpollEventLoop.run(EpollEventLoop.java:309)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:886)
+	at java.lang.Thread.run(Thread.java:745)
+2018-05-04 15:15:50.510+0000 INFO  Neo4j Server shutdown initiated by request
+nohup: ignoring input
+2018-05-04 23:13:59.879+0000 INFO  ======== Neo4j 3.3.4 ========
+2018-05-04 23:13:59.902+0000 INFO  Starting...
+2018-05-04 23:14:00.500+0000 INFO  Bolt enabled on 127.0.0.1:7687.
+2018-05-04 23:14:01.690+0000 ERROR Failed to start Neo4j: Starting Neo4j failed: Component 'org.neo4j.server.database.LifecycleManagingDatabase@44924587' was successfully initialized, but failed to start. Please see the attached cause exception "Address 127.0.0.1:7687 is already in use, cannot bind to it.". Starting Neo4j failed: Component 'org.neo4j.server.database.LifecycleManagingDatabase@44924587' was successfully initialized, but failed to start. Please see the attached cause exception "Address 127.0.0.1:7687 is already in use, cannot bind to it.".
+org.neo4j.server.ServerStartupException: Starting Neo4j failed: Component 'org.neo4j.server.database.LifecycleManagingDatabase@44924587' was successfully initialized, but failed to start. Please see the attached cause exception "Address 127.0.0.1:7687 is already in use, cannot bind to it.".
+	at org.neo4j.server.exception.ServerStartupErrors.translateToServerStartupError(ServerStartupErrors.java:68)
+	at org.neo4j.server.AbstractNeoServer.start(AbstractNeoServer.java:220)
+	at org.neo4j.server.ServerBootstrapper.start(ServerBootstrapper.java:111)
+	at org.neo4j.server.ServerBootstrapper.start(ServerBootstrapper.java:79)
+	at org.neo4j.server.CommunityEntryPoint.main(CommunityEntryPoint.java:32)
+Caused by: org.neo4j.kernel.lifecycle.LifecycleException: Component 'org.neo4j.server.database.LifecycleManagingDatabase@44924587' was successfully initialized, but failed to start. Please see the attached cause exception "Address 127.0.0.1:7687 is already in use, cannot bind to it.".
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:466)
+	at org.neo4j.kernel.lifecycle.LifeSupport.start(LifeSupport.java:107)
+	at org.neo4j.server.AbstractNeoServer.start(AbstractNeoServer.java:212)
+	... 3 more
+Caused by: java.lang.RuntimeException: Error starting org.neo4j.kernel.impl.factory.GraphDatabaseFacadeFactory, /home/19217226/PycharmProjects/quori/neo4j-community-3.3.4/data/databases/graph.db
+	at org.neo4j.kernel.impl.factory.GraphDatabaseFacadeFactory.initFacade(GraphDatabaseFacadeFactory.java:211)
+	at org.neo4j.kernel.impl.factory.GraphDatabaseFacadeFactory.newFacade(GraphDatabaseFacadeFactory.java:126)
+	at org.neo4j.server.CommunityNeoServer.lambda$static$0(CommunityNeoServer.java:58)
+	at org.neo4j.server.database.LifecycleManagingDatabase.start(LifecycleManagingDatabase.java:88)
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:445)
+	... 5 more
+Caused by: org.neo4j.kernel.lifecycle.LifecycleException: Component 'org.neo4j.bolt.transport.NettyServer@41b1f51e' was successfully initialized, but failed to start. Please see the attached cause exception "Address 127.0.0.1:7687 is already in use, cannot bind to it.".
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:466)
+	at org.neo4j.kernel.lifecycle.LifeSupport.start(LifeSupport.java:107)
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:445)
+	at org.neo4j.kernel.lifecycle.LifeSupport.start(LifeSupport.java:107)
+	at org.neo4j.kernel.extension.KernelExtensions.start(KernelExtensions.java:84)
+	at org.neo4j.kernel.lifecycle.LifeSupport$LifecycleInstance.start(LifeSupport.java:445)
+	at org.neo4j.kernel.lifecycle.LifeSupport.start(LifeSupport.java:107)
+	at org.neo4j.kernel.impl.factory.GraphDatabaseFacadeFactory.initFacade(GraphDatabaseFacadeFactory.java:207)
+	... 9 more
+Caused by: org.neo4j.helpers.PortBindException: Address 127.0.0.1:7687 is already in use, cannot bind to it.
+	at io.netty.channel.unix.Errors.newIOException(Errors.java:122)
+	at io.netty.channel.unix.Socket.bind(Socket.java:287)
+	at io.netty.channel.epoll.AbstractEpollChannel.doBind(AbstractEpollChannel.java:688)
+	at io.netty.channel.epoll.EpollServerSocketChannel.doBind(EpollServerSocketChannel.java:70)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.bind(AbstractChannel.java:558)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.bind(DefaultChannelPipeline.java:1338)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeBind(AbstractChannelHandlerContext.java:501)
+	at io.netty.channel.AbstractChannelHandlerContext.bind(AbstractChannelHandlerContext.java:486)
+	at io.netty.channel.DefaultChannelPipeline.bind(DefaultChannelPipeline.java:999)
+	at io.netty.channel.AbstractChannel.bind(AbstractChannel.java:254)
+	at io.netty.bootstrap.AbstractBootstrap$2.run(AbstractBootstrap.java:366)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:163)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:404)
+	at io.netty.channel.epoll.EpollEventLoop.run(EpollEventLoop.java:309)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:886)
+	at java.lang.Thread.run(Thread.java:745)
+2018-05-04 23:14:01.691+0000 INFO  Neo4j Server shutdown initiated by request
+nohup: ignoring input
+2018-05-05 10:17:39.081+0000 INFO  ======== Neo4j 3.3.4 ========
+2018-05-05 10:17:39.119+0000 INFO  Starting...
+2018-05-05 10:17:39.946+0000 INFO  Bolt enabled on 127.0.0.1:7687.
+2018-05-05 10:17:43.906+0000 INFO  Started.
+2018-05-05 10:17:44.992+0000 INFO  Remote interface available at http://localhost:7474/
+2018-05-05 10:27:16.475+0000 INFO  Neo4j Server shutdown initiated by request
+2018-05-05 10:27:16.483+0000 INFO  Stopping...
+2018-05-05 10:27:16.618+0000 INFO  Stopped.
+nohup: ignoring input
+2018-05-05 10:47:31.842+0000 INFO  ======== Neo4j 3.3.4 ========
+2018-05-05 10:47:31.895+0000 INFO  Starting...
+2018-05-05 10:47:33.051+0000 INFO  Bolt enabled on 127.0.0.1:7687.
+2018-05-05 10:47:36.884+0000 INFO  Started.
+2018-05-05 10:47:37.967+0000 INFO  Remote interface available at http://localhost:7474/
