@@ -1,6 +1,8 @@
 from flask import render_template, flash, redirect, url_for, request, session, jsonify
 from app import app
 from app.forms import LoginForm
+from .models import find_one
+from .models import get_answers
 from .models import User, getUsersStartingWith, get_interests_titles, add_q_tag
 import os
 
@@ -103,15 +105,6 @@ def add_question():
 
     return redirect(url_for('home'))
 
-
-@app.route('/question', methods=['GET'])
-def question():
-    questiontitle = request.args.get('title')
-    # question_answers = get_answers(questiontitle)
-    # return render_template('question.html', question_answers=question_answers)
-    return render_template('question.html', title=questiontitle)
-
-
 @app.route('/updateBio', methods=['POST'])
 def updateBio():
     if request.method == 'POST':
@@ -155,4 +148,25 @@ def search(prefix):
     print(names)
     return jsonify({'suggestions': names})
 
+@app.route('/question', methods=['GET'])
+def question():
+    questiontitle = request.args.get('title')
+    question = find_one(questiontitle)
+    answers = get_answers(questiontitle)
+	#question_answers = get_answers(questiontitle)
+    #return render_template('question.html', question_answers=question_answers)
+    return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers)
+
+@app.route('/submit_answer/<title>', methods=['POST'])
+def submit_answer(title):
+	global questiontitle
+	user = User(session['username'])
+	answer = request.form['message']
+	me = user.submit_answer(answer, title)
+	questiontitle = title
+	question = find_one(questiontitle)
+	answers = get_answers(questiontitle)
+	#question_answers = get_answers(questiontitle)
+    #return render_template('question.html', question_answers=question_answers)
+	return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers)
 
