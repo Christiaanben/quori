@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request, session, jsonify
 from app import app
 from app.forms import LoginForm
-from .models import User, getUsersStartingWith, get_interests_titles
+from .models import User, getUsersStartingWith, get_interests_titles, add_q_tag
 import os
 
 
@@ -50,7 +50,6 @@ def logout():
 def home():
     questions = User(session['username']).get_questions()
     interests = get_interests_titles()
-    print (url_for('static',filename='profilepictures/'+session['username']+'.jpg'))
     return render_template('home.html', posts=questions, interests=interests)
 
 
@@ -90,16 +89,17 @@ def profilepage():
 def add_question():
     title = request.form['title']
     question = request.form['question']
-    tags = request.form['tags']
-
+    q_tags = request.form.getlist('Qtags')
     if not title:
         flash('You have not entered a title.')
     elif not question:
         flash('You have not entered a question.')
-    elif not tags:
+    elif not q_tags:
         flash('You must give your post at least one tag.')
     else:
-        User(session['username']).ask(title, question, tags)
+        User(session['username']).ask(title, question)
+        for tag in q_tags:
+            add_q_tag(title, tag)
 
     return redirect(url_for('home'))
 

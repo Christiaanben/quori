@@ -135,9 +135,10 @@ class User:
         else:
             return False
 
-    def ask(self, title, question, tags):
+    def ask(self, title, question):
         user = self.find()
         question = Node(
+            "Question",
             id=str(uuid.uuid4()),
             title=title,
             description=question,
@@ -146,12 +147,6 @@ class User:
         )
         rel = Relationship(user, 'Asked', question)
         graph.create(rel)
-        tags = [x.strip() for x in tags.split(',')]
-        for tag in set(tags):
-            tag = graph.find_one('Tag', 'title', tag)
-
-            rel = Relationship(tag, 'Tagged', question)
-            graph.create(rel)
 
     def get_questions(self):
         query = '''
@@ -178,6 +173,13 @@ def get_interests_titles():
         MATCH (tag:Tag) RETURN tag.title AS tag
         '''
     return graph.run(query)
+
+
+def add_q_tag(question_title, interest):
+    question = graph.find_one('Question', 'title', question_title)
+    tag = graph.find_one('Tag', 'title', interest)
+    rel = Relationship(tag, 'Tagged', question)
+    graph.create(rel)
 
 
 def get_similar_users(self):
