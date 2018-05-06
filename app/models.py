@@ -148,6 +148,12 @@ class User:
         rel = Relationship(user, 'Asked', question)
         graph.create(rel)
 
+    def submit_answer(self, answer, question):
+        query = '''
+			MATCH (question:Question{title:"'''+ question +'''"}) MATCH(user:User {username:"'''+ self.username +'''"})  MERGE(question)<-[:AnswerTo]-(answer:Answer{id:'A9',title: "'''+answer+'''", timestamp:"1",date:"1", user:"'''+ self.username +'''"})<-[:Answered]-(user)
+		'''
+        graph.run(query)
+	
     def get_questions(self):
         query = '''
             MATCH (user:User)-[:Follows]->(:Tag)-[:Tagged]->(question:Question)
@@ -222,6 +228,14 @@ def get_todays_recent_posts():
 
     return graph.run(query, today=date())
 
+def find_one(questiontitle):
+	return graph.find_one("Question", "title", questiontitle)
+
+def get_answers(questiontitle):
+	query = '''
+    MATCH (question:Question)<-[:AnswerTo]-(answer:Answer) WHERE question.title = {questiontitle} RETURN answer.title AS title
+    '''
+	return graph.run(query, questiontitle=questiontitle)
 
 def timestamp():
     epoch = datetime.utcfromtimestamp(0)
