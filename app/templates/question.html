@@ -8,69 +8,30 @@
     <hl>
       <div class="card">
         <div class="card-body">
-          This is the Question body and what will follow will ne some dummy text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula condimentum nulla, eu accumsan libero auctor at. In pretium purus at nulla dignissim, in rutrum erat auctor.
-          Vestibulum varius pellentesque euismod. Aenean tempor, erat id rutrum fermentum, erat nibh dignissim augue, a elementum tellus tortor id est. Nulla enim turpis, porta sed imperdiet vitae, semper eget diam. Etiam porta sollicitudin sapien, nec
-          lacinia mauris eleifend in. Nulla erat erat, ullamcorper sit amet diam sit amet, ultricies scelerisque nisl. Nulla facilisi. In varius urna nibh, non scelerisque nisl rhoncus sit amet. Nulla et facilisis metus. Fusce vitae ultricies massa. Curabitur
-          malesuada scelerisque purus, sed elementum purus molestie in. Nulla in viverra tortor, in pulvinar justo. Curabitur consectetur felis felis, in condimentum turpis porta ac. Etiam pharetra ultrices eros ac cursus. Nam vitae vestibulum massa.
-          Donec eu mauris id augue tincidunt imperdiet. Sed dignissim lacus a porta tempor. Fusce ut dolor ipsum. Vestibulum varius pulvinar metus, ut tincidunt leo malesuada et. Integer eget eros et ex aliquam pretium. Suspendisse non sem at lorem vestibulum
-          aliquam. Quisque et nisl id turpis dapibus tempus in quis nisl. Nulla turpis urna, mollis nec euismod in, placerat vel orci. Cras semper leo vitae lacus egestas tempor sit amet rhoncus neque. Cras commodo accumsan scelerisque. Vivamus pulvinar
-          scelerisque arcu nec fringilla. Integer eget tellus tempor, egestas mi a, tincidunt odio. Curabitur et ipsum laoreet, eleifend metus in, dignissim quam. Integer lobortis elit quis urna sagittis, eu consequat nisl dignissim. In ante odio, fringilla
-          quis est non, varius imperdiet dolor. Nunc aliquet pellentesque neque et eleifend. Ut rhoncus sem vel tempus fermentum. Sed sodales suscipit erat, ut tristique augue pharetra at. Sed ac tempus felis. Donec magna odio, luctus in hendrerit a,
-          fermentum ut erat. Aliquam eu lacus ut sapien ultrices volutpat in vitae lacus. Suspendisse consequat mauris quis purus placerat, eget iaculis tortor luctus. Nullam id feugiat purus, quis accumsan ex. Morbi dapibus mauris ac convallis congue.
-          Ut aliquam id tortor finibus pretium. Praesent sagittis id mi pulvinar pellentesque. Duis fermentum a nisl varius fermentum. Mauris sodales varius mauris, ac gravida quam sollicitudin nec. Donec ut aliquet quam. Praesent facilisis congue urna,
-          ac posuere sapien blandit et. Donec malesuada elementum massa congue accumsan. Nulla ac nisi tempus, feugiat nunc eu, porttitor justo. Nulla porta odio placerat vestibulum ullamcorper. Ut lobortis, tellus ac aliquet ornare, sapien sem porta
-          nisl, ac interdum dui arcu non turpis. Donec quis commodo erat. Integer sed tellus vehicula, elementum augue a, ultricies urna. In fermentum rhoncus mi, ut venenatis nisi tempus vel. Morbi rhoncus tempor urna, quis pellentesque sem varius in.
-          Nunc consectetur pharetra odio id lacinia. Nullam fermentum at mi ac maximus. Phasellus pharetra arcu quis bibendum pharetra.
+          <p name="question">{{  htmlquestion.description  }}</p>
         </div>
       </div>
       <br>
 
-      <form action="/action_page.php">
+      <form class="input-group" action="{{url_for('submit_answer', title = htmlquestion.title)}}" method="post">
         <h5>Answer</h5>
-        <textarea name="message" style="width:100%; height:150px;">Type your answer...</textarea>
+        <textarea name="message" style="width:100%; height:100px;" placeholder="Type your answer..."></textarea>
         <br>
-        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Post</button>
+        <input type="submit" class="btn btn-secondary" value="Answer">
+        <!--<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Post</button>-->
       </form>
       <br>
+      {% for row in htmlanswers %}
       <div class="card">
         <div class="card-body">
           <h5 class="card-title"><div class="d-inline-flex align-items-center">
-            <div class="user one"></div><a href="#" style="font-size:10px; padding-left:5px">Username1<br>19 Best Answers</small></a><br></div><br></h5>
-          <hr> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum consectetur luctus dapibus. Nulla facilisi. Proin fringilla eu felis id viverra. Curabitur vel libero neque. Pellentesque habitant morbi tristique senectus et netus et malesuada
-          fames ac turpis egestas. Aliquam vulputate, elit non tincidunt iaculis, nisl velit convallis nulla, in consequat orci sem ac massa. Nam consequat lorem quam, egestas aliquam mauris commodo pretium. Nulla et pulvinar felis. Integer vitae velit
-          sollicitudin, suscipit elit non, tristique nisi. Curabitur ultrices nisl quis interdum scelerisque. Vivamus tempus neque ut congue rutrum. Aliquam erat volutpat. Phasellus gravida sapien vitae massa ultrices, vel egestas augue porttitor. Donec
-          tristique dui eu dolor euismod, ut bibendum lorem efficitur. Quisque vestibulum laoreet ante, sit amet fringilla sem. Donec quis vehicula diam. Morbi nec nulla dignissim, porttitor turpis vel, convallis nisi. Aliquam neque est, rutrum a nisl
-          ac, euismod rutrum ex. Nunc tincidunt commodo ligula, quis pellentesque mi fringilla a. Curabitur eu maximus metus. Aliquam finibus laoreet eros, eu vulputate nibh dictum nec. Curabitur auctor tempor tellus at luctus. Nam sollicitudin lectus
-          ac suscipit auctor.
+            <div class="user one"></div><a href="#" style="font-size:10px; padding-left:5px">{{htmlquestion.user}}<br>19 Best Answers</small></a><br></div><br></h5>
+          <hr> <p>{{ row.title }}</p>
         </div>
       </div>
       <br>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title"><div class="d-inline-flex align-items-center">
-            <div class="user one"></div><a href="#" style="font-size:10px; padding-left:5px">Username1<br>19 Best Answers</small></a><br></div><br></h5>
-          <hr> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum consectetur luctus dapibus. Nulla facilisi. Proin fringilla eu felis id viverra. Curabitur vel libero neque. Pellentesque habitant morbi tristique senectus et netus et malesuada
-          fames ac turpis egestas. Aliquam vulputate, elit non tincidunt iaculis, nisl velit convallis nulla, in consequat orci sem ac massa. Nam consequat lorem quam, egestas aliquam mauris commodo pretium. Nulla et pulvinar felis. Integer vitae velit
-          sollicitudin, suscipit elit non, tristique nisi. Curabitur ultrices nisl quis interdum scelerisque. Vivamus tempus neque ut congue rutrum. Aliquam erat volutpat. Phasellus gravida sapien vitae massa ultrices, vel egestas augue porttitor. Donec
-          tristique dui eu dolor euismod, ut bibendum lorem efficitur. Quisque vestibulum laoreet ante, sit amet fringilla sem. Donec quis vehicula diam. Morbi nec nulla dignissim, porttitor turpis vel, convallis nisi. Aliquam neque est, rutrum a nisl
-          ac, euismod rutrum ex. Nunc tincidunt commodo ligula, quis pellentesque mi fringilla a. Curabitur eu maximus metus. Aliquam finibus laoreet eros, eu vulputate nibh dictum nec. Curabitur auctor tempor tellus at luctus. Nam sollicitudin lectus
-          ac suscipit auctor.
-        </div>
-      </div>
-      <br>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title"><div class="d-inline-flex align-items-center">
-            <div class="user one"></div><a href="#" style="font-size:10px; padding-left:5px">Username1<br>19 Best Answers</small></a><br></div><br></h5>
-          <hr> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum consectetur luctus dapibus. Nulla facilisi. Proin fringilla eu felis id viverra. Curabitur vel libero neque. Pellentesque habitant morbi tristique senectus et netus et malesuada
-          fames ac turpis egestas. Aliquam vulputate, elit non tincidunt iaculis, nisl velit convallis nulla, in consequat orci sem ac massa. Nam consequat lorem quam, egestas aliquam mauris commodo pretium. Nulla et pulvinar felis. Integer vitae velit
-          sollicitudin, suscipit elit non, tristique nisi. Curabitur ultrices nisl quis interdum scelerisque. Vivamus tempus neque ut congue rutrum. Aliquam erat volutpat. Phasellus gravida sapien vitae massa ultrices, vel egestas augue porttitor. Donec
-          tristique dui eu dolor euismod, ut bibendum lorem efficitur. Quisque vestibulum laoreet ante, sit amet fringilla sem. Donec quis vehicula diam. Morbi nec nulla dignissim, porttitor turpis vel, convallis nisi. Aliquam neque est, rutrum a nisl
-          ac, euismod rutrum ex. Nunc tincidunt commodo ligula, quis pellentesque mi fringilla a. Curabitur eu maximus metus. Aliquam finibus laoreet eros, eu vulputate nibh dictum nec. Curabitur auctor tempor tellus at luctus. Nam sollicitudin lectus
-          ac suscipit auctor.
-        </div>
-      </div>
-      <br>
+      {% endfor %}
+
   </div>
   <!-- Column for the suggestions -->
   <div class="col-4">
