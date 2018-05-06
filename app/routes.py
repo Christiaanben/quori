@@ -43,16 +43,20 @@ def register():
 
 
 @app.route('/logout')
-def logout():
-    session.pop('username', None)
-    return render_template('login.html')
+def logout():    
+    print(session['username'])   
+    session.pop('username', None)    
+    return redirect(url_for('login'))
 
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-    questions = User(session['username']).get_questions()
-    interests = get_interests_titles()
-    return render_template('home.html', posts=questions, interests=interests)
+    if (session.get('username')):
+        questions = User(session['username']).get_questions()
+        interests = get_interests_titles()
+        return render_template('home.html', posts=questions, interests=interests)
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route('/interest')
