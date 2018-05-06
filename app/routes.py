@@ -1,10 +1,11 @@
 from flask import render_template, flash, redirect, url_for, request, session, jsonify
 from app import app
 from app.forms import LoginForm
-from .models import User, getUsersStartingWith
+from .models import User, getUsersStartingWith, get_interests_titles
 
-@app.route('/',methods=['GET','POST'])
-@app.route('/login',methods=['GET','POST'])
+
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     form = LoginForm()
@@ -14,54 +15,74 @@ def login():
 
         if not (User(username)).find():
             error = "Username was not found."
-        elif (not User(username).verify_password(password)):
-            error = "Password is incorrect."  
+        elif not User(username).verify_password(password):
+            error = "Password is incorrect."
         else:
             session['username'] = username
             return redirect(url_for('home'))
 
-    return render_template('login.html',form=form, error = error)
+    return render_template('login.html', form=form, error=error)
 
-@app.route('/register', methods=['GET','POST'])
+
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     error = None
-    if request.method == 'POST':        
+    if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         repassword = request.form['retypePassword']
-        if (not User(username).register(password, repassword)):
-             error = 'A user with this username already exists.' 
+        if not User(username).register(password, repassword):
+            error = 'A user with this username already exists.'
         else:
             session['username'] = username
-            return redirect(url_for('home'))
-    return render_template('register.html', error = error)
+            return redirect(url_for('interest'))
+    return render_template('register.html', error=error)
+
 
 @app.route('/logout')
 def logout():
     session.pop('username', None)
     return render_template('login.html')
 
-@app.route('/home', methods=['GET','POST'])
+
+@app.route('/home', methods=['GET', 'POST'])
 def home():
     questions = User(session['username']).get_questions()
     return render_template('home.html', posts=questions)
 
+
 @app.route('/interest')
 def interest():
-    return render_template('interest.html')
+    interests = get_interests_titles()
+    return render_template('interest.html', interests=interests)
+
+
+@app.route('/add_interests', methods=['POST'])
+def add_interests():
+    interests = get_interests_titles()
+    list_of_interests = interests.data()
+    for value in list_of_interests:
+        print(value['tag'])
+        if request.form.get(value['tag']):
+            User(session['username']).addInterest(value['tag'])
+    return redirect(url_for('home'))
+
 
 @app.route('/otherprofile')
 def otherprofile():
     return render_template('otherprofile.html')
 
+
 @app.route('/searchpage')
 def searchpage():
     return render_template('searchpage.html')
+
 
 @app.route('/profilepage')
 def profilepage():
     user = User(session['username']);
     return render_template('profilepage.html', user=user)
+
 
 @app.route('/add_question', methods=['POST'])
 def add_question():
@@ -81,10 +102,9 @@ def add_question():
 @app.route('/question', methods=['GET'])
 def question():
     questiontitle = request.args.get('title')
-    #question_answers = get_answers(questiontitle)
-    #return render_template('question.html', question_answers=question_answers)
+    # question_answers = get_answers(questiontitle)
+    # return render_template('question.html', question_answers=question_answers)
     return render_template('question.html', title=questiontitle)
-
 
 
 @app.route('/updateBio', methods=['POST'])
@@ -93,6 +113,7 @@ def updateBio():
         bio = request.form['txtFieldBio']
         User(session['username']).editBio(bio)
         return redirect(url_for('profilepage'))
+
 
 @app.route('/updatePassword', methods=['POST'])
 def updatePassword():
@@ -103,23 +124,25 @@ def updatePassword():
         User(session['username']).editPassword(oldPassword, newPassword, retypePassword)
         return redirect(url_for('profilepage'))
 
+
 @app.route('/uploader', methods=['GET', 'POST'])
 def uploader():
     if request.method == 'POST':
         f = request.files['pic']
         f.save(f.filename)
-        #pic.save(".jpg")
-        #User(session['username']).uploadIMG(pic)
+        # pic.save(".jpg")
+        # User(session['username']).uploadIMG(pic)
         return 'file uploaded successfully'
 
-        #return redirect(url_for('profilepage'))
+        # return redirect(url_for('profilepage'))
+
 
 @app.route('/search/<prefix>')
 def search(prefix):
     print(prefix)
     searchResult = getUsersStartingWith(prefix)
-    names = ['Basic','Ben']
+    names = ['Basic', 'Ben']
     for user in searchResult:
         names.append(user['username'])
     print(names)
-    return jsonify({'suggestions':names})
+    return jsonify({'suggestions': names})

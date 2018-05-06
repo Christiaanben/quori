@@ -167,6 +167,19 @@ class User:
         '''
         return graph.run(query, username=self.username)
 
+    def addInterest(self, interest):
+        user = self.find()
+        tag = Node('Tag', title=interest)
+        rel = Relationship(user, 'Likes', tag)
+        graph.create(rel)
+
+
+def get_interests_titles():
+    query = '''
+        MATCH (tag:Tag) RETURN tag.title AS tag
+        '''
+    return graph.run(query)
+
 
 def get_similar_users(self):
     # Find three users who are most similar to the logged-in user
