@@ -1,163 +1,185 @@
-{%extends "usertemplate.html" %} {% block body %}
+{##}{% extends "usertemplate.html" %} {% block body %}
 
-<div class="row" style="margin-left: 20px; margin-right: 20px; margin-top: 65px;">
-  <!-- Column for the feeds -->
-  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-    <div class="card">
-      <div class="card-body mediaFeeds">
-        <h4 class="card-title">Feeds</h4>
-        <hr>
-        <h6 class="card-subtitle mb-2 text-muted"></h6>
-        <a href="#" class="feedsColor">Top Questions</a>
-        <br>
-        <a href="#" class="feedsColor">New Questions</a>
-        <br>
-        <a href="#" class="feedsColor">Bookmarked Answers</a>
-        <br>
-        <a href="#" class="feedsColor">Followed Catagory 1</a>
-        <br>
-        <a href="#" class="feedsColor">Followed Catsgory 2</a>
-        <br>
-        <a href="#" class="feedsColor">Followed Catagory 3</a>
-        <br>
-      </div>
-    </div>
-    <br>
-  </div>
-  <!-- Main column for the questions, id's need to be added to each card div depending on how much we want to display-->
-  <div class="col-lg-4 col-md-4 mediaQuestion">
-    <h4 class="card-title">Ask a Question:</h4>
-    <form class="input-group" action="{{ url_for('add_question') }}" method="post" style="display: inline;">
-      <input type="text" class="form-control" name="title" placeholder="Title" width="300px" style="margin-bottom: 20px; padding: 20px; border-radius: 3px;">
-      <textarea class="form-control txtAreaQuestion" name="question" placeholder="What is your question" style=" margin-bottom: 12px; padding: 20px; border-radius: 3px; height: 100px; overflow: scroll"></textarea>
-      <input type="text" class="form-control" size="26" name="tags" placeholder="Add tags separated by a comma" width="300px" style="margin-bottom: 20px; padding: 20px; border-radius: 3px;">
-      <span class="input-group-btn">
-        <input type="submit" class="btn btn-secondary" value="Ask" style="padding: 12px; width: 90px; border-radius: 4px;">
+    <div class="row" style="margin-left: 20px; margin-right: 20px; margin-top: 65px;">
+        <!-- Column for the feeds -->
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <div class="card">
+                <div class="card-body mediaFeeds">
+                    <h4 class="card-title">Feeds</h4>
+                    <hr>
+                    <h6 class="card-subtitle mb-2 text-muted"></h6>
+                    <a href="#" class="feedsColor">Top Questions</a>
+                    <br>
+                    <a href="#" class="feedsColor">New Questions</a>
+                    <br>
+                    <a href="#" class="feedsColor">Bookmarked Answers</a>
+                    <br>
+                    <a href="#" class="feedsColor">Followed Catagory 1</a>
+                    <br>
+                    <a href="#" class="feedsColor">Followed Catsgory 2</a>
+                    <br>
+                    <a href="#" class="feedsColor">Followed Catagory 3</a>
+                    <br>
+                </div>
+            </div>
+            <br>
+        </div>
+        <!-- Main column for the questions, id's need to be added to each card div depending on how much we want to display-->
+        <div class="col-lg-4 col-md-4 mediaQuestion">
+            <h4 class="card-title">Ask a Question:</h4>
+            <form class="input-group" action="{{ url_for('add_question') }}" method="post" style="display: inline;">
+                <input type="text" class="form-control" name="title" placeholder="title" width="300px"
+                       style="margin-bottom: 20px; padding: 20px; border-radius: 3px;">
+                <textarea class="form-control txtAreaQuestion" name="question" placeholder="What is your question"
+                          style=" margin-bottom: 12px; padding: 20px; border-radius: 3px; height: 100px; overflow: scroll"></textarea>
+                <input type="text" class="form-control" size="26" name="tags"
+                       placeholder="Add tags separated by a comma" width="300px"
+                       style="margin-bottom: 20px; padding: 20px; border-radius: 3px;">
+
+
+                <select multiple>
+                    {% for interest in interests %}
+                        <option type="checkbox" name="{{ interest.tag }}"
+                                value="{{ interest.tag }}">{{ interest.tag }}</option>
+                    {% endfor %}
+                </select>
+
+
+
+                <span class="input-group-btn">
+        <input type="submit" class="btn btn-secondary" value="Ask"
+               style="padding: 12px; width: 90px; border-radius: 4px;">
       </span>
-    </form>
-    <br> {% for row in posts %}
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">
-          <a href="question?title={{ row.question.title }}">{{ row.question.title }}</a>
-        </h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{ ", ".join(row.tags) }}</h6>
-        <p>{{row.question.description}}</p>
-        <div>
-          <a class="btn btn-secondary" href="question?title={{ row.question.title }}" role="button">Answer</a>
-        </div>
+            </form>
 
-      </div>
+            <br> {% for row in posts %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="question?title={{ row.question.title }}">{{ row.question.title }}</a>
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ ", ".join(row.tags) }}</h6>
+                    <p>{{ row.question.description }}</p>
+                    <div>
+                        <a class="btn btn-secondary" href="question?title={{ row.question.title }}"
+                           role="button">Answer</a>
+                    </div>
+
+                </div>
+            </div>
+            <br> {% endfor %}
+        </div>
+        <style>
+            .mediaFeeds {
+                padding-right: 100px;
+            }
+
+            .mediaSuggetions {
+                padding-left: 100px;
+                text-align: center;
+            }
+
+            .mediaQuestion {
+            }
+
+            .feedsColor {
+                color: rgb(215, 148, 14);
+            }
+
+            .feedsColor:hover {
+                color: #888;
+            }
+
+            .sugColor {
+                color: rgb(179, 0, 1);
+            }
+
+            .sugColor:hover {
+                color: #888;;
+            }
+
+            .txtAreaQuestion {
+                width: 350px;
+            }
+
+            .inputBoxes {
+                padding: 20px;
+                border-radius: 3px;
+            }
+
+            @media only screen and (max-width: 600px) {
+                .mediaSuggetions {
+                    padding-left: 0px;
+                    text-align: center;
+                }
+
+                .mediaFeeds {
+                    padding-right: 0px;
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+
+                .mediaQuestion {
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+
+                .feedsColor {
+                    color: rgb(215, 148, 14);
+                }
+
+                .txtAreaQuestion {
+                    width: 100px;
+                }
+
+            }
+
+            @media screen and (max-width: 991px) and (min-width: 601px) {
+                .mediaSuggetions {
+                    padding-left: 0px;
+                    text-align: left;
+                }
+            }
+        </style>
+        <!-- Column for the suggestions -->
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <div class="card">
+                <div class="card-body mediaSuggetions">
+                    <h4 class="card-title">Suggestions</h4>
+                    <hr>
+                    <h6 class="card-subtitle mb-2 text-muted"></h6>
+                    <div class="d-inline-flex align-items-center">
+                        <div class="user one"></div>
+                        <a href="#" style="font-size:10px; padding-left:5px" class="sugColor">Username1
+                            <br>19 Best Answers</small>
+                        </a>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="d-inline-flex align-items-center">
+                        <div class="user one"></div>
+                        <a href="#" style="font-size:10px; padding-left:5px" class="sugColor">Username2
+                            <br>1 Best Answers</a>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="d-inline-flex align-items-center">
+                        <div class="user one"></div>
+                        <a href="#" style="font-size:10px; padding-left:5px" class="sugColor">Username3
+                            <br>12 Best Answers</a>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="d-inline-flex align-items-center">
+                        <div class="user one"></div>
+                        <a href="#" style="font-size:10px; padding-left:5px" class="sugColor">Username4
+                            <br>7 Best Answers</a>
+                        <br>
+                    </div>
+                    <br>
+                </div>
+            </div>
+            <br>
+        </div>
     </div>
-    <br> {% endfor %}
-  </div>
-  <style>
-    .mediaFeeds {
-      padding-right: 100px;
-    }
-
-    .mediaSuggetions {
-      padding-left: 100px;
-      text-align: center;
-    }
-
-    .mediaQuestion {}
-
-    .feedsColor {
-      color: rgb(215, 148, 14);
-    }
-
-    .feedsColor:hover {
-      color: #888;
-    }
-
-    .sugColor {
-      color: rgb(179, 0, 1);
-    }
-
-    .sugColor:hover {
-      color: #888;
-      ;
-    }
-
-    .txtAreaQuestion {
-      width: 350px;
-    }
-
-    .inputBoxes {
-      padding: 20px;
-      border-radius: 3px;
-    }
-
-    @media only screen and (max-width: 600px) {
-      .mediaSuggetions {
-        padding-left: 0px;
-        text-align: center;
-      }
-      .mediaFeeds {
-        padding-right: 0px;
-        text-align: center;
-        margin-bottom: 20px;
-      }
-      .mediaQuestion {
-        text-align: center;
-        margin-bottom: 20px;
-      }
-      .feedsColor {
-        color: rgb(215, 148, 14);
-      }
-      .txtAreaQuestion {
-        width: 100px;
-      }
-
-    }
-
-    @media screen and (max-width: 991px) and (min-width: 601px) {
-      .mediaSuggetions {
-        padding-left: 0px;
-        text-align: left;
-      }
-    }
-  </style>
-  <!-- Column for the suggestions -->
-  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-    <div class="card">
-      <div class="card-body mediaSuggetions">
-        <h4 class="card-title">Suggestions</h4>
-        <hr>
-        <h6 class="card-subtitle mb-2 text-muted"></h6>
-        <div class="d-inline-flex align-items-center">
-          <div class="user one"></div>
-          <a href="#" style="font-size:10px; padding-left:5px" class="sugColor">Username1
-            <br>19 Best Answers</small>
-          </a>
-          <br>
-        </div>
-        <br>
-        <div class="d-inline-flex align-items-center">
-          <div class="user one"></div>
-          <a href="#" style="font-size:10px; padding-left:5px" class="sugColor">Username2
-            <br>1 Best Answers</a>
-          <br>
-        </div>
-        <br>
-        <div class="d-inline-flex align-items-center">
-          <div class="user one"></div>
-          <a href="#" style="font-size:10px; padding-left:5px" class="sugColor">Username3
-            <br>12 Best Answers</a>
-          <br>
-        </div>
-        <br>
-        <div class="d-inline-flex align-items-center">
-          <div class="user one"></div>
-          <a href="#" style="font-size:10px; padding-left:5px" class="sugColor">Username4
-            <br>7 Best Answers</a>
-          <br>
-        </div>
-        <br>
-      </div>
-    </div>
-    <br>
-  </div>
-</div>
 {% endblock %}

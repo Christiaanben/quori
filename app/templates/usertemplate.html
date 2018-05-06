@@ -20,6 +20,7 @@
     <!--Import fonts-->
     <link href='https://fonts.googleapis.com/css?family=Numans' rel='stylesheet'>
     <!-- Inline style -->
+
     <style>
         body {
             font-family: 'Numans';
@@ -187,10 +188,10 @@
                     </li>
                     <li>
                         <a href="#" onclick="window.location.href='{{url_for('profilepage')}}'">
-                            <img alt="Profile" src='../static/profilepictures/temp.jpg' class="user">
+                            <img alt="Profile" src='../static/profilepictures/{{ session.profilepic }}' class="user">
                         </a>
                     </li>
-                    <li style="color: Grey; onclick="window.location.href='{{url_for('profilepage')}}'">
+                    <li style="color: Grey;" onclick="window.location.href='{{url_for('profilepage')}}'">
                             {{ session.username }}
                     </li>
                 </ul>

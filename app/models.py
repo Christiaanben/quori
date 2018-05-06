@@ -105,8 +105,9 @@ class User:
         else:
             return False
 
-        def uploadIMG(self, pic):
-            pic.save(self.username + ".jpg")
+    def updateProfilePic(self, filename):
+        query = 'MATCH (a:User) WHERE a.username = {username} SET a.pp = {pp}'
+        graph.run(query, username=self.username, pp=filename)
 
     def find(self):
         user = graph.find_one('User', 'username', self.username)
@@ -137,19 +138,17 @@ class User:
     def ask(self, title, question, tags):
         user = self.find()
         question = Node(
-            'Question',
-            title=title,
             id=str(uuid.uuid4()),
+            title=title,
             description=question,
             timestamp=timestamp(),
             date=date()
         )
         rel = Relationship(user, 'Asked', question)
         graph.create(rel)
-
         tags = [x.strip() for x in tags.split(',')]
-        for name in set(tags):
-            tag = graph.find_one('Tag', 'title', name)
+        for tag in set(tags):
+            tag = graph.find_one('Tag', 'title', tag)
 
             rel = Relationship(tag, 'Tagged', question)
             graph.create(rel)

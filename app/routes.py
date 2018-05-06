@@ -2,6 +2,7 @@ from flask import render_template, flash, redirect, url_for, request, session, j
 from app import app
 from app.forms import LoginForm
 from .models import User, getUsersStartingWith, get_interests_titles
+import os
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -48,7 +49,9 @@ def logout():
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     questions = User(session['username']).get_questions()
-    return render_template('home.html', posts=questions)
+    interests = get_interests_titles()
+    print (url_for('static',filename='profilepictures/'+session['username']+'.jpg'))
+    return render_template('home.html', posts=questions, interests=interests)
 
 
 @app.route('/interest')
@@ -62,7 +65,6 @@ def add_interests():
     interests = get_interests_titles()
     list_of_interests = interests.data()
     for value in list_of_interests:
-        print(value['tag'])
         if request.form.get(value['tag']):
             User(session['username']).addInterest(value['tag'])
     return redirect(url_for('home'))
@@ -86,15 +88,18 @@ def profilepage():
 
 @app.route('/add_question', methods=['POST'])
 def add_question():
+    title = request.form['title']
     question = request.form['question']
     tags = request.form['tags']
 
-    if not question:
+    if not title:
+        flash('You have not entered a title.')
+    elif not question:
         flash('You have not entered a question.')
     elif not tags:
         flash('You must give your post at least one tag.')
     else:
-        User(session['username']).ask(question, tags)
+        User(session['username']).ask(title, question, tags)
 
     return redirect(url_for('home'))
 
@@ -129,12 +134,15 @@ def updatePassword():
 def uploader():
     if request.method == 'POST':
         f = request.files['pic']
-        f.save(f.filename)
-        # pic.save(".jpg")
-        # User(session['username']).uploadIMG(pic)
-        return 'file uploaded successfully'
+        # verander net hierdie na julle profile picture path
+        filepath = os.path.join('/home/comango/Desktop/Github Repos/Quori/app/static/profilepictures', f.filename)
+        if os.path.isfile(filepath):
+            os.remove(filepath)
 
-        # return redirect(url_for('profilepage'))
+        f.save(filepath)
+        User(session['username']).updateProfilePic(f.filename)
+        session['profilepic']=f.filename
+        return redirect(url_for('profilepage'))
 
 
 @app.route('/search/<prefix>')
@@ -146,3 +154,5 @@ def search(prefix):
         names.append(user['username'])
     print(names)
     return jsonify({'suggestions': names})
+
+
