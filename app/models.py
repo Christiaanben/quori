@@ -169,9 +169,14 @@ class User:
 
     def addInterest(self, interest):
         user = self.find()
-        tag = Node('Tag', title=interest)
+        tag = graph.find_one('Tag', 'title', interest)
         rel = Relationship(user, 'Likes', tag)
         graph.create(rel)
+
+
+    def getPP(self):
+        query = 'MATCH (a:User) WHERE a.username = {username} RETURN a.pp AS p'
+        return graph.run(query, username = self.username).next()
 
 
 def get_interests_titles():

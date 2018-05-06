@@ -6,7 +6,7 @@
         <!-- ************************ Profile Pic *************************** -->
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                 <div class="centerp">
-                        <img class="pic" src='../static/profilepictures/{{ session.profilepic }}'>
+                        <img class="pic" src='../static/profilepictures/{{ pp['p'] }}'>
                         <form action="{{url_for('uploader')}}" method="post" enctype = "multipart/form-data">
                                 <input type="file" name="pic" style="margin-bottom:20px">
                                 <br>

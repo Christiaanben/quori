@@ -43,9 +43,9 @@ def register():
 
 
 @app.route('/logout')
-def logout():    
-    print(session['username'])   
-    session.pop('username', None)    
+def logout():
+    print(session['username'])
+    session.pop('username', None)
     return redirect(url_for('login'))
 
 
@@ -54,7 +54,7 @@ def home():
     if (session.get('username')):
         questions = User(session['username']).get_questions()
         interests = get_interests_titles()
-        return render_template('home.html', posts=questions, interests=interests)
+        return render_template('home.html', posts=questions, interests=interests, pp=User(session['username']).getPP())
     else:
         return redirect(url_for('login'))
 
@@ -77,7 +77,7 @@ def add_interests():
 
 @app.route('/otherprofile')
 def otherprofile():
-    return render_template('otherprofile.html')
+    return render_template('otherprofile.html', pp=User(session['username']).getPP())
 
 
 @app.route('/searchpage')
@@ -88,7 +88,7 @@ def searchpage():
 @app.route('/profilepage')
 def profilepage():
     user = User(session['username']);
-    return render_template('profilepage.html', user=user)
+    return render_template('profilepage.html', user=user, pp=User(session['username']).getPP())
 
 
 @app.route('/add_question', methods=['POST'])
@@ -108,6 +108,7 @@ def add_question():
             add_q_tag(title, tag)
 
     return redirect(url_for('home'))
+
 
 @app.route('/updateBio', methods=['POST'])
 def updateBio():
@@ -138,7 +139,7 @@ def uploader():
 
         f.save(filepath)
         User(session['username']).updateProfilePic(f.filename)
-        session['profilepic']=f.filename
+        session['profilepic'] = f.filename
         return redirect(url_for('profilepage'))
 
 
@@ -152,25 +153,27 @@ def search(prefix):
     print(names)
     return jsonify({'suggestions': names})
 
+
 @app.route('/question', methods=['GET'])
 def question():
     questiontitle = request.args.get('title')
     question = find_one(questiontitle)
     answers = get_answers(questiontitle)
-	#question_answers = get_answers(questiontitle)
-    #return render_template('question.html', question_answers=question_answers)
-    return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers)
+    # question_answers = get_answers(questiontitle)
+    # return render_template('question.html', question_answers=question_answers)
+    return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers,
+                           pp=User(session['username']).getPP())
+
 
 @app.route('/submit_answer/<title>', methods=['POST'])
 def submit_answer(title):
-	global questiontitle
-	user = User(session['username'])
-	answer = request.form['message']
-	me = user.submit_answer(answer, title)
-	questiontitle = title
-	question = find_one(questiontitle)
-	answers = get_answers(questiontitle)
-	#question_answers = get_answers(questiontitle)
-    #return render_template('question.html', question_answers=question_answers)
-	return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers)
-
+    global questiontitle
+    user = User(session['username'])
+    answer = request.form['message']
+    me = user.submit_answer(answer, title)
+    questiontitle = title
+    question = find_one(questiontitle)
+    answers = get_answers(questiontitle)
+    # question_answers = get_answers(questiontitle)
+    # return render_template('question.html', question_answers=question_answers)
+    return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers)
