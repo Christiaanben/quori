@@ -114,7 +114,7 @@ def updateBio():
     if request.method == 'POST':
         bio = request.form['txtFieldBio']
         User(session['username']).editBio(bio)
-        return redirect(url_for('profilepage'))
+        return redirect(url_for('profile', name=session['username']))
 
 
 @app.route('/updatePassword', methods=['POST'])
@@ -124,7 +124,7 @@ def updatePassword():
         newPassword = request.form['passwordNew']
         retypePassword = request.form['passwordRetype']
         User(session['username']).editPassword(oldPassword, newPassword, retypePassword)
-        return redirect(url_for('profilepage'))
+        return redirect(url_for('profile', name=session['username']))
 
 
 @app.route('/uploader', methods=['GET', 'POST'])
