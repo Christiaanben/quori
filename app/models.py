@@ -170,7 +170,7 @@ class User:
     def addInterest(self, interest):
         user = self.find()
         tag = graph.find_one('Tag', 'title', interest)
-        rel = Relationship(user, 'Likes', tag)
+        rel = Relationship(user, 'Follows', tag)
         graph.create(rel)
 
 
