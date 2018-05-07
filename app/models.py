@@ -305,7 +305,7 @@ def find_one(questiontitle):
 def get_answers(questiontitle):
     query = '''
     MATCH (question:Question)<-[:AnswerTo]-(answer:Answer)<-[:Answered]-(u:User) WHERE question.title = {questiontitle} 
-	MATCH (a:Answer{title:answer.title})<-[b:Upvoted]-(:User) RETURN answer.title AS title, u.username AS user, u.pp AS pp, count(b) AS upvotes ORDER BY upvotes DESC
+	OPTIONAL MATCH (a:Answer{title:answer.title})<-[b:Upvoted]-(:User) RETURN answer.title AS title, u.username AS user, u.pp AS pp, count(b) AS upvotes ORDER BY upvotes DESC
     '''
     return graph.run(query, questiontitle=questiontitle)
 
