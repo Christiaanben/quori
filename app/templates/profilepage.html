@@ -1,64 +1,80 @@
-{%extends "usertemplate.html" %}
+{% extends "usertemplate.html" %}
 {% block body %}
 
-<div class="row">
+    <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
         <!-- ************************ Profile Pic *************************** -->
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                <div class="centerp">
-                        <img class="pic" src='../static/profilepictures/{{ pp['p'] }}'>
-                        <form action="{{url_for('uploader')}}" method="post" enctype = "multipart/form-data">
-                                <input type="file" name="pic" style="margin-bottom:20px">
-                                <br>
-                                <input type="submit" class=" niceButts spaceme btn btn-default" value="Upload pic">
-                        </form>
+            <div class="centerp">
+                <img class="pic" src='../static/profilepictures/{{ user.getPP['p'] }}'>
+                {% if user.getUsername()['un'] == session.username %}
+                    <form action="{{ url_for('uploader') }}" method="post" enctype="multipart/form-data">
+                        <input type="file" name="pic" style="margin-bottom:20px">
                         <br>
-                        <button onclick="showPassword()" class="niceButts spaceme btn btn-default">Change password</button>
+                        <input type="submit" class=" niceButts spaceme btn btn-default" value="Upload pic">
+                    </form>
+                    <br>
+                    <button onclick="showPassword()" class="niceButts spaceme btn btn-default">Change password</button>
 
-                        <form action="{{url_for('updatePassword')}}" method="post">
+                    <form action="{{ url_for('updatePassword') }}" method="post">
                         <div id="yeschange" display="none">
-                                <br>
-                                <label for="passwordOld"><b>Old Password</b></label><div class="loginlabel"></div>
-                                <input type="password" placeholder="Old Password" id="password" name="passwordOld"><br><br>
-                                <label for="passwordNew"><b>New Password</b></label><div class="loginlabel"></div>
-                                <input type="password" placeholder="New Password" id="password2" name="passwordNew"><br><br>
-                                <label for="passwordRetype"><b>Retype</b></label><div class="loginlabel"></div>
-                                <input type="password" placeholder="Retype Password" id="retypePassword2" name="passwordRetype"><br><br>
-                                <button type="submit" style="margin-bottom: 20px">Update password</button>
-                        </div>
-                        </form>
-                </div>                
-            </div>
-        <!-- %%%%%%%%%%%% Main column for the Bio%%%%%%%%%%%%%%%-->
-        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-                <div class="panel panel-default">
-                    <h2 STYLE="margin-top: 1em;">Welcome {{ session.username }}!</h2>
-                    <form action="{{url_for('updateBio')}}" method="post">
-                        <div class="panel-heading" id="T1">
-                                <h3 class="spaceme panel-title" style="margin-top:20px;">
-                                    <span>Your Bio</span>
-
-                                    <button type="submit" class=" niceButts spaceme btn btn-default" style="float:right;">Update bio</button>
-
-                                </h3>
-                        </div>
-                        <div class="bio panel-body">
-                            <textarea name="txtFieldBio" class="fits" value="">{{ user.getBio()['a.bio'] }}</textarea>
+                            <br>
+                            <label for="passwordOld"><b>Old Password</b></label>
+                            <div class="loginlabel"></div>
+                            <input type="password" placeholder="Old Password" id="password" name="passwordOld"><br><br>
+                            <label for="passwordNew"><b>New Password</b></label>
+                            <div class="loginlabel"></div>
+                            <input type="password" placeholder="New Password" id="password2" name="passwordNew"><br><br>
+                            <label for="passwordRetype"><b>Retype</b></label>
+                            <div class="loginlabel"></div>
+                            <input type="password" placeholder="Retype Password" id="retypePassword2"
+                                   name="passwordRetype"><br><br>
+                            <button type="submit" style="margin-bottom: 20px">Update password</button>
                         </div>
                     </form>
-                </div>
+                {% endif %}
+
+            </div>
         </div>
-        
+        <!-- %%%%%%%%%%%% Main column for the Bio%%%%%%%%%%%%%%%-->
+        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+            <div class="panel panel-default">
+                <h2 STYLE="margin-top: 1em;">{{ user.getUsername()['un'] }}</h2>
+                {% if user.getUsername()['un'] == session.username %}
+                    <form action="{{ url_for('updateBio') }}" method="post">
+                {% endif %}
+                <div class="panel-heading" id="T1">
+                    <h3 class="spaceme panel-title" style="margin-top:20px;">
+                        <span>Your Bio</span>
+                        {% if user.getUsername()['un'] == session.username %}
+                            <button type="submit" class=" niceButts spaceme btn btn-default" style="float:right;">Update
+                                bio
+                            </button>
+                        {% elseif %}
+
+                        {% endif %}
+                    </h3>
+                </div>
+                <div class="bio panel-body">
+                    <textarea name="txtFieldBio" class="fits" value="">{{ user.getBio()['a.bio'] }}</textarea>
+                </div>
+                {% if user.getUsername()['un'] == session.username %}
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+
         <!--Space-->
         <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
         </div>
-</div>
-<script>
-    $( document ).ready(function() {        
-        $("#yeschange").hide(); 
-});
-    function showPassword(){
-        $("#yeschange").show(); 
-    };
-</script>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#yeschange").hide();
+        });
+
+        function showPassword() {
+            $("#yeschange").show();
+        };
+    </script>
 {% endblock %}

@@ -51,9 +51,7 @@ def logout():
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-    if request.method == 'POST':
-        return redirect(url_for('searchpage', prefix=request.form['search']))
-    if (session.get('username')):
+    if session.get('username'):
         questions = User(session['username']).get_questions()
         interests = get_interests_titles()
         return render_template('home.html', posts=questions, interests=interests, pp=User(session['username']).getPP())
@@ -61,13 +59,12 @@ def home():
         return redirect(url_for('login'))
 
 
-@app.route('/searchpage/')
-@app.route('/searchpage/<prefix>', methods=['GET', 'POST'])
-def searchpage(prefix=None):
-    if request.method == 'POST':
-        return redirect(url_for('searchpage', prefix=request.form['search']))
-    users = getUsersStartingWith(prefix)
+@app.route('/searchpage/', methods=['GET', 'POST'])
+def searchpage():
+    search = request.form['search']
+    users = getUsersStartingWith(search)
     return render_template('searchpage.html', users=users, pp=User(session['username']).getPP())
+    return
 
 
 @app.route('/interest')
@@ -86,16 +83,17 @@ def add_interests():
     return redirect(url_for('home'))
 
 
-@app.route('/otherprofile', methods=['GET', 'POST'])
-def otherprofile():
-    return render_template('otherprofile.html', pp=User(session['username']).getPP())
+@app.route('/otherprofile/<name>', methods=['GET', 'POST'])
+def otherprofile(name):
+    userinfo = User(name)
+    return render_template('profilepage.html', user=userinfo, pp=User(session['username']).getPP())
 
 
 @app.route('/profilepage', methods=['GET', 'POST'])
 def profilepage():
     if request.method == 'POST':
         return redirect(url_for('searchpage', prefix=request.form['search']))
-    user = User(session['username']);
+    user = User(session['username'])
     return render_template('profilepage.html', user=user, pp=User(session['username']).getPP())
 
 

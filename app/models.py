@@ -178,6 +178,10 @@ class User:
         query = 'MATCH (a:User) WHERE a.username = {username} RETURN a.pp AS p'
         return graph.run(query, username = self.username).next()
 
+    def getUsername(self):
+        query = 'MATCH (a:User) WHERE a.username = {username} RETURN a.username AS un'
+        return graph.run(query, username = self.username).next()
+
 
 def get_interests_titles():
     query = '''

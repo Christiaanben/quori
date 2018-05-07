@@ -178,13 +178,13 @@
                         </a>
                     </li>
                     <li>
-                        <a  href="#" onclick="window.location.href='{{url_for('otherprofile')}}'">Questions</a>
+                        <a  href="#">Questions</a>
                     </li>
                     <li>
                         <a href="#">Answers</a>
                     </li>
                     <li>
-                        <form method="post">
+                        <form action="{{ url_for('searchpage') }}" method="post">
                             <input id="search" name="search" placeholder="Search...">
                             <input type="submit" value="Search">
                         </form>
