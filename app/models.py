@@ -192,7 +192,7 @@ class User:
         query = 'MATCH (a:User) WHERE a.username = {username} RETURN a.username AS un'
         return graph.run(query, username = self.username).next()
 	
-	def addBookmark(self, questionTitle):
+    def addBookmark(self, questionTitle):
         user = self.find()
         question = find_one(questionTitle)
         rel = Relationship(user,'Bookmarked', question)
