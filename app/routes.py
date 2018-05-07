@@ -184,6 +184,26 @@ def unfollow(name):
     User(session['username']).removeFollows(name)
     return redirect(url_for('profile', name=name))
 
+@app.route('/upvote/<answer>/<title>')
+def upvote(answer, title):
+    User(session['username']).addUpvoted(answer)
+    questiontitle = title
+    question = find_one(questiontitle)
+    answers = get_answers(questiontitle)
+    # question_answers = get_answers(questiontitle)
+    # return render_template('question.html', question_answers=question_answers)
+    return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP())
+
+@app.route('/removeupvote/<answer>/<title>')
+def removeupvote(answer, title):
+    User(session['username']).removeUpvoted(answer)
+    questiontitle = title
+    question = find_one(questiontitle)
+    answers = get_answers(questiontitle)
+    # question_answers = get_answers(questiontitle)
+    # return render_template('question.html', question_answers=question_answers)
+    return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP())
+
 @app.route('/add_bookmark', methods = ['GET'])
 def add_bookmark():
     if (session.get('username')):
@@ -199,15 +219,6 @@ def rem_bookmark():
         questiontitle = request.args.get('title')
         User(session['username']).remBookmark(questiontitle)
         return redirect(url_for('bookmarkPage'))
-    else:
-        return redirect(url_for('login'))
-   
-@app.route('/rem_bookmark_home', methods = ['GET'])
-def rem_bookmark_home():
-    if (session.get('username')):
-        questiontitle = request.args.get('title')
-        User(session['username']).remBookmark(questiontitle)
-        return redirect(url_for('home'))
     else:
         return redirect(url_for('login'))
 
