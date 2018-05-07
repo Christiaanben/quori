@@ -219,3 +219,11 @@ def bookmarkPage():
         return render_template('bookmark.html', posts=questions, interests=interests, pp=User(session['username']).getPP())
     else:
         return redirect(url_for('login'))
+  
+#@app.route('/get_bookmarked/<title>')
+def get_bookmarked(title):
+    if (session.get('username')):        
+        return User(session['username']).getBookmarked(title)
+        
+    else:
+        return redirect(url_for('login'))
