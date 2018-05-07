@@ -155,45 +155,20 @@
 
 <body>
     <!--NAVBAR LARGE-->
-    <nav class="navbar navbar-inverse ">
-        <div class="container-fluid ">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarSupportedContent" style="padding-left: 40px;">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">
-                    <img alt="Quori" src="{{url_for('static',filename='quoriLogo.png')}}" width="100%" height="90px" style="width: 130px; margin-top: -18px; height: 65px;">
-                </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="nav navbar-nav mediaNav">
-                    <li>
-                        <a href="#" onclick="window.location.href='{{url_for('home')}}'">Home
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a  href="#" onclick="window.location.href='{{url_for('bookmarkedQuestions')}}'">Bookmarked Questions</a>
-                    </li>
-                    <li>
-                        <form action="{{ url_for('searchpage') }}" method="post">
-                            <input id="search" name="search" placeholder="Search...">
-                            <input type="submit" value="Search">
-                        </form>
-                    </li>
-                    <li>
-                        <a href="#" onclick="window.location.href='{{url_for('profile',name=session.username)}}'">
-                            <img alt="Profile" src='../static/profilepictures/{{ pp['p'] }}' class="user">
-                            {{ session.username }}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" onclick="window.location.href='{{url_for('logout')}}'">Logout</a>
-                    </li>
-                </ul>
-            </div>
+    <!--NAVBAR LARGE-->
+<nav class="navbar navbar-inverse ">
+    <div class="container-fluid ">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    style="padding-left: 40px;">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <img alt="Quori" src="{{ url_for('static',filename='quoriLogo.png') }}" width="100%" height="90px"
+                     style="width: 130px; margin-top: -18px; height: 65px;">
+            </a> 
         </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav mediaNav">
@@ -215,7 +190,7 @@
                     </form>
                 </li>
                 <li>
-                    <a href="#" onclick="window.location.href='{{ url_for('profilepage') }}'">
+                    <a href="#" onclick="window.location.href='{{ url_for('profile', name= session.username) }}'">
                         <img alt="Profile" src='../static/profilepictures/{{ pp['p'] }}' class="user">
                         {{ session.username }}
                     </a>
