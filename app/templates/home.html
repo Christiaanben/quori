@@ -53,7 +53,7 @@
                         <a href="add_bookmark?title={{row.question.title}}"><img src="../static/bookmark.png"  alt= 'Bookmark' style = ' width: 40px;height: 40px;float: right;'></a>
                         {%endif%}
                         {%if myFunction(row.question.title) == 1%}           
-                        <a href="add_bookmark?title={{row.question.title}}"><img src="../static/bookmarked.png"  alt= 'Bookmark' style = ' width: 40px;height: 40px;float: right;'></a>
+                        <a href="rem_bookmark_home?title={{row.question.title}}"><img src="../static/bookmarked.png"  alt= 'Bookmark' style = ' width: 40px;height: 40px;float: right;'></a>
                         {%endif%}
                     </h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{ ", ".join(row.tags) }}</h6>
