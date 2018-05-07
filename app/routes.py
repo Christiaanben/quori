@@ -177,4 +177,4 @@ def submit_answer(title):
     answers = get_answers(questiontitle)
     # question_answers = get_answers(questiontitle)
     # return render_template('question.html', question_answers=question_answers)
-    return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers)
+    return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP())
