@@ -26,29 +26,14 @@
         </div>
         <!-- Main column for the questions, id's need to be added to each card div depending on how much we want to display-->
         <div class="col-lg-4 col-md-4 mediaQuestion">
-            <h4 class="card-title">Ask a Question:</h4>
-            <form class="input-group" action="{{ url_for('add_question') }}" method="post" style="display: inline;">
-                <input type="text" class="form-control" name="title" placeholder="title" width="300px"
-                       style="margin-bottom: 20px; padding: 20px; border-radius: 3px;">
-                <textarea class="form-control txtAreaQuestion" name="question" placeholder="What is your question"
-                          style=" margin-bottom: 12px; padding: 20px; border-radius: 3px; height: 100px; overflow: scroll"></textarea>
-                <select id="Qtags" name="Qtags" multiple>
-                    {% for interest in interests %}
-                        <option type="checkbox" name="{{ interest.tag }}"
-                                value="{{ interest.tag }}">{{ interest.tag }}</option>
-                    {% endfor %}
-                </select>
-                <span class="input-group-btn">
-        <input type="submit" class="btn btn-secondary" value="Ask"
-               style="padding: 12px; width: 90px; border-radius: 4px;">
-      </span>
-            </form>
+            <h4 class="card-title">Bookmarked Questions:</h4>           
 
             <br> {% for row in posts %}
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">
                         <a href="question?title={{ row.question.title }}">{{ row.question.title }}</a>
+                        <a href="add_bookmark?title={{row.question.title}}"><img src = "../static/bookmark.png" alt= "Bookmark" style = " width: 40px;height: 40px;float: right;" ></a>
                     </h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{ ", ".join(row.tags) }}</h6>
                     <p>{{ row.question.description }}</p>
@@ -140,17 +125,35 @@
                     <h4 class="card-title">Suggestions</h4>
                     <hr>
                     <h6 class="card-subtitle mb-2 text-muted"></h6>
-                    {% for user in suggestions %}
-                    <div class="d-inline-flex align-items-center" onclick="window.location.href='{{url_for('profile',name=user[0]['username'])}}'">
-                        <img alt="Profile Picture" src='{{url_for('static',filename="profilepictures/"+user[0]['pp'])}}' class="user">
-                        <a href="#" style="font-size:10px; padding-left:5px" class="sugColor">
-                            {{ user[0]['username'] }}
-                            <br>{{ user[1] }} Upvote(s) on Answers
+                    <div class="d-inline-flex align-items-center">
+                        <div class="user one"></div>
+                        <a href="#" style="font-size:10px; padding-left:5px" class="sugColor">Username1
+                            <br>19 Best Answers
                         </a>
                         <br>
                     </div>
                     <br>
-                    {% endfor %}
+                    <div class="d-inline-flex align-items-center">
+                        <div class="user one"></div>
+                        <a href="#" style="font-size:10px; padding-left:5px" class="sugColor">Username2
+                            <br>1 Best Answers</a>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="d-inline-flex align-items-center">
+                        <div class="user one"></div>
+                        <a href="#" style="font-size:10px; padding-left:5px" class="sugColor">Username3
+                            <br>12 Best Answers</a>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="d-inline-flex align-items-center">
+                        <div class="user one"></div>
+                        <a href="#" style="font-size:10px; padding-left:5px" class="sugColor">Username4
+                            <br>7 Best Answers</a>
+                        <br>
+                    </div>
+                    <br>
                 </div>
             </div>
             <br>

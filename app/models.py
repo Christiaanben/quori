@@ -160,6 +160,8 @@ class User:
         graph.create(rel)
 
     def submit_answer(self, answer, question):
+        if answer=="":
+            return
         query = '''
 			MATCH (question:Question{title:"''' + question + '''"}) MATCH(user:User {username:"''' + self.username + '''"})  MERGE(question)<-[:AnswerTo]-(answer:Answer{id:'A9',title: "''' + answer + '''", timestamp:"1",date:"1", user:"''' + self.username + '''"})<-[:Answered]-(user)
 		'''
@@ -167,14 +169,20 @@ class User:
 
     def get_questions(self):
         query = '''
+            MATCH (user:User)-[:Asked]->(question:Question)
+            WHERE user.username = {username}
+            RETURN question ORDER BY question.timestamp DESC
+            LIMIT 10
+            UNION
             MATCH (user:User)-[:Follows]->(:Tag)-[:Tagged]->(question:Question)
             WHERE user.username = {username}
-            RETURN question ORDER BY question.timestamp
-            LIMIT 5
-            UNION  MATCH (user:User)-[:Follows]->(p:User)-[:Asked]->(question:Question)
+            RETURN question ORDER BY question.timestamp DESC
+            LIMIT 10
+            UNION  
+            MATCH (user:User)-[:Follows]->(p:User)-[:Asked]->(question:Question)
             WHERE user.username = {username}
-            RETURN question ORDER BY question.timestamp
-            LIMIT 5
+            RETURN question ORDER BY question.timestamp DESC
+            LIMIT 10
         '''
         return graph.run(query, username=self.username)
 
@@ -194,24 +202,25 @@ class User:
 
     def getSuggestions(self):
         query = '''
-        MATCH (myself:User)-[f:Follows]-(t1:Tag), 
-        (u:User)-[ans:Answered]-(a:Answer)-[ans2:AnswerTo]-(q:Question)-[tag:Tagged]-(t2:Tag)
-        WHERE t1=t2 AND myself.username = '{username}'
-        RETURN u
-        '''
-        return graph.run(query, username=self.username)
-
-    def getTopSuggestions(self):
-        query = '''
-        MATCH (myself:User)-[f:Follows]-(t1:Tag), 
-        (u:User)-[ans:Answered]-(a:Answer)-[ans2:AnswerTo]-(q:Question)-[tag:Tagged]-(t2:Tag),
-        (a)-[up:Upvoted]-(b:User)
-        WHERE t1=t2 AND myself.username = {username}
-        RETURN u, COUNT(up)
+        MATCH (myself:User)-[:Follows]->(following:User),
+        (following)-[:Follows]->(notFollowing:User),
+        (:User)-[up:Upvoted]-(:Answer)-[:Answered]-(notFollowing)
+        WHERE myself.username={username} AND NOT (myself)-[:Follows]->(notFollowing)
+        RETURN notFollowing, COUNT(up)
         ORDER BY COUNT(up) DESC
-        LIMIT 4
+        LIMIT 5
         '''
         return graph.run(query, username=self.username)
+    
+    def addBookmark(self, questionTitle):
+        user = self.find()
+        question = find_one(questionTitle)
+        rel = Relationship(user,'Bookmarked', question)
+        graph.create(rel)
+    
+    def getBookmarkedQuestion(self):
+        query = "MATCH (u:User)-[:Bookmarked]->(question:Question) WHERE u.username={username} return question"
+        return graph.run(query, username = self.username)
 
 def get_interests_titles():
     query = '''
@@ -274,7 +283,7 @@ def find_one(questiontitle):
 
 def get_answers(questiontitle):
     query = '''
-    MATCH (question:Question)<-[:AnswerTo]-(answer:Answer) WHERE question.title = {questiontitle} RETURN answer.title AS title
+    MATCH (question:Question)<-[:AnswerTo]-(answer:Answer)<-[:Answered]-(u:User) WHERE question.title = {questiontitle} RETURN answer.title AS title, u.username as user, u.pp as pp
     '''
     return graph.run(query, questiontitle=questiontitle)
 

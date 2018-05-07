@@ -55,7 +55,7 @@ def home():
         questions = User(session['username']).get_questions()
         interests = get_interests_titles()
         u = User(session.get('username'))
-        suggestions = u.getTopSuggestions()
+        suggestions = u.getSuggestions()
         return render_template('home.html', posts=questions, interests=interests,
                                pp=User(session['username']).getPP(), suggestions=suggestions)
     else:
@@ -67,7 +67,6 @@ def searchpage():
     search = request.form['search']
     users = getUsersStartingWith(search)
     return render_template('searchpage.html', users=users, pp=User(session['username']).getPP())
-    return
 
 
 @app.route('/interest')
@@ -86,20 +85,11 @@ def add_interests():
     return redirect(url_for('home'))
 
 
-@app.route('/otherprofile/<name>', methods=['GET', 'POST'])
-def otherprofile(name):
+@app.route('/profile/<name>', methods=['GET', 'POST'])
+def profile(name):
     userinfo = User(name)
     results = User(session['username']).checkFollow(name)
     return render_template('profilepage.html', user=userinfo, following=results, pp=User(session['username']).getPP())
-
-
-@app.route('/profilepage', methods=['GET', 'POST'])
-def profilepage():
-    if request.method == 'POST':
-        return redirect(url_for('searchpage', prefix=request.form['search']))
-    user = User(session['username'])
-    return render_template('profilepage.html', user=user, pp=User(session['username']).getPP())
-
 
 @app.route('/add_question', methods=['POST'])
 def add_question():
@@ -125,7 +115,7 @@ def updateBio():
     if request.method == 'POST':
         bio = request.form['txtFieldBio']
         User(session['username']).editBio(bio)
-        return redirect(url_for('profilepage'))
+        return redirect(url_for('profile', name=session['username']))
 
 
 @app.route('/updatePassword', methods=['POST'])
@@ -135,7 +125,7 @@ def updatePassword():
         newPassword = request.form['passwordNew']
         retypePassword = request.form['passwordRetype']
         User(session['username']).editPassword(oldPassword, newPassword, retypePassword)
-        return redirect(url_for('profilepage'))
+        return redirect(url_for('profile', name=session['username']))
 
 
 @app.route('/uploader', methods=['GET', 'POST'])
@@ -153,7 +143,7 @@ def uploader():
         f.save(filepath)
         User(session['username']).updateProfilePic(f.filename)
         session['profilepic'] = f.filename
-        return redirect(url_for('profilepage'))
+        return redirect(url_for('profile', name=session['username']))
 
 
 @app.route('/question', methods=['GET'])
@@ -193,3 +183,30 @@ def unfollow(name):
     print(name)
     User(session['username']).removeFollows(name)
     return redirect(url_for('otherprofile', name=name))
+
+@app.route('/add_bookmark', methods = ['GET'])
+def add_bookmark():
+    if (session.get('username')):
+        questiontitle = request.args.get('title')
+        User(session['username']).addBookmark(questiontitle)
+        return redirect(url_for('home'))
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/bookmarkedQuestions')
+def bookmarkedQuestions():
+    if (session.get('username')):    
+        return redirect(url_for('bookmarkPage'))
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/bookmarkPage', methods=['GET', 'POST'])
+def bookmarkPage():
+    if request.method == 'POST':
+        return redirect(url_for('searchpage', prefix=request.form['search']))
+    if (session.get('username')):
+        questions = User(session['username']).getBookmarkedQuestion()
+        interests = get_interests_titles()
+        return render_template('bookmark.html', posts=questions, interests=interests, pp=User(session['username']).getPP())
+    else:
+        return redirect(url_for('login'))
