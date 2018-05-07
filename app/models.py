@@ -64,7 +64,6 @@ class User:
         query = '''
 		MATCH (n:User{username: "'''+self.username+'''" })-[r:Upvoted]->(:Answer{title:"'''+title+'''"})
 		DELETE r'''
-        print query
         graph.run(query)
 
     # MATCH (a:User)-[r:Upvoted]-(b:Answer)
@@ -163,19 +162,19 @@ class User:
 
     def get_questions(self):
         query = '''
-            MATCH (user:User)-[:Asked]->(question:Question)
-            WHERE user.username = {username}
-            RETURN question ORDER BY question.timestamp DESC
-            LIMIT 10
-            UNION
-            MATCH (user:User)-[:Follows]->(:Tag)-[:Tagged]->(question:Question)
-            WHERE user.username = {username}
-            RETURN question ORDER BY question.timestamp DESC
-            LIMIT 10
-            UNION  
-            MATCH (user:User)-[:Follows]->(p:User)-[:Asked]->(question:Question)
-            WHERE user.username = {username}
-            RETURN question ORDER BY question.timestamp DESC
+            MATCH (u:User)-[:Asked]->(q:Question)
+            WHERE u.username='admin'
+            WITH COLLECT({ques:q}) AS row1
+            MATCH (u:User)-[:Follows]->(:Tag)-[:Tagged]->(q:Question)
+            WHERE u.username='admin'
+            WITH row1+COLLECT({ques:q}) AS row2
+            MATCH (u:User)-[:Follows]->(:User)-[:Asked]->(q:Question)
+            WHERE u.username='admin'
+            WITH row2+COLLECT({ques:q}) AS row3
+            UNWIND row3 AS row
+            WITH row.ques AS q
+            RETURN q
+            ORDER BY q DESC
             LIMIT 10
         '''
         return graph.run(query, username=self.username)

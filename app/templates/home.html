@@ -44,22 +44,22 @@
       </span>
             </form>
 
-            <br> {% for row in posts %}
+            <br> {% for question in posts %}
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">
-                        <a href="question?title={{ row.question.title }}">{{ row.question.title }}</a>
-                        {%if myFunction(row.question.title) == 0%}           
-                        <a href="add_bookmark?title={{row.question.title}}"><img src="../static/bookmark.png"  alt= 'Bookmark' style = ' width: 40px;height: 40px;float: right;'></a>
+                        <a href="question?title={{ question[0]['title'] }}">{{ question[0]['title'] }}</a>
+                        {%if myFunction(question[0]['title']) == 0%}
+                        <a href="add_bookmark?title={{question[0]['title']}}"><img src="../static/bookmark.png"  alt= 'Bookmark' style = ' width: 40px;height: 40px;float: right;'></a>
                         {%endif%}
-                        {%if myFunction(row.question.title) == 1%}           
-                        <a href="rem_bookmark_home?title={{row.question.title}}"><img src="../static/bookmarked.png"  alt= 'Bookmark' style = ' width: 40px;height: 40px;float: right;'></a>
+                        {%if myFunction(question[0]['title']) == 1%}
+                        <a href="rem_bookmark_home?title={{question[0]['title']}}"><img src="../static/bookmarked.png"  alt= 'Bookmark' style = ' width: 40px;height: 40px;float: right;'></a>
                         {%endif%}
                     </h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ ", ".join(row.tags) }}</h6>
-                    <p>{{ row.question.description }}</p>
+{#                    <h6 class="card-subtitle mb-2 text-muted">{{ ", ".join(question[0]['tags']) }}</h6> #}
+                    <p>{{ question[0]['description'] }}</p>
                     <div>
-                        <a class="btn btn-secondary" href="question?title={{ row.question.title }}"
+                        <a class="btn btn-secondary" href="question?title={{ question[0]['title'] }}"
                            role="button">Answer</a>
                     </div>
 

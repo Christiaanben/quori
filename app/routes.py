@@ -146,7 +146,7 @@ def uploader():
         return redirect(url_for('profile', name=session['username']))
 
 
-@app.route('/question', methods=['GET'])
+@app.route('/question', methods=['GET','POST'])
 def question():
     questiontitle = request.args.get('title')
     question = find_one(questiontitle)
@@ -224,7 +224,7 @@ def rem_bookmark():
 
 @app.route('/bookmarkedQuestions')
 def bookmarkedQuestions():
-    if (session.get('username')):    
+    if (session.get('username')):
         return redirect(url_for('bookmarkPage'))
     else:
         return redirect(url_for('login'))
