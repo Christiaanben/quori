@@ -142,7 +142,7 @@ def uploader():
         f.save(filepath)
         User(session['username']).updateProfilePic(f.filename)
         session['profilepic'] = f.filename
-        return redirect(url_for('profilepage'))
+        return redirect(url_for('profile', name=session['username']))
 
 
 @app.route('/question', methods=['GET'])
