@@ -212,19 +212,7 @@ class User:
     
     def getBookmarkedQuestion(self):
         query = "MATCH (u:User)-[:Bookmarked]->(question:Question) WHERE u.username={username} return question"
-        return graph.run(query, username = self.username) 
-
-    # def getTopSuggestions(self):
-    #     query = '''
-    #     MATCH (myself:User)-[f:Follows]-(t1:Tag),
-    #     (u:User)-[ans:Answered]-(a:Answer)-[ans2:AnswerTo]-(q:Question)-[tag:Tagged]-(t2:Tag),
-    #     (a)-[up:Upvoted]-(b:User)
-    #     WHERE t1=t2 AND myself.username = {username}
-    #     RETURN u, COUNT(up)
-    #     ORDER BY COUNT(up) DESC
-    #     LIMIT 4
-    #     '''
-    #     return graph.run(query, username=self.username)
+        return graph.run(query, username = self.username)
 
 def get_interests_titles():
     query = '''
