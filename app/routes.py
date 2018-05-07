@@ -67,7 +67,6 @@ def searchpage():
     search = request.form['search']
     users = getUsersStartingWith(search)
     return render_template('searchpage.html', users=users, pp=User(session['username']).getPP())
-    return
 
 
 @app.route('/interest')
@@ -86,19 +85,10 @@ def add_interests():
     return redirect(url_for('home'))
 
 
-@app.route('/otherprofile/<name>', methods=['GET', 'POST'])
-def otherprofile(name):
+@app.route('/profile/<name>', methods=['GET', 'POST'])
+def profile(name):
     userinfo = User(name)
     return render_template('profilepage.html', user=userinfo, pp=User(session['username']).getPP())
-
-
-@app.route('/profilepage', methods=['GET', 'POST'])
-def profilepage():
-    if request.method == 'POST':
-        return redirect(url_for('searchpage', prefix=request.form['search']))
-    user = User(session['username'])
-    return render_template('profilepage.html', user=user, pp=User(session['username']).getPP())
-
 
 @app.route('/add_question', methods=['POST'])
 def add_question():
