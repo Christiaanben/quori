@@ -184,15 +184,16 @@
                         <a href="#">Answers</a>
                     </li>
                     <li>
-                            <input id="search" />
+                        <form method="post">
+                            <input id="search" name="search" placeholder="Search...">
+                            <input type="submit" value="Search">
+                        </form>
                     </li>
                     <li>
                         <a href="#" onclick="window.location.href='{{url_for('profilepage')}}'">
                             <img alt="Profile" src='../static/profilepictures/{{ pp['p'] }}' class="user">
-                        </a>
-                    </li>
-                    <li style="color: Grey;" onclick="window.location.href='{{url_for('profilepage')}}'">
                             {{ session.username }}
+                        </a>
                     </li>
                     <li>
                         <a href="#" onclick="window.location.href='{{url_for('logout')}}'">Logout</a>
