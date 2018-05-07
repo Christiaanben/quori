@@ -8,11 +8,8 @@ import uuid
 #username = os.environ.get('neo4j')
 #password = os.environ.get('password')
 
-# connects to db when db authetication is off
+# connects to db
 graph = Graph("http://localhost:7474/db/data/", user='neo4j', password='1234')
-#graph = Graph(url + '/db/data/', username=username, password=password)
-#graph = Graph('http://localhost:7474', username = 'neo4j', password = 'password')
-
 
 class User:
     def __init__(self, username):
@@ -166,11 +163,11 @@ class User:
             MATCH (user:User)-[:Follows]->(:Tag)-[:Tagged]->(question:Question)
             WHERE user.username = {username}
             RETURN question ORDER BY question.timestamp
-            LIMIT 5
+            LIMIT 10
             UNION  MATCH (user:User)-[:Follows]->(p:User)-[:Asked]->(question:Question)
             WHERE user.username = {username}
             RETURN question ORDER BY question.timestamp
-            LIMIT 5
+            LIMIT 10
         '''
         return graph.run(query, username=self.username)
 
