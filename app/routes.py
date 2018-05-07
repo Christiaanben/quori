@@ -61,9 +61,12 @@ def home():
         return redirect(url_for('login'))
 
 @app.route('/searchpage/')
-@app.route('/searchpage/<prefix>')
+@app.route('/searchpage/<prefix>', methods=['GET', 'POST'])
 def searchpage(prefix=None):
-    return render_template('searchpage.html',pp=User(session['username']).getPP())
+    if request.method == 'POST':
+        return redirect(url_for('searchpage',prefix=request.form['search']))
+    users = getUsersStartingWith(prefix)
+    return render_template('searchpage.html',users = users, pp=User(session['username']).getPP())
 
 @app.route('/interest')
 def interest():
@@ -80,16 +83,14 @@ def add_interests():
             User(session['username']).addInterest(value['tag'])
     return redirect(url_for('home'))
 
-
-@app.route('/otherprofile')
+@app.route('/otherprofile', methods=['GET', 'POST'])
 def otherprofile():
     return render_template('otherprofile.html', pp=User(session['username']).getPP())
 
-
-
-
-@app.route('/profilepage')
+@app.route('/profilepage', methods=['GET', 'POST'])
 def profilepage():
+    if request.method == 'POST':
+        return redirect(url_for('searchpage',prefix=request.form['search']))
     user = User(session['username']);
     return render_template('profilepage.html', user=user, pp=User(session['username']).getPP())
 
@@ -144,18 +145,6 @@ def uploader():
         User(session['username']).updateProfilePic(f.filename)
         session['profilepic'] = f.filename
         return redirect(url_for('profilepage'))
-
-
-@app.route('/search/<prefix>')
-def search(prefix):
-    print(prefix)
-    searchResult = getUsersStartingWith(prefix)
-    names = ['Basic', 'Ben']
-    for user in searchResult:
-        names.append(user['username'])
-    print(names)
-    return jsonify({'suggestions': names})
-
 
 @app.route('/question', methods=['GET'])
 def question():

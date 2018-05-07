@@ -256,7 +256,7 @@ def date():
 def getUsersStartingWith(prefix):
     query = '''
     MATCH (u:User)
-    WHERE LOWER(u.username) STARTS WITH LOWER("'''+prefix+'''")
-    RETURN u.username AS username
+    WHERE LOWER(u.username) STARTS WITH LOWER({prefix})
+    RETURN u
     '''
-    return graph.run(query)
+    return graph.run(query,prefix=prefix)
