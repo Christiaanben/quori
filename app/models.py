@@ -156,7 +156,7 @@ class User:
 	
     def get_questions(self):
         query = '''
-            MATCH (user:User)-[:Follows]->(:Tag)-[:Tagged]->(question:Question)
+            MATCH (user:User)-[:Likes]->(:Tag)-[:Tagged]->(question:Question)
             WHERE user.username = {username}
             RETURN question ORDER BY question.timestamp
             LIMIT 5
