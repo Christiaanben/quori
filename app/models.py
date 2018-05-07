@@ -225,6 +225,11 @@ class User:
                 DELETE r
                 '''
         graph.run(query, username = self.username, question_title = questionTitle)
+	
+    def getBookmarked(self, question_title):
+        query = "MATCH (u:User)-[:Bookmarked]->(q:Question) WHERE u.username = {username} AND q.title = {questionTitle} return count(q)"
+        result = graph.run(query, username=self.username, questionTitle=question_title)
+        return result.next()['count(q)'] 
     
     def getBookmarkedQuestion(self):
         query = "MATCH (u:User)-[:Bookmarked]->(question:Question) WHERE u.username={username} return question"

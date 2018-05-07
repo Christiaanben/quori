@@ -57,7 +57,7 @@ def home():
         u = User(session.get('username'))
         suggestions = u.getSuggestions()
         return render_template('home.html', posts=questions, interests=interests,
-                               pp=User(session['username']).getPP(), suggestions=suggestions)
+                               pp=User(session['username']).getPP(), suggestions=suggestions, , myFunction=get_bookmarked)
     else:
         return redirect(url_for('login'))
 
@@ -217,5 +217,13 @@ def bookmarkPage():
         questions = User(session['username']).getBookmarkedQuestion()
         interests = get_interests_titles()
         return render_template('bookmark.html', posts=questions, interests=interests, pp=User(session['username']).getPP())
+    else:
+        return redirect(url_for('login'))
+  
+#@app.route('/get_bookmarked/<title>')
+def get_bookmarked(title):
+    if (session.get('username')):        
+        return User(session['username']).getBookmarked(title)
+        
     else:
         return redirect(url_for('login'))

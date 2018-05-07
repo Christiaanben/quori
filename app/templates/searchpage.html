@@ -1,14 +1,21 @@
 {##}{% extends "usertemplate.html" %} {% block body %}
-{% for user in users %}
-<div class="bubble">
-    <a href={{ url_for('profile', name=user[0]['username']) }}><h3>{{user[0]['username']}}</h3></a>
-    <p>
-        {% if  user[0]['bio'] != None %}
-        {{ user[0]['bio'][:127]}}
-        {% else %}
-        No bio
-        {% endif %}
-    </p>
-</div>
-{% endfor %}
+    {% for user in users %}
+        <div class="bubble">
+            <div class="panel panel-default" style="margin-left: 5%; margin-right: 5%;">
+                <div class="panel-heading" id="T1">
+                    <a href={{ url_for('profile', name=user[0]['username']) }}><h3>{{ user[0]['username'] }}</h3></a>
+                </div>
+                <div class="panel-body" style="padding-left:1em">
+                    <p>
+                        {% if  user[0]['bio'] != None %}
+                            {{ user[0]['bio'][:127] }}
+                        {% else %}
+                            No bio
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <div style="padding-bottom: 3em;"></div>
 {% endblock %}

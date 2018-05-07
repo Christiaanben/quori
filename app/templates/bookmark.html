@@ -33,7 +33,7 @@
                 <div class="card-body">
                     <h5 class="card-title">
                         <a href="question?title={{ row.question.title }}">{{ row.question.title }}</a>
-                        <a href="rem_bookmark?title={{row.question.title}}"><img src = "../static/bookmark.png" alt= "Bookmark" style = " width: 40px;height: 40px;float: right;" ></a>
+                        <a href="rem_bookmark?title={{row.question.title}}"><img src = "../static/bookmarked.png" alt= "Bookmark" style = " width: 40px;height: 40px;float: right;" ></a>
                     </h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{ ", ".join(row.tags) }}</h6>
                     <p>{{ row.question.description }}</p>
