@@ -11,7 +11,7 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.js"></script>
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-        crossorigin="anonymous">
+          crossorigin="anonymous">
     <!-- Latest compiled and minified JavaScript -->
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -20,7 +20,78 @@
     <!--Import fonts-->
     <link href='https://fonts.googleapis.com/css?family=Numans' rel='stylesheet'>
     <!-- Inline style -->
+    <style>
+        .mediaFeeds {
+            padding-right: 100px;
+        }
 
+        .mediaSuggetions {
+            padding-left: 100px;
+            text-align: center;
+        }
+
+        .mediaQuestion {
+        }
+
+        .feedsColor {
+            color: rgb(215, 148, 14);
+        }
+
+        .feedsColor:hover {
+            color: #888;
+        }
+
+        .sugColor {
+            color: rgb(179, 0, 1);
+        }
+
+        .sugColor:hover {
+            color: #888;;
+        }
+
+        .txtAreaQuestion {
+            width: 350px;
+        }
+
+        .inputBoxes {
+            padding: 20px;
+            border-radius: 3px;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .mediaSuggetions {
+                padding-left: 0px;
+                text-align: center;
+            }
+
+            .mediaFeeds {
+                padding-right: 0px;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .mediaQuestion {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .feedsColor {
+                color: rgb(215, 148, 14);
+            }
+
+            .txtAreaQuestion {
+                width: 100px;
+            }
+
+        }
+
+        @media screen and (max-width: 991px) and (min-width: 601px) {
+            .mediaSuggetions {
+                padding-left: 0px;
+                text-align: left;
+            }
+        }
+    </style>
     <style>
         body {
             font-family: 'Numans';
@@ -138,6 +209,7 @@
                 padding-top: 14px;
             }
 
+
         }
     </style>
     <script>
@@ -154,7 +226,7 @@
 <!-- Code for the navbar -->
 
 <body>
-    <!--NAVBAR LARGE-->
+<!--NAVBAR LARGE-->
     <!--NAVBAR LARGE-->
 <nav class="navbar navbar-inverse ">
     <div class="container-fluid ">
@@ -168,7 +240,7 @@
             <a class="navbar-brand" href="#">
                 <img alt="Quori" src="{{ url_for('static',filename='quoriLogo.png') }}" width="100%" height="90px"
                      style="width: 130px; margin-top: -18px; height: 65px;">
-            </a> 
+            </a>
         </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav mediaNav">

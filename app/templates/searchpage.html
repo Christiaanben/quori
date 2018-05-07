@@ -3,7 +3,11 @@
 <div class="bubble">
     <a href={{ url_for('profile', name=user[0]['username']) }}><h3>{{user[0]['username']}}</h3></a>
     <p>
-        {{user[0]['bio']}}
+        {% if  user[0]['bio'] != None %}
+        {{ user[0]['bio'][:127]}}
+        {% else %}
+        No bio
+        {% endif %}
     </p>
 </div>
 {% endfor %}
