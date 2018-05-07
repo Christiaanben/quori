@@ -161,14 +161,20 @@ class User:
 
     def get_questions(self):
         query = '''
+            MATCH (user:User)-[:Asked]->(question:Question)
+            WHERE user.username = {username}
+            RETURN question ORDER BY question.timestamp DESC
+            LIMIT 10
+            UNION
             MATCH (user:User)-[:Follows]->(:Tag)-[:Tagged]->(question:Question)
             WHERE user.username = {username}
-            RETURN question ORDER BY question.timestamp
-            LIMIT 5
-            UNION  MATCH (user:User)-[:Follows]->(p:User)-[:Asked]->(question:Question)
+            RETURN question ORDER BY question.timestamp DESC
+            LIMIT 10
+            UNION  
+            MATCH (user:User)-[:Follows]->(p:User)-[:Asked]->(question:Question)
             WHERE user.username = {username}
-            RETURN question ORDER BY question.timestamp
-            LIMIT 5
+            RETURN question ORDER BY question.timestamp DESC
+            LIMIT 10
         '''
         return graph.run(query, username=self.username)
 
@@ -206,6 +212,16 @@ class User:
         LIMIT 4
         '''
         return graph.run(query, username=self.username)
+    
+    def addBookmark(self, questionTitle):
+        user = self.find()
+        question = find_one(questionTitle)
+        rel = Relationship(user,'Bookmarked', question)
+        graph.create(rel)
+    
+    def getBookmarkedQuestion(self):
+        query = "MATCH (u:User)-[:Bookmarked]->(question:Question) WHERE u.username={username} return question"
+        return graph.run(query, username = self.username) 
 
 def get_interests_titles():
     query = '''
