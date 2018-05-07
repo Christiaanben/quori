@@ -52,7 +52,7 @@ def logout():
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        return redirect(url_for('searchpage',prefix=request.form['search']))
+        return redirect(url_for('searchpage', prefix=request.form['search']))
     if (session.get('username')):
         questions = User(session['username']).get_questions()
         interests = get_interests_titles()
@@ -60,13 +60,15 @@ def home():
     else:
         return redirect(url_for('login'))
 
+
 @app.route('/searchpage/')
 @app.route('/searchpage/<prefix>', methods=['GET', 'POST'])
 def searchpage(prefix=None):
     if request.method == 'POST':
-        return redirect(url_for('searchpage',prefix=request.form['search']))
+        return redirect(url_for('searchpage', prefix=request.form['search']))
     users = getUsersStartingWith(prefix)
-    return render_template('searchpage.html',users = users, pp=User(session['username']).getPP())
+    return render_template('searchpage.html', users=users, pp=User(session['username']).getPP())
+
 
 @app.route('/interest')
 def interest():
@@ -83,14 +85,16 @@ def add_interests():
             User(session['username']).addInterest(value['tag'])
     return redirect(url_for('home'))
 
+
 @app.route('/otherprofile', methods=['GET', 'POST'])
 def otherprofile():
     return render_template('otherprofile.html', pp=User(session['username']).getPP())
 
+
 @app.route('/profilepage', methods=['GET', 'POST'])
 def profilepage():
     if request.method == 'POST':
-        return redirect(url_for('searchpage',prefix=request.form['search']))
+        return redirect(url_for('searchpage', prefix=request.form['search']))
     user = User(session['username']);
     return render_template('profilepage.html', user=user, pp=User(session['username']).getPP())
 
@@ -136,8 +140,11 @@ def updatePassword():
 def uploader():
     if request.method == 'POST':
         f = request.files['pic']
-        # verander net hierdie na julle profile picture path
-        filepath = os.path.join('/home/comango/Desktop/Github Repos/Quori/app/static/profilepictures', f.filename)
+        full_path = os.path.realpath(__file__)
+        path, filename = os.path.split(full_path)
+        print(path + ' --> ' + filename + "\n")
+        filepath = os.path.join(path + '/static/profilepictures', f.filename)
+        print(filepath)
         if os.path.isfile(filepath):
             os.remove(filepath)
 
@@ -145,6 +152,7 @@ def uploader():
         User(session['username']).updateProfilePic(f.filename)
         session['profilepic'] = f.filename
         return redirect(url_for('profilepage'))
+
 
 @app.route('/question', methods=['GET'])
 def question():
