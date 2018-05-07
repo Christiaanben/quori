@@ -55,7 +55,7 @@ def home():
         questions = User(session['username']).get_questions()
         interests = get_interests_titles()
         u = User(session.get('username'))
-        suggestions = u.getTopSuggestions()
+        suggestions = u.getSuggestions()
         return render_template('home.html', posts=questions, interests=interests,
                                pp=User(session['username']).getPP(),suggestions=suggestions)
     else:
