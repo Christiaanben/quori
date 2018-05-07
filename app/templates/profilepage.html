@@ -51,7 +51,15 @@
                                 bio
                             </button>
                         {% else %}
-                            <button type="button" class="niceButts spaceme btn btn-default" style="float:right;">Follow</button>
+                            {% if following==1 %}
+                                <a type="button" href='{{ url_for('unfollow', name=user.getUsername()['un']) }}'
+                                   class="followButton niceButts spaceme btn btn-default" style="float:right;"
+                                   name="followButton" id="followButton" value="Follow">Unfollow</a>
+                            {% else %}
+                                <a type="button" href='{{ url_for('follow', name=user.getUsername()['un']) }}'
+                                   class="followButton niceButts spaceme btn btn-default" style="float:right;"
+                                   name="followButton" id="followButton" value="Follow">Follow</a>
+                            {% endif %}
                         {% endif %}
                     </h3>
                 </div>

@@ -57,7 +57,7 @@ def home():
         u = User(session.get('username'))
         suggestions = u.getTopSuggestions()
         return render_template('home.html', posts=questions, interests=interests,
-                               pp=User(session['username']).getPP(),suggestions=suggestions)
+                               pp=User(session['username']).getPP(), suggestions=suggestions)
     else:
         return redirect(url_for('login'))
 
@@ -89,7 +89,8 @@ def add_interests():
 @app.route('/otherprofile/<name>', methods=['GET', 'POST'])
 def otherprofile(name):
     userinfo = User(name)
-    return render_template('profilepage.html', user=userinfo, pp=User(session['username']).getPP())
+    results = User(session['username']).checkFollow(name)
+    return render_template('profilepage.html', user=userinfo, following=results, pp=User(session['username']).getPP())
 
 
 @app.route('/profilepage', methods=['GET', 'POST'])
@@ -177,4 +178,18 @@ def submit_answer(title):
     answers = get_answers(questiontitle)
     # question_answers = get_answers(questiontitle)
     # return render_template('question.html', question_answers=question_answers)
-    return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP())
+    return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers,
+                           pp=User(session['username']).getPP())
+
+
+@app.route('/follow/<name>', methods=['GET', 'POST'])
+def follow(name):
+    print(name)
+    User(session['username']).addFollows(name)
+    return redirect(url_for('otherprofile', name=name))
+
+@app.route('/unfollow/<name>', methods=['GET', 'POST'])
+def unfollow(name):
+    print(name)
+    User(session['username']).removeFollows(name)
+    return redirect(url_for('otherprofile', name=name))

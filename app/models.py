@@ -24,13 +24,20 @@ class User:
         u = graph.find_one('User', 'username', self.username)
         return u
 
-    def addFollows(self, username):
+    def addFollows(self, user):
         query = '''MATCH (a:User),(b:User)
-        WHERE a.username = \' ''' + self.username + '''\' AND b.username = \'''' + username + '''\'
-		CREATE (a)-[r:Follows]->(b)'''
-        graph.run(query)
+        WHERE a.username = {selfusername} AND b.username = {otheruser} MERGE (a)-[r:Follows]->(b)'''
+        graph.run(query, selfusername=self.username, otheruser=user)
         # MATCH (a:User),(b:User)
 
+    def checkFollow(self, user):
+        query = '''MATCH (u1:User)-[:Follows]-(u2:User) WHERE u1.username={selfun} AND u2.username={otherusern} Return u1'''
+        result= graph.run(query, selfun=self.username, otherusern=user)
+        try:
+            bio = result.next()
+            return 1
+        except StopIteration:
+            return 0
     # WHERE a.username = 'Ricky' AND b.username = 'Maan'
     # CREATE (a)-[r:Follows]->(b)
 
@@ -53,10 +60,9 @@ class User:
     # WHERE a.username = 'Maan'
     # SET a.pp = a.username
 
-    def removeFollows(self, username):
-        query = 'MATCH (a:User)-[r:Follows]-(b:User) WHERE a.username = \''
-        +self.username + '\' AND b.username = \'' + username + '\' DELETE r'
-        graph.run(query)
+    def removeFollows(self, user):
+        query = '''MATCH (u1:User)-[f:Follows]-(u2:User) WHERE u1.username={selfun} AND u2.username={otherusern} DELETE f'''
+        graph.run(query, selfun=self.username, otherusern=user)
 
     # MATCH (a:User)-[r:Follows]-(b:User)
     # WHERE a.username = 'Maan' AND b.username = 'Patrick'
