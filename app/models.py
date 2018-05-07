@@ -217,6 +217,14 @@ class User:
         question = find_one(questionTitle)
         rel = Relationship(user,'Bookmarked', question)
         graph.create(rel)
+	
+    def remBookmark(self, questionTitle):              
+        query = '''
+                MATCH (u:User)-[r:Bookmarked]->(q:Question)
+                WHERE u.username = {username} AND q.title = {question_title}
+                DELETE r
+                '''
+        graph.run(query, username = self.username, question_title = questionTitle)
     
     def getBookmarkedQuestion(self):
         query = "MATCH (u:User)-[:Bookmarked]->(question:Question) WHERE u.username={username} return question"
