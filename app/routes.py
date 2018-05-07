@@ -192,6 +192,15 @@ def add_bookmark():
         return redirect(url_for('home'))
     else:
         return redirect(url_for('login'))
+   
+@app.route('/rem_bookmark', methods = ['GET'])
+def rem_bookmark():
+    if (session.get('username')):
+        questiontitle = request.args.get('title')
+        User(session['username']).remBookmark(questiontitle)
+        return redirect(url_for('bookmarkPage'))
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/bookmarkedQuestions')
 def bookmarkedQuestions():
