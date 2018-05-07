@@ -190,7 +190,7 @@
                         </form>
                     </li>
                     <li>
-                        <a href="#" onclick="window.location.href='{{url_for('profilepage')}}'">
+                        <a href="#" onclick="window.location.href='{{url_for('profile',name=session.username)}}'">
                             <img alt="Profile" src='../static/profilepictures/{{ pp['p'] }}' class="user">
                             {{ session.username }}
                         </a>
