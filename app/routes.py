@@ -176,13 +176,13 @@ def submit_answer(title):
 def follow(name):
     print(name)
     User(session['username']).addFollows(name)
-    return redirect(url_for('otherprofile', name=name))
+    return redirect(url_for('profile', name=name))
 
 @app.route('/unfollow/<name>', methods=['GET', 'POST'])
 def unfollow(name):
     print(name)
     User(session['username']).removeFollows(name)
-    return redirect(url_for('otherprofile', name=name))
+    return redirect(url_for('profile', name=name))
 
 @app.route('/add_bookmark', methods = ['GET'])
 def add_bookmark():
