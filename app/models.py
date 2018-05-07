@@ -4,12 +4,17 @@ from datetime import datetime
 import os
 import uuid
 
-#url = os.environ.get('GRAPHENEDB_URL', 'http://localhost:7474')
-#username = os.environ.get('neo4j')
-#password = os.environ.get('password')
+# url = os.environ.get('GRAPHENEDB_URL', 'http://localhost:7474')
+# username = os.environ.get('neo4j')
+# password = os.environ.get('password')
 
-# connects to db
+# connects to db when db authetication is off
 graph = Graph("http://localhost:7474/db/data/", user='neo4j', password='1234')
+
+
+# graph = Graph(url + '/db/data/', username=username, password=password)
+# graph = Graph('http://localhost:7474', username = 'neo4j', password = 'password')
+
 
 class User:
     def __init__(self, username):
@@ -19,28 +24,23 @@ class User:
         u = graph.find_one('User', 'username', self.username)
         return u
 
-    # wernich help!
-    def getFollow(self, username):
-        query = '''MATCH (a:User),(b:User)
-                WHERE a.username = \' ''' + self.username + '''\' AND b.username = \'''' + username + '''\'
-                Return a.username'''
-        graph.run(query)
-
     def addFollows(self, username):
         query = '''MATCH (a:User),(b:User)
         WHERE a.username = \' ''' + self.username + '''\' AND b.username = \'''' + username + '''\'
 		CREATE (a)-[r:Follows]->(b)'''
         graph.run(query)
         # MATCH (a:User),(b:User)
+
     # WHERE a.username = 'Ricky' AND b.username = 'Maan'
     # CREATE (a)-[r:Follows]->(b)
 
     def addUpvoted(self, id):
         query = 'MATCH (a:User), (b:Answer) WHERE a.username = \''
         self.username + '\' AND b.id = \' ' + \
-            id + '\' CREATE (a)-[r:Upvoted]->(b)'
+        id + '\' CREATE (a)-[r:Upvoted]->(b)'
         graph.run(query)
         # MATCH (a:User),(b:User)
+
     # WHERE a.username = 'Ricky' AND b.id = 'A2'
     # CREATE (a)-[r:Upvoted]->(b)
 
@@ -48,6 +48,7 @@ class User:
         query = 'MATCH (a:User) WHERE a.username = \''
         + self.username + '\' SET a.pp = a.username + \'.jpg\''
         graph.run(query)
+
     # MATCH (a:User)
     # WHERE a.username = 'Maan'
     # SET a.pp = a.username
@@ -56,6 +57,7 @@ class User:
         query = 'MATCH (a:User)-[r:Follows]-(b:User) WHERE a.username = \''
         +self.username + '\' AND b.username = \'' + username + '\' DELETE r'
         graph.run(query)
+
     # MATCH (a:User)-[r:Follows]-(b:User)
     # WHERE a.username = 'Maan' AND b.username = 'Patrick'
     # DELETE r
@@ -64,6 +66,7 @@ class User:
         query = 'MATCH (a:User)-[r:Upvoted]-(b:Answer) WHERE a.username = \''
         + self.username + '\' AND b.id = \'' + id + '\'DELETE r '
         graph.run(query)
+
     # MATCH (a:User)-[r:Upvoted]-(b:Answer)
     # WHERE a.username = 'Maan' AND b.id = 'A5'
     # DELETE r
@@ -72,9 +75,9 @@ class User:
         query = 'MATCH (a:User) WHERE a.username = \''
         + self.username + '\' SET a.pp = \'temp.jpg\''
         graph.run(query)
-    # MATCH (a:User)
-    # WHERE a.username = 'Maan'
-    # SET a.pp = 'temp.jpg'
+        # MATCH (a:User)
+        # WHERE a.username = 'Maan'
+        # SET a.pp = 'temp.jpg'
         return 0
 
     def getBio(self):
@@ -92,8 +95,6 @@ class User:
         # MATCH (a:User)
         # WHERE a.username = 'Maan'
         # SET a.bio = 'My new bio!'
-
-
 
     def editPassword(self, passwordOld, passwordNew, passwordRetype):
         if (self.verify_password(passwordOld)):
@@ -154,50 +155,57 @@ class User:
 
     def submit_answer(self, answer, question):
         query = '''
-			MATCH (question:Question{title:"'''+ question +'''"}) MATCH(user:User {username:"'''+ self.username +'''"})  MERGE(question)<-[:AnswerTo]-(answer:Answer{id:'A9',title: "'''+answer+'''", timestamp:"1",date:"1", user:"'''+ self.username +'''"})<-[:Answered]-(user)
+			MATCH (question:Question{title:"''' + question + '''"}) MATCH(user:User {username:"''' + self.username + '''"})  MERGE(question)<-[:AnswerTo]-(answer:Answer{id:'A9',title: "''' + answer + '''", timestamp:"1",date:"1", user:"''' + self.username + '''"})<-[:Answered]-(user)
 		'''
         graph.run(query)
-	
+
     def get_questions(self):
         query = '''
-            MATCH (user:User)-[:Asked]->(question:Question)
-            WHERE user.username = {username}
-            RETURN question ORDER BY question.timestamp DESC
-            LIMIT 10
-            UNION
             MATCH (user:User)-[:Follows]->(:Tag)-[:Tagged]->(question:Question)
             WHERE user.username = {username}
-            RETURN question ORDER BY question.timestamp DESC
-            LIMIT 10
-            UNION  
-            MATCH (user:User)-[:Follows]->(p:User)-[:Asked]->(question:Question)
+            RETURN question ORDER BY question.timestamp
+            LIMIT 5
+            UNION  MATCH (user:User)-[:Follows]->(p:User)-[:Asked]->(question:Question)
             WHERE user.username = {username}
-            RETURN question ORDER BY question.timestamp DESC
-            LIMIT 10
+            RETURN question ORDER BY question.timestamp
+            LIMIT 5
         '''
         return graph.run(query, username=self.username)
 
     def addInterest(self, interest):
         user = self.find()
         tag = graph.find_one('Tag', 'title', interest)
-        rel = Relationship(user, 'Follows', tag)
+        rel = Relationship(user, 'Likes', tag)
         graph.create(rel)
-
 
     def getPP(self):
         query = 'MATCH (a:User) WHERE a.username = {username} RETURN a.pp AS p'
-        return graph.run(query, username = self.username).next()
+        return graph.run(query, username=self.username).next()
 
     def getUsername(self):
         query = 'MATCH (a:User) WHERE a.username = {username} RETURN a.username AS un'
-        return graph.run(query, username = self.username).next()
-	
-    def addBookmark(self, questionTitle):
-        user = self.find()
-        question = find_one(questionTitle)
-        rel = Relationship(user,'Bookmarked', question)
-        graph.create(rel)
+        return graph.run(query, username=self.username).next()
 
+    def getSuggestions(self):
+        query = '''
+        MATCH (myself:User)-[f:Follows]-(t1:Tag), 
+        (u:User)-[ans:Answered]-(a:Answer)-[ans2:AnswerTo]-(q:Question)-[tag:Tagged]-(t2:Tag)
+        WHERE t1=t2 AND myself.username = '{username}'
+        RETURN u
+        '''
+        return graph.run(query, username=self.username)
+
+    def getTopSuggestions(self):
+        query = '''
+        MATCH (myself:User)-[f:Follows]-(t1:Tag), 
+        (u:User)-[ans:Answered]-(a:Answer)-[ans2:AnswerTo]-(q:Question)-[tag:Tagged]-(t2:Tag),
+        (a)-[up:Upvoted]-(b:User)
+        WHERE t1=t2 AND myself.username = {username}
+        RETURN u, COUNT(up)
+        ORDER BY COUNT(up) DESC
+        LIMIT 4
+        '''
+        return graph.run(query, username=self.username)
 
 def get_interests_titles():
     query = '''
@@ -253,14 +261,17 @@ def get_todays_recent_posts():
 
     return graph.run(query, today=date())
 
+
 def find_one(questiontitle):
-	return graph.find_one("Question", "title", questiontitle)
+    return graph.find_one("Question", "title", questiontitle)
+
 
 def get_answers(questiontitle):
-	query = '''
+    query = '''
     MATCH (question:Question)<-[:AnswerTo]-(answer:Answer) WHERE question.title = {questiontitle} RETURN answer.title AS title
     '''
-	return graph.run(query, questiontitle=questiontitle)
+    return graph.run(query, questiontitle=questiontitle)
+
 
 def timestamp():
     epoch = datetime.utcfromtimestamp(0)
@@ -279,4 +290,5 @@ def getUsersStartingWith(prefix):
     WHERE LOWER(u.username) STARTS WITH LOWER({prefix})
     RETURN u
     '''
-    return graph.run(query,prefix=prefix)
+    return graph.run(query, prefix=prefix)
+

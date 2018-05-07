@@ -54,7 +54,10 @@ def home():
     if session.get('username'):
         questions = User(session['username']).get_questions()
         interests = get_interests_titles()
-        return render_template('home.html', posts=questions, interests=interests, pp=User(session['username']).getPP())
+        u = User(session.get('username'))
+        suggestions = u.getTopSuggestions()
+        return render_template('home.html', posts=questions, interests=interests,
+                               pp=User(session['username']).getPP(),suggestions=suggestions)
     else:
         return redirect(url_for('login'))
 
@@ -82,10 +85,6 @@ def add_interests():
             User(session['username']).addInterest(value['tag'])
     return redirect(url_for('home'))
 
-
-@app.route('/follow/<name>', methods=['GET', 'POST'])
-def follow(name):
-    User(session['username']).addFollows(name)
 
 @app.route('/otherprofile/<name>', methods=['GET', 'POST'])
 def otherprofile(name):
@@ -179,12 +178,3 @@ def submit_answer(title):
     # question_answers = get_answers(questiontitle)
     # return render_template('question.html', question_answers=question_answers)
     return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers)
-
-@app.route('/add_bookmark', methods = ['GET'])
-def add_bookmark():
-    if (session.get('username')):
-        questiontitle = request.args.get('title')
-        User(session['username']).addBookmark(questiontitle)
-        return redirect(url_for('home'))
-    else:
-        return redirect(url_for('login'))
