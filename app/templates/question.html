@@ -1,4 +1,4 @@
-{##}{%extends "usertemplate.html" %}
+{%extends "usertemplate.html" %}
 {% block body %}
 <div class="row" style="padding-left:20px">
   <div class="col-md-2">
@@ -26,7 +26,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title"><div class="d-inline-flex align-items-center">
-            <div class="user one"></div><a href="#" style="font-size:10px; padding-left:5px">{{htmlquestion.user}}<br>19 Best Answers</small></a><br></div><br></h5>
+            <div class="user" style="background-image: url('../static/profilepictures/{{row.pp}}');"></div><a href="#" style="font-size:10px; padding-left:5px">{{row.user}}<br></a><br></div><br></h5>
           <hr> <p>{{ row.title }}</p>
         </div>
       </div>
