@@ -160,13 +160,19 @@ class User:
 	
     def get_questions(self):
         query = '''
+            MATCH (user:User)-[:Asked]->(question:Question)
+            WHERE user.username = {username}
+            RETURN question ORDER BY question.timestamp DESC
+            LIMIT 10
+            UNION
             MATCH (user:User)-[:Follows]->(:Tag)-[:Tagged]->(question:Question)
             WHERE user.username = {username}
-            RETURN question ORDER BY question.timestamp
+            RETURN question ORDER BY question.timestamp DESC
             LIMIT 10
-            UNION  MATCH (user:User)-[:Follows]->(p:User)-[:Asked]->(question:Question)
+            UNION  
+            MATCH (user:User)-[:Follows]->(p:User)-[:Asked]->(question:Question)
             WHERE user.username = {username}
-            RETURN question ORDER BY question.timestamp
+            RETURN question ORDER BY question.timestamp DESC
             LIMIT 10
         '''
         return graph.run(query, username=self.username)
