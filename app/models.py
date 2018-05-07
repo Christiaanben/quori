@@ -284,7 +284,7 @@ def find_one(questiontitle):
 
 def get_answers(questiontitle):
     query = '''
-    MATCH (question:Question)<-[:AnswerTo]-(answer:Answer) WHERE question.title = {questiontitle} RETURN answer.title AS title
+    MATCH (question:Question)<-[:AnswerTo]-(answer:Answer) WHERE question.title = {questiontitle} RETURN answer.title AS title, u.username as user, u.pp as pp
     '''
     return graph.run(query, questiontitle=questiontitle)
 
