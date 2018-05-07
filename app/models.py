@@ -154,6 +154,8 @@ class User:
         graph.create(rel)
 
     def submit_answer(self, answer, question):
+        if answer=="":
+            return
         query = '''
 			MATCH (question:Question{title:"''' + question + '''"}) MATCH(user:User {username:"''' + self.username + '''"})  MERGE(question)<-[:AnswerTo]-(answer:Answer{id:'A9',title: "''' + answer + '''", timestamp:"1",date:"1", user:"''' + self.username + '''"})<-[:Answered]-(user)
 		'''
