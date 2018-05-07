@@ -57,7 +57,7 @@ def home():
         u = User(session.get('username'))
         suggestions = u.getSuggestions()
         return render_template('home.html', posts=questions, interests=interests,
-                               pp=User(session['username']).getPP(), suggestions=suggestions, , myFunction=get_bookmarked)
+                               pp=User(session['username']).getPP(), suggestions=suggestions, myFunction=get_bookmarked)
     else:
         return redirect(url_for('login'))
 
@@ -219,15 +219,6 @@ def rem_bookmark():
         questiontitle = request.args.get('title')
         User(session['username']).remBookmark(questiontitle)
         return redirect(url_for('bookmarkPage'))
-    else:
-        return redirect(url_for('login'))
-    
-@app.route('/rem_bookmark_home', methods = ['GET'])
-def rem_bookmark_home():
-    if (session.get('username')):
-        questiontitle = request.args.get('title')
-        User(session['username']).remBookmark(questiontitle)
-        return redirect(url_for('home'))
     else:
         return redirect(url_for('login'))
 
