@@ -86,18 +86,6 @@
             padding-top: 5px;
         }
 
-        .one {
-            background-image: url('http://placehold.it/400x200');
-        }
-
-        .two {
-            background-image: url('http://placehold.it/200x200');
-        }
-
-        .three {
-            background-image: url('http://placehold.it/200x400');
-        }
-
         a:link {
             text-decoration: none;
             color: Grey;
@@ -178,10 +166,7 @@
                         </a>
                     </li>
                     <li>
-                        <a  href="#">Questions</a>
-                    </li>
-                    <li>
-                        <a href="#">Answers</a>
+                        <a  href="#" onclick="window.location.href='{{url_for('bookmarkedQuestions')}}'">Bookmarked Questions</a>
                     </li>
                     <li>
                         <form action="{{ url_for('searchpage') }}" method="post">

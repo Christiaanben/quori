@@ -168,3 +168,30 @@ def submit_answer(title):
     # question_answers = get_answers(questiontitle)
     # return render_template('question.html', question_answers=question_answers)
     return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP())
+
+@app.route('/add_bookmark', methods = ['GET'])
+def add_bookmark():
+    if (session.get('username')):
+        questiontitle = request.args.get('title')
+        User(session['username']).addBookmark(questiontitle)
+        return redirect(url_for('home'))
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/bookmarkedQuestions')
+def bookmarkedQuestions():
+    if (session.get('username')):    
+        return redirect(url_for('bookmarkPage'))
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/bookmarkPage', methods=['GET', 'POST'])
+def bookmarkPage():
+    if request.method == 'POST':
+        return redirect(url_for('searchpage', prefix=request.form['search']))
+    if (session.get('username')):
+        questions = User(session['username']).getBookmarkedQuestion()
+        interests = get_interests_titles()
+        return render_template('bookmark.html', posts=questions, interests=interests, pp=User(session['username']).getPP())
+    else:
+        return redirect(url_for('login'))
