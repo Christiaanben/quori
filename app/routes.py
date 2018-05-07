@@ -57,7 +57,7 @@ def home():
         u = User(session.get('username'))
         suggestions = u.getSuggestions()
         return render_template('home.html', posts=questions, interests=interests,
-                               pp=User(session['username']).getPP(), suggestions=suggestions)
+                               pp=User(session['username']).getPP(), suggestions=suggestions, , myFunction=get_bookmarked)
     else:
         return redirect(url_for('login'))
 
