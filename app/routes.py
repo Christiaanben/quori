@@ -83,6 +83,10 @@ def add_interests():
     return redirect(url_for('home'))
 
 
+@app.route('/follow/<name>', methods=['GET', 'POST'])
+def follow(name):
+    User(session['username']).addFollows(name)
+
 @app.route('/otherprofile/<name>', methods=['GET', 'POST'])
 def otherprofile(name):
     userinfo = User(name)

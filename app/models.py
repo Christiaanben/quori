@@ -22,6 +22,13 @@ class User:
         u = graph.find_one('User', 'username', self.username)
         return u
 
+    # wernich help!
+    def getFollow(self, username):
+        query = '''MATCH (a:User),(b:User)
+                WHERE a.username = \' ''' + self.username + '''\' AND b.username = \'''' + username + '''\'
+                Return a.username'''
+        graph.run(query)
+
     def addFollows(self, username):
         query = '''MATCH (a:User),(b:User)
         WHERE a.username = \' ''' + self.username + '''\' AND b.username = \'''' + username + '''\'
@@ -170,7 +177,7 @@ class User:
     def addInterest(self, interest):
         user = self.find()
         tag = graph.find_one('Tag', 'title', interest)
-        rel = Relationship(user, 'Likes', tag)
+        rel = Relationship(user, 'Follows', tag)
         graph.create(rel)
 
 

@@ -6,7 +6,7 @@
         <!-- ************************ Profile Pic *************************** -->
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
             <div class="centerp">
-                <img class="pic" src='../static/profilepictures/{{ user.getPP['p'] }}'>
+                <img class="pic" src='../static/profilepictures/{{ user.getPP()['p'] }}'>
                 {% if user.getUsername()['un'] == session.username %}
                     <form action="{{ url_for('uploader') }}" method="post" enctype="multipart/form-data">
                         <input type="file" name="pic" style="margin-bottom:20px">
@@ -50,8 +50,8 @@
                             <button type="submit" class=" niceButts spaceme btn btn-default" style="float:right;">Update
                                 bio
                             </button>
-                        {% elseif %}
-
+                        {% else %}
+                            <button type="button" class="niceButts spaceme btn btn-default" style="float:right;">Follow</button>
                         {% endif %}
                     </h3>
                 </div>
