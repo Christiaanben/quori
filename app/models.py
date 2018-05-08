@@ -144,13 +144,13 @@ class User:
     def get_questions(self):
         query = '''
             MATCH (u:User)-[:Asked]->(q:Question)
-            WHERE u.username='admin'
+            WHERE u.username={username}
             WITH COLLECT({ques:q}) AS row1
             MATCH (u:User)-[:Follows]->(:Tag)-[:Tagged]->(q:Question)
-            WHERE u.username='admin'
+            WHERE u.username={username}
             WITH row1+COLLECT({ques:q}) AS row2
             MATCH (u:User)-[:Follows]->(:User)-[:Asked]->(q:Question)
-            WHERE u.username='admin'
+            WHERE u.username={username}
             WITH row2+COLLECT({ques:q}) AS row3
             UNWIND row3 AS row
             WITH row.ques AS q
