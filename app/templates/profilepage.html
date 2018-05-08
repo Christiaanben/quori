@@ -23,14 +23,13 @@
                     <form action="{{ url_for('updatePassword') }}" method="post">
                         <div id="yeschange" display="none">
                             <br>
-                            <label for="passwordOld"><b>Old Password</b></label>
-                            <div class="loginlabel"></div>
+                            <label for="passwordOld"><b>Old Password</b></label><br>
                             <input type="password" placeholder="Old Password" id="password" name="passwordOld"><br><br>
-                            <label for="passwordNew"><b>New Password</b></label>
-                            <div class="loginlabel"></div>
+
+                            <label for="passwordNew"><b>New Password</b></label><br>
                             <input type="password" placeholder="New Password" id="password2" name="passwordNew"><br><br>
-                            <label for="passwordRetype"><b>Retype</b></label>
-                            <div class="loginlabel"></div>
+
+                            <label for="passwordRetype"><b>Retype</b></label><br>
                             <input type="password" placeholder="Retype Password" id="retypePassword2"
                                    name="passwordRetype"><br><br>
                             <button type="submit" style="width: 200px; margin-bottom: 20px;" class="niceButts btn btn-default">Update password</button>
