@@ -189,9 +189,7 @@ def upvote(answer, title):
     questiontitle = title
     question = find_one(questiontitle)
     answers = get_answers(questiontitle)
-    # question_answers = get_answers(questiontitle)
-    # return render_template('question.html', question_answers=question_answers)
-    return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP())
+    return redirect(url_for('question', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP()))
 
 @app.route('/removeupvote/<answer>/<title>')
 def removeupvote(answer, title):
@@ -199,9 +197,7 @@ def removeupvote(answer, title):
     questiontitle = title
     question = find_one(questiontitle)
     answers = get_answers(questiontitle)
-    # question_answers = get_answers(questiontitle)
-    # return render_template('question.html', question_answers=question_answers)
-    return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP())
+    return redirect(url_for('question', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP()))
 
 @app.route('/add_bookmark', methods = ['GET'])
 def add_bookmark():
