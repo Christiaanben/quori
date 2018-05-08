@@ -1,98 +1,91 @@
 {##}{% extends "usertemplate.html" %} {% block body %}
 
-    <div class="row" style="margin-left: 20px; margin-right: 20px; margin-top: 65px;">
-        <!-- Column for the feeds -->
-        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-            <div class="card">
-                <div class="card-body mediaFeeds">
-                    <h4 class="card-title">Feeds</h4>
-                    <hr>
-                    <h6 class="card-subtitle mb-2 text-muted"></h6>
-                    <a href="#" class="feedsColor">Top Questions</a>
-                    <br>
-                    <a href="#" class="feedsColor">New Questions</a>
-                    <br>
-                    <a href="#" class="feedsColor">Bookmarked Answers</a>
-                    <br>
-                    <a href="#" class="feedsColor">Followed Catagory 1</a>
-                    <br>
-                    <a href="#" class="feedsColor">Followed Catsgory 2</a>
-                    <br>
-                    <a href="#" class="feedsColor">Followed Catagory 3</a>
-                    <br>
-                </div>
-            </div>
-            <br>
-        </div>
-        <!-- Main column for the questions, id's need to be added to each card div depending on how much we want to display-->
-        <div class="col-lg-4 col-md-4 mediaQuestion">
-            <h4 class="card-title">Ask a Question:</h4>
-            <form class="form-horizontal" action="{{ url_for('add_question') }}" method="post" style="display: inline;">
-                <div class="form-group" style="width: 50% ">
-                    <input type="text" class="form-control input-sm" name="title" placeholder="title"
-                           style="width: 100%;">
-                </div>
-                <div class="form-group">
-                    <select id="Qtags" name="Qtags" class="form-control input-sm" multiple style="height: 55px">
-                        {% for interest in interests %}
-                            <option type="checkbox" name="{{ interest.tag }}"
-                                    value="{{ interest.tag }}">{{ interest.tag }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">
-                <textarea class="form-control" name="question" placeholder="What is your question"
-                          style="overflow: -moz-scrollbars-vertical; resize: vertical; max-height: 200px; min-height: 60px"></textarea>
-                </div>
-                <span class="input-group-btn">
-        <input type="submit" class="btn btn-default" value="Ask">
-      </span>
-            </form>
-
-            <br> {% for question in posts %}
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <a href="question?title={{ question[0]['title'] }}">{{ question[0]['title'] }}</a>
-                        {%if myFunction(question[0]['title']) == 0%}
-                        <a href="add_bookmark?title={{question[0]['title']}}"><img src="../static/bookmark.png"  alt= 'Bookmark' style = ' width: 40px;height: 40px;float: right;'></a>
-                        {%endif%}
-                        {%if myFunction(question[0]['title']) == 1%}
-                        <a href="rem_bookmark_home?title={{question[0]['title']}}"><img src="../static/bookmarked.png"  alt= 'Bookmark' style = ' width: 40px;height: 40px;float: right;'></a>
-                        {%endif%}
-                    </h5>
-{#                    <h6 class="card-subtitle mb-2 text-muted">{{ ", ".join(question[0]['tags']) }}</h6> #}
-                    <p style="word-wrap:break-word;">{{ question[0]['description'] }}</p>
-                    <div>
-                        <a class="btn btn-secondary" href="question?title={{ question[0]['title'] }}"
-                           role="button">Answer</a>
-                    </div>
-
-                </div>
-            </div>
-            <br> {% endfor %}
-        </div>
-        <!-- Column for the suggestions -->
-        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-            <div class="card">
-                <div class="card-body mediaSuggetions">
-                    <h4 class="card-title">Suggestions</h4>
-                    <hr>
-                    <h6 class="card-subtitle mb-2 text-muted"></h6>
-                    {% for user in suggestions %}
-                    <div class="d-inline-flex align-items-center" onclick="window.location.href='{{url_for('profile',name=user[0]['username'])}}'">
-                        <img alt="Profile Picture" src='{{url_for('static',filename="profilepictures/"+user[0]['pp'])}}' class="user">
-                        <a href="#" style="font-size:10px; padding-left:5px" class="sugColor">
-                            {{ user[0]['username'] }}
-                            <br>{{ user[1] }} Upvote(s) on Answers
-                        </a>
-                        <br>
-                    </div>
-                    <br>
-                    {% endfor %}
-                </div>
-            </div>
-            <br>
-        </div>
+<div class="row" style="margin-left: 20px; margin-right: 20px; margin-top: 65px;">
+  <!-- Column for the feeds -->
+  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+    <div class="card">
+      <div class="card-body mediaFeeds">
+        <h4 class="card-title">Feeds</h4>
+        <hr>
+        <h6 class="card-subtitle mb-2 text-muted"></h6>
+        <a href="#" class="feedsColor">Top Questions</a>
+        <br>
+        <a href="#" class="feedsColor">New Questions</a>
+        <br>
+        <a href="#" class="feedsColor">Bookmarked Answers</a>
+        <br>
+        <a href="#" class="feedsColor">Followed Catagory 1</a>
+        <br>
+        <a href="#" class="feedsColor">Followed Catsgory 2</a>
+        <br>
+        <a href="#" class="feedsColor">Followed Catagory 3</a>
+        <br>
+      </div>
     </div>
-{% endblock %}
+    <br>
+  </div>
+  <!-- Main column for the questions, id's need to be added to each card div depending on how much we want to display-->
+  <div class="col-lg-4 col-md-4 mediaQuestion">
+    <h4 class="card-title">Ask a Question:</h4>
+    <form class="input-group" action="{{ url_for('add_question') }}" method="post" style="display: inline;">
+      <input type="text" class="form-control" name="title" placeholder="title" width="300px" style="margin-bottom: 20px; padding: 20px; border-radius: 3px;">
+      <textarea class="form-control txtAreaQuestion" name="question" placeholder="What is your question" style=" margin-bottom: 12px; padding: 20px; border-radius: 3px; height: 150px; resize: none;"></textarea>
+      <select id="Qtags" name="Qtags" multiple>
+                    {% for interest in interests %}
+                        <option type="checkbox" name="{{ interest.tag }}"
+                                value="{{ interest.tag }}">{{ interest.tag }}</option>
+                    {% endfor %}
+                </select>
+      <span class="input-group-btn">
+        <input type="submit" class="btn btn-secondary" value="Ask"
+               style="padding: 12px; width: 90px; border-radius: 4px;">
+      </span>
+    </form>
+    <br>
+    <hr>
+    <br> {% for question in posts %}
+    <div class="panel panel-default">
+      <div class="panel-heading" id="T1" style="height:60px">
+        <h5>
+            <a href="question?title={{ question[0]['title'] }}">{{ question[0]['title'] }}</a>
+            {%if myFunction(question[0]['title']) == 0%}
+            <a href="add_bookmark?title={{question[0]['title']}}"><img src="../static/bookmark.png"  alt= 'Bookmark' style = " width: 40px;height: 40px;float: right; margin-top:-10px"></a>
+            {%endif%}
+            {%if myFunction(question[0]['title']) == 1%}
+            <a href="rem_bookmark_home?title={{question[0]['title']}}"><img src="../static/bookmarked.png"  alt= 'Bookmark' style = " width: 40px;height: 40px;float: right; margin-top:-10px"></a>
+            {%endif%}
+       </h5>
+      </div>
+      <div class="panel-body" style="padding-left:1em">
+        {#
+        <h6 class="">{{ ", ".join(question[0]['tags']) }}</h6> #}
+        <p style="word-wrap:break-word;">{{ question[0]['description'] }}</p>
+        <div>
+          <a class="btn btn-secondary" href="question?title={{ question[0]['title'] }}" role="button">Answer</a>
+        </div>
+      </div>
+    </div>
+    <br> {% endfor %}
+    <!-- Column for the suggestions -->
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+      <div class="card">
+        <div class="card-body mediaSuggetions">
+          <h4 class="card-title">Suggestions</h4>
+          <hr>
+          <h6 class="card-subtitle mb-2 text-muted"></h6> {% for user in suggestions %}
+          <div class="d-inline-flex align-items-center" onclick="window.location.href='{{url_for('profile',name=user[0]['username'])}}'">
+            <img alt="Profile Picture" src='{{url_for(' static ',filename="profilepictures/"+user[0]['pp '])}}' class="user">
+            <a href="#" style="font-size:10px; padding-left:5px" class="sugColor">
+                {{ user[0]['username'] }}
+                <br>{{ user[1] }} Upvote(s) on Answers
+                </a>
+            <br>
+          </div>
+          <br>
+          {% endfor %}
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
+  {% endblock %}
