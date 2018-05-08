@@ -164,9 +164,10 @@ def uploader():
 
 @app.route('/question', methods=['GET', 'POST'])
 def question():
+    user = User(session['username']).username
     questiontitle = request.args.get('title')
     question = find_one(questiontitle)
-    answers = get_answers(questiontitle)
+    answers = get_answers(questiontitle, user)
     # question_answers = get_answers(questiontitle)
     # return render_template('question.html', question_answers=question_answers)
     return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers,
@@ -181,7 +182,7 @@ def submit_answer(title):
     me = user.submit_answer(answer, title)
     questiontitle = title
     question = find_one(questiontitle)
-    answers = get_answers(questiontitle)
+    answers = get_answers(questiontitle, user.username)
     # question_answers = get_answers(questiontitle)
     # return render_template('question.html', question_answers=question_answers)
     return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers,
@@ -202,18 +203,20 @@ def unfollow(name):
 
 @app.route('/upvote/<answer>/<title>')
 def upvote(answer, title):
-    User(session['username']).addUpvoted(answer)
+    user = User(session['username'])
+    user.addUpvoted(answer)
     questiontitle = title
     question = find_one(questiontitle)
-    answers = get_answers(questiontitle)
+    answers = get_answers(questiontitle, user.username)
     return redirect(url_for('question', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP()))
 
 @app.route('/removeupvote/<answer>/<title>')
 def removeupvote(answer, title):
-    User(session['username']).removeUpvoted(answer)
+    user = User(session['username'])
+    user.removeUpvoted(answer)
     questiontitle = title
     question = find_one(questiontitle)
-    answers = get_answers(questiontitle)
+    answers = get_answers(questiontitle, user.username)
     return redirect(url_for('question', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP()))
 
 @app.route('/add_bookmark', methods = ['GET'])
