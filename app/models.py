@@ -136,8 +136,8 @@ class User:
 
     def get_questions(self):
         queryCheck = "MATCH (u:User)-[:Follows]->(p:User) WHERE u.username = {username} RETURN count(p)"
-         result = graph.run(queryCheck, username = self.username)
-         if (result.next()['count(p)'] == 0):
+        result = graph.run(queryCheck, username = self.username)
+        if (result.next()['count(p)'] == 0):
              query = '''
              MATCH (u:User)-[:Asked]->(q:Question)
              WHERE u.username={username}
@@ -151,7 +151,7 @@ class User:
              ORDER BY q.timestamp DESC
              LIMIT 10
          '''
-         else:
+        else:
              query = '''
                  MATCH (u:User)-[:Asked]->(q:Question)
                  WHERE u.username={username}
@@ -168,7 +168,7 @@ class User:
                  ORDER BY q.timestamp DESC
                  LIMIT 10
              '''
-    return graph.run(query, username=self.username)
+        return graph.run(query, username=self.username)
 
     def addInterest(self, interest):
         user = self.find()
