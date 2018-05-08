@@ -177,13 +177,11 @@ def follow(name):
     User(session['username']).addFollows(name)
     return redirect(url_for('profile', name=name))
 
-
 @app.route('/unfollow/<name>', methods=['GET', 'POST'])
 def unfollow(name):
     print(name)
     User(session['username']).removeFollows(name)
     return redirect(url_for('profile', name=name))
-
 
 @app.route('/upvote/<answer>/<title>')
 def upvote(answer, title):
@@ -191,9 +189,7 @@ def upvote(answer, title):
     questiontitle = title
     question = find_one(questiontitle)
     answers = get_answers(questiontitle)
-    return redirect(url_for('question', title=questiontitle, htmlquestion=question, htmlanswers=answers,
-                            pp=User(session['username']).getPP()))
-
+    return redirect(url_for('question', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP()))
 
 @app.route('/removeupvote/<answer>/<title>')
 def removeupvote(answer, title):
@@ -201,19 +197,7 @@ def removeupvote(answer, title):
     questiontitle = title
     question = find_one(questiontitle)
     answers = get_answers(questiontitle)
-    return redirect(url_for('question', title=questiontitle, htmlquestion=question, htmlanswers=answers,
-                            pp=User(session['username']).getPP()))
-
-
-@app.route('/add_bookmark', methods=['GET'])
-def add_bookmark():
-    if (session.get('username')):
-        questiontitle = request.args.get('title')
-        User(session['username']).addBookmark(questiontitle)
-        return redirect(url_for('home'))
-    else:
-        return redirect(url_for('login'))
-
+    return redirect(url_for('question', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP()))
 
 @app.route('/rem_bookmark', methods=['GET'])
 def rem_bookmark():
