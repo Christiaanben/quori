@@ -146,16 +146,19 @@ def updatePassword():
 @app.route('/uploader', methods=['POST'])
 def uploader():
     if request.method == 'POST':
-        f = request.files['pic']
-        full_path = os.path.realpath(__file__)
-        path, filename = os.path.split(full_path)
-        filepath = os.path.join(path + '/static/profilepictures', f.filename)
-        print(filepath)
-        if os.path.isfile(filepath):
-            os.remove(filepath)
-        f.save(filepath)
-        User(session['username']).updateProfilePic(f.filename)
-        session['profilepic'] = f.filename
+        try:
+            f = request.files['pic']
+            full_path = os.path.realpath(__file__)
+            path, filename = os.path.split(full_path)
+            filepath = os.path.join(path + '/static/profilepictures', f.filename)
+            print(filepath)
+            if os.path.isfile(filepath):
+                os.remove(filepath)
+            f.save(filepath)
+            User(session['username']).updateProfilePic(f.filename)
+            session['profilepic'] = f.filename
+        except:
+            print('File not found!')
         return redirect(url_for('profile', name=session['username']))
 
 
