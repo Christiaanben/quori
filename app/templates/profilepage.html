@@ -41,7 +41,7 @@
         <!-- %%%%%%%%%%%% Main column for the Bio%%%%%%%%%%%%%%%-->
         <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
             <div class="panel panel-default">
-                <h2 STYLE="margin-top: 1em;">{{ user.getUsername()['un'] }}</h2>
+                <h2 STYLE="margin-top: 7px;">{{ user.getUsername()['un'] }}</h2>
                 {% if user.getUsername()['un'] == session.username %}
                     <form action="{{ url_for('updateBio') }}" method="post">
                 {% endif %}
