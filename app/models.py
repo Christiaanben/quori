@@ -10,6 +10,7 @@ import uuid
 
 graph = Graph("http://localhost:7474/db/data/", user='neo4j', password='1234')
 
+
 class User:
     def __init__(self, username):
         self.username = username
@@ -49,7 +50,7 @@ class User:
 
     def removeUpvoted(self, title):
         query = '''
-		MATCH (n:User{username: "'''+self.username+'''" })-[r:Upvoted]->(:Answer{title:"'''+title+'''"})
+		MATCH (n:User{username: "''' + self.username + '''" })-[r:Upvoted]->(:Answer{title:"''' + title + '''"})
 		DELETE r'''
         graph.run(query)
 
@@ -136,9 +137,9 @@ class User:
 
     def get_questions(self):
         queryCheck = "MATCH (u:User)-[:Follows]->(p:User) WHERE u.username = {username} RETURN count(p)"
-        result = graph.run(queryCheck, username = self.username)
+        result = graph.run(queryCheck, username=self.username)
         if (result.next()['count(p)'] == 0):
-             query = '''
+            query = '''
              MATCH (u:User)-[:Asked]->(q:Question)
              WHERE u.username={username}
              WITH COLLECT({ques:q}) AS row1
@@ -152,7 +153,7 @@ class User:
              LIMIT 10
          '''
         else:
-             query = '''
+            query = '''
                  MATCH (u:User)-[:Asked]->(q:Question)
                  WHERE u.username={username}
                  WITH COLLECT({ques:q}) AS row1
@@ -186,14 +187,14 @@ class User:
 
     def getSuggestions(self):
         query = '''
-        MATCH (myself:User)-[:Follows]->(following:User),
-        (following)-[:Follows]->(notFollowing:User),
-        (:User)-[up:Upvoted]-(:Answer)-[:Answered]-(notFollowing)
-        WHERE myself.username={username} AND NOT (myself)-[:Follows]->(notFollowing)
-        RETURN notFollowing, COUNT(up)
-        ORDER BY COUNT(up) DESC
-        LIMIT 5
-        '''
+            MATCH (myself:User)-[:Follows]->(following:User),
+            (following)-[:Follows]->(notFollowing:User),
+            (:User)-[up:Upvoted]-(:Answer)-[:Answered]-(notFollowing)
+            WHERE myself.username={username} AND NOT (myself)-[:Follows]->(notFollowing)
+            RETURN notFollowing, COUNT(up)
+            ORDER BY COUNT(up) DESC
+            LIMIT 5
+            '''
         return graph.run(query, username=self.username)
 
     def addBookmark(self, questionTitle):
@@ -204,10 +205,10 @@ class User:
 
     def remBookmark(self, questionTitle):
         query = '''
-                MATCH (u:User)-[r:Bookmarked]->(q:Question)
-                WHERE u.username = {username} AND q.title = {question_title}
-                DELETE r
-                '''
+                    MATCH (u:User)-[r:Bookmarked]->(q:Question)
+                    WHERE u.username = {username} AND q.title = {question_title}
+                    DELETE r
+                    '''
         graph.run(query, username=self.username, question_title=questionTitle)
 
     def getBookmarked(self, question_title):
