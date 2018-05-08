@@ -38,13 +38,19 @@
             </div>
             <div class="panel-body" style="padding-left:1em">
                 <p style="word-wrap: break-word;">{{ row.title }}</p>
-                <hr> UPVOTES: {{row.upvotes}}<br>
+                <!--{{row.userupvoted}}-->
+                <!--{%if row.userupvoted == 0%}-->
+              <!--{%endif%}-->
                 <form action="{{url_for('upvote', answer = row.title, title = htmlquestion.title)}}">
-                    <input type="submit" class="btn btn-success" value="UPVOTE"><br>
+                    <input type="submit" class="btn btn-success" value="UPVOTE">
                 </form>
+
+                <!--{%if row.userupvoted == 1%}-->
+                <!--                {%endif%}-->
                 <form action="{{url_for('removeupvote', answer = row.title, title = htmlquestion.title)}}">
-                    <input type="submit" class="btn btn-danger" value="REMOVE UPVOTE">
+                    <input type="submit" class="btn btn-danger" value="UNUPVOTE">
                 </form>
+                <p>UPVOTES: {{row.upvotes}}</p>
             </div>
         </div>
         <br>
