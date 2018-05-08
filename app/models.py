@@ -66,16 +66,14 @@ class User:
         +self.username + '\' AND b.username = \'' + username + '\' DELETE r'
         graph.run(query)
 
+    def removeUpvoted(self, title):
+        query = '''
+		MATCH (n:User{username: "'''+self.username+'''" })-[r:Upvoted]->(:Answer{title:"'''+title+'''"})
+		DELETE r'''
+        print query
+        graph.run(query)
     # MATCH (a:User)-[r:Follows]-(b:User)
     # WHERE a.username = 'Maan' AND b.username = 'Patrick'
-    # DELETE r
-
-    def removeFollows(self, user):
-        query = '''MATCH (u1:User)-[f:Follows]-(u2:User) WHERE u1.username={selfun} AND u2.username={otherusern} DELETE f'''
-        graph.run(query, selfun=self.username, otherusern=user)
-
-        # MATCH (a:User)-[r:Upvoted]-(b:Answer)
-    # WHERE a.username = 'Maan' AND b.id = 'A5'
     # DELETE r
 
     def removePP(self):
