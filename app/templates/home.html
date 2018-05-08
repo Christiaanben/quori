@@ -62,7 +62,7 @@
                         {%endif%}
                     </h5>
 {#                    <h6 class="card-subtitle mb-2 text-muted">{{ ", ".join(question[0]['tags']) }}</h6> #}
-                    <p>{{ question[0]['description'] }}</p>
+                    <p style="word-wrap:break-word;">{{ question[0]['description'] }}</p>
                     <div>
                         <a class="btn btn-secondary" href="question?title={{ question[0]['title'] }}"
                            role="button">Answer</a>
