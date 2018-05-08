@@ -136,24 +136,39 @@ class User:
 
     def get_questions(self):
         queryCheck = "MATCH (u:User)-[:Follows]->(p:User) WHERE u.username = {username} RETURN count(p)"
-        result = graph.run(queryCheck, username = self.username)
-        query = '''
-	MATCH (u:User)-[:Asked]->(q:Question)
-	WHERE u.username={username}
-	WITH COLLECT({ques:q}) AS row1
-	MATCH (u:User)-[:Follows]->(:Tag)-[:Tagged]->(q:Question)
-	WHERE u.username={username}
-	WITH row1+COLLECT({ques:q}) AS row2
-	MATCH (u:User)-[:Follows]->(:User)-[:Asked]->(q:Question)
-	WHERE u.username={username}
-	WITH row2+COLLECT({ques:q}) AS row3
-	UNWIND row3 AS row
-	WITH row.ques AS q
-	RETURN DISTINCT q
-	ORDER BY q.timestamp DESC
-	LIMIT 10
-        '''
-        return graph.run(query, username=self.username)
+         result = graph.run(queryCheck, username = self.username)
+         if (result.next()['count(p)'] == 0):
+             query = '''
+             MATCH (u:User)-[:Asked]->(q:Question)
+             WHERE u.username={username}
+             WITH COLLECT({ques:q}) AS row1
+             MATCH (u:User)-[:Follows]->(:Tag)-[:Tagged]->(q:Question)
+             WHERE u.username={username}
+             WITH row1+COLLECT({ques:q}) AS row2           
+             UNWIND row2 AS row
+             WITH row.ques AS q
+             RETURN DISTINCT q
+             ORDER BY q.timestamp DESC
+             LIMIT 10
+         '''
+         else:
+             query = '''
+                 MATCH (u:User)-[:Asked]->(q:Question)
+                 WHERE u.username={username}
+                 WITH COLLECT({ques:q}) AS row1
+                 MATCH (u:User)-[:Follows]->(:Tag)-[:Tagged]->(q:Question)
+                 WHERE u.username={username}
+                 WITH row1+COLLECT({ques:q}) AS row2
+                 MATCH (u:User)-[:Follows]->(:User)-[:Asked]->(q:Question)
+                 WHERE u.username={username}
+                 WITH row2+COLLECT({ques:q}) AS row3
+                 UNWIND row3 AS row
+                 WITH row.ques AS q
+                 RETURN DISTINCT q
+                 ORDER BY q.timestamp DESC
+                 LIMIT 10
+             '''
+    return graph.run(query, username=self.username)
 
     def addInterest(self, interest):
         user = self.find()
