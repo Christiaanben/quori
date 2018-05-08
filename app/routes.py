@@ -135,7 +135,7 @@ def updatePassword():
             if(User(session['username']).editPassword(oldPassword, newPassword, retypePassword) == False):
                 error = "Your new passwords do not match."
         else:
-            error = "Your current password is incorrect."           
+            error = "Changing password was unsuccessful."           
             
     return redirect(url_for('profile', name=session['username'], error = error))
 
