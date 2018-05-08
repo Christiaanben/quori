@@ -44,17 +44,10 @@ class User:
 		MATCH (a:User), (b:Answer) WHERE a.username = "''' + self.username + '''" AND b.title =  "''' + title + '''" MERGE (a)-[r:Upvoted]->(b)'''
         graph.run(query)
 
-    # WHERE a.username = 'Ricky' AND b.id = 'A2'
-    # CREATE (a)-[r:Upvoted]->(b)
-
     def addPP(self):
         query = 'MATCH (a:User) WHERE a.username = \''
         + self.username + '\' SET a.pp = a.username + \'.jpg\''
         graph.run(query)
-
-    # MATCH (a:User)
-    # WHERE a.username = 'Maan'
-    # SET a.pp = a.username
 
     def removeFollows(self, username):
         query = 'MATCH (a:User)-[r:Follows]-(b:User) WHERE a.username = \''
@@ -66,17 +59,11 @@ class User:
 		MATCH (n:User{username: "'''+self.username+'''" })-[r:Upvoted]->(:Answer{title:"'''+title+'''"})
 		DELETE r'''
         graph.run(query)
-    # MATCH (a:User)-[r:Follows]-(b:User)
-    # WHERE a.username = 'Maan' AND b.username = 'Patrick'
-    # DELETE r
 
     def removePP(self):
         query = 'MATCH (a:User) WHERE a.username = \''
         + self.username + '\' SET a.pp = \'temp.jpg\''
         graph.run(query)
-        # MATCH (a:User)
-        # WHERE a.username = 'Maan'
-        # SET a.pp = 'temp.jpg'
         return 0
 
     def getBio(self):
@@ -91,9 +78,6 @@ class User:
     def editBio(self, bio):
         query = 'MATCH (a:User) WHERE a.username = {username} SET a.bio = {bio}'
         graph.run(query, username=self.username, bio=bio)
-        # MATCH (a:User)
-        # WHERE a.username = 'Maan'
-        # SET a.bio = 'My new bio!'
 
     def editPassword(self, passwordOld, passwordNew, passwordRetype):
         if (self.verify_password(passwordOld)):
@@ -103,9 +87,6 @@ class User:
             graph.run(query, username=self.username,
                       passwordNew=bcrypt.encrypt(passwordNew))
             return True
-        # MATCH (a:User)
-        # WHERE a.username = 'Maan'
-        # SET a.password = 'badPassword42'
         else:
             return False
 
