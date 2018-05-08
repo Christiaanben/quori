@@ -11,12 +11,12 @@
                     <form action="{{ url_for('uploader') }}" method="post" enctype="multipart/form-data">
                         <input type="file" name="pic" style="margin-bottom:20px">
                         <br>
-                        <input type="submit" class=" niceButts spaceme btn btn-default" value="Upload pic">
+                        <input type="submit" style="width: 200px;" class=" niceButts spaceme btn btn-default" value="Upload pic">
                     </form>
                     <br>
-                    <button type="button" style="width: fit-content; margin-bottom: 1em;" class="niceButts btn btn-default" onclick="window.location.href='{{url_for('interest')}}'">Change interests</button>
+                    <button type="button" style="width: 200px; margin-bottom: 1em;" class="niceButts btn btn-default" onclick="window.location.href='{{url_for('interest')}}'">Change interests</button>
                     <br>
-                    <button onclick="showPassword()" style="width: fit-content" class="niceButts spaceme btn btn-default">Change password</button>
+                    <button onclick="showPassword()" style="width: 200px" class="niceButts spaceme btn btn-default">Change password</button>
                     {% if error %}
                     <p style = "color: red;"><strong>Error:</strong> {{ error }}</p>
                     {% endif %}
