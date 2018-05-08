@@ -135,7 +135,7 @@ def uploader():
         full_path = os.path.realpath(__file__)
         path, filename = os.path.split(full_path)
         print(path + ' --> ' + filename + "\n")
-        filepath = os.path.join(path + '\static\profilepictures', f.filename)
+        filepath = os.path.join(path + '\\static\\profilepictures', f.filename)
         print(filepath)
         if os.path.isfile(filepath):
             os.remove(filepath)
