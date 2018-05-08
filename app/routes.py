@@ -91,6 +91,7 @@ def profile(name):
     results = User(session['username']).checkFollow(name)
     return render_template('profilepage.html', user=userinfo, following=results, pp=User(session['username']).getPP())
 
+
 @app.route('/add_question', methods=['POST'])
 def add_question():
     title = request.form['title']
@@ -134,18 +135,17 @@ def uploader():
         f = request.files['pic']
         full_path = os.path.realpath(__file__)
         path, filename = os.path.split(full_path)
-        print(path + ' --> ' + filename + "\n")
-        filepath = os.path.join(path + '\\static\\profilepictures', f.filename)
+        filepath = os.path.join(path + '/static/profilepictures', f.filename)
         print(filepath)
         if os.path.isfile(filepath):
             os.remove(filepath)
-            f.save(filepath)
-            User(session['username']).updateProfilePic(f.filename)
-            session['profilepic'] = f.filename
+        f.save(filepath)
+        User(session['username']).updateProfilePic(f.filename)
+        session['profilepic'] = f.filename
         return redirect(url_for('profile', name=session['username']))
 
 
-@app.route('/question', methods=['GET','POST'])
+@app.route('/question', methods=['GET', 'POST'])
 def question():
     questiontitle = request.args.get('title')
     question = find_one(questiontitle)
@@ -177,11 +177,13 @@ def follow(name):
     User(session['username']).addFollows(name)
     return redirect(url_for('profile', name=name))
 
+
 @app.route('/unfollow/<name>', methods=['GET', 'POST'])
 def unfollow(name):
     print(name)
     User(session['username']).removeFollows(name)
     return redirect(url_for('profile', name=name))
+
 
 @app.route('/upvote/<answer>/<title>')
 def upvote(answer, title):
@@ -189,7 +191,9 @@ def upvote(answer, title):
     questiontitle = title
     question = find_one(questiontitle)
     answers = get_answers(questiontitle)
-    return redirect(url_for('question', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP()))
+    return redirect(url_for('question', title=questiontitle, htmlquestion=question, htmlanswers=answers,
+                            pp=User(session['username']).getPP()))
+
 
 @app.route('/removeupvote/<answer>/<title>')
 def removeupvote(answer, title):
@@ -197,9 +201,11 @@ def removeupvote(answer, title):
     questiontitle = title
     question = find_one(questiontitle)
     answers = get_answers(questiontitle)
-    return redirect(url_for('question', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP()))
+    return redirect(url_for('question', title=questiontitle, htmlquestion=question, htmlanswers=answers,
+                            pp=User(session['username']).getPP()))
 
-@app.route('/add_bookmark', methods = ['GET'])
+
+@app.route('/add_bookmark', methods=['GET'])
 def add_bookmark():
     if (session.get('username')):
         questiontitle = request.args.get('title')
@@ -207,8 +213,9 @@ def add_bookmark():
         return redirect(url_for('home'))
     else:
         return redirect(url_for('login'))
-   
-@app.route('/rem_bookmark', methods = ['GET'])
+
+
+@app.route('/rem_bookmark', methods=['GET'])
 def rem_bookmark():
     if (session.get('username')):
         questiontitle = request.args.get('title')
@@ -217,12 +224,14 @@ def rem_bookmark():
     else:
         return redirect(url_for('login'))
 
+
 @app.route('/bookmarkedQuestions')
 def bookmarkedQuestions():
     if (session.get('username')):
         return redirect(url_for('bookmarkPage'))
     else:
         return redirect(url_for('login'))
+
 
 @app.route('/bookmarkPage', methods=['GET', 'POST'])
 def bookmarkPage():
@@ -231,14 +240,16 @@ def bookmarkPage():
     if (session.get('username')):
         questions = User(session['username']).getBookmarkedQuestion()
         interests = get_interests_titles()
-        return render_template('bookmark.html', posts=questions, interests=interests, pp=User(session['username']).getPP())
+        return render_template('bookmark.html', posts=questions, interests=interests,
+                               pp=User(session['username']).getPP())
     else:
         return redirect(url_for('login'))
-  
-#@app.route('/get_bookmarked/<title>')
+
+
+# @app.route('/get_bookmarked/<title>')
 def get_bookmarked(title):
-    if (session.get('username')):        
+    if (session.get('username')):
         return User(session['username']).getBookmarked(title)
-        
+
     else:
         return redirect(url_for('login'))
