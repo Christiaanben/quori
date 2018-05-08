@@ -43,10 +43,9 @@ class User:
         + self.username + '\' SET a.pp = a.username + \'.jpg\''
         graph.run(query)
 
-    def removeFollows(self, username):
-        query = 'MATCH (a:User)-[r:Follows]-(b:User) WHERE a.username = \''
-        +self.username + '\' AND b.username = \'' + username + '\' DELETE r'
-        graph.run(query)
+    def removeFollows(self, user):
+        query = '''MATCH (u1:User)-[f:Follows]-(u2:User) WHERE u1.username={selfun} AND u2.username={otherusern} DELETE f'''
+        graph.run(query, selfun=self.username, otherusern=user)
 
     def removeUpvoted(self, title):
         query = '''
@@ -137,24 +136,39 @@ class User:
 
     def get_questions(self):
         queryCheck = "MATCH (u:User)-[:Follows]->(p:User) WHERE u.username = {username} RETURN count(p)"
-        result = graph.run(queryCheck, username = self.username)
-        query = '''
-        MATCH (u:User)-[:Asked]->(q:Question)
-        WHERE u.username={username}
-        WITH COLLECT({ques:q}) AS row1
-        MATCH (u:User)-[:Follows]->(:Tag)-[:Tagged]->(q:Question)
-        WHERE u.username={username}
-        WITH row1+COLLECT({ques:q}) AS row2
-        MATCH (u:User)-[:Follows]->(:User)-[:Asked]->(q:Question)
-        WHERE u.username={username}
-        WITH row2+COLLECT({ques:q}) AS row3
-        UNWIND row3 AS row
-        WITH row.ques AS q
-        RETURN DISTINCT q
-        ORDER BY q.timestamp DESC
-        LIMIT 10
-        '''
-        return graph.run(query, username=self.username)
+         result = graph.run(queryCheck, username = self.username)
+         if (result.next()['count(p)'] == 0):
+             query = '''
+             MATCH (u:User)-[:Asked]->(q:Question)
+             WHERE u.username={username}
+             WITH COLLECT({ques:q}) AS row1
+             MATCH (u:User)-[:Follows]->(:Tag)-[:Tagged]->(q:Question)
+             WHERE u.username={username}
+             WITH row1+COLLECT({ques:q}) AS row2
+             UNWIND row2 AS row
+             WITH row.ques AS q
+             RETURN DISTINCT q
+             ORDER BY q.timestamp DESC
+             LIMIT 10
+         '''
+         else:
+             query = '''
+                 MATCH (u:User)-[:Asked]->(q:Question)
+                 WHERE u.username={username}
+                 WITH COLLECT({ques:q}) AS row1
+                 MATCH (u:User)-[:Follows]->(:Tag)-[:Tagged]->(q:Question)
+                 WHERE u.username={username}
+                 WITH row1+COLLECT({ques:q}) AS row2
+                 MATCH (u:User)-[:Follows]->(:User)-[:Asked]->(q:Question)
+                 WHERE u.username={username}
+                 WITH row2+COLLECT({ques:q}) AS row3
+                 UNWIND row3 AS row
+                 WITH row.ques AS q
+                 RETURN DISTINCT q
+                 ORDER BY q.timestamp DESC
+                 LIMIT 10
+             '''
+    return graph.run(query, username=self.username)
 
     def addInterest(self, interest):
         user = self.find()
