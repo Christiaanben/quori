@@ -46,7 +46,7 @@
                     <form action="{{ url_for('updateBio') }}" method="post">
                 {% endif %}
                 <div class="panel-heading" id="T1">
-                    <h3 class="spaceme panel-title" style="margin-top:20px;">
+                    <h3 class="spaceme panel-title">
                         <span>Your Bio</span>
                         {% if user.getUsername()['un'] == session.username %}
                             <button type="submit" class=" niceButts spaceme btn btn-default" style="width: fit-content; float:right;">Update
