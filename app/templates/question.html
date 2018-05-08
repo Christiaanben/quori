@@ -7,7 +7,7 @@
         <hr>
         <div class="card">
             <div class="card-body">
-                <p name="question">{{ htmlquestion.description }}</p>
+                <p style="word-wrap: break-word;" name="question">{{ htmlquestion.description }}</p>
                 <hr>
             </div>
         </div>
@@ -37,7 +37,7 @@
                 <br>
             </div>
             <div class="panel-body" style="padding-left:1em">
-                <p>{{ row.title }}</p>
+                <p style="word-wrap: break-word;">{{ row.title }}</p>
                 <hr> UPVOTES: {{row.upvotes}}<br>
                 <form action="{{url_for('upvote', answer = row.title, title = htmlquestion.title)}}">
                     <input type="submit" class="btn btn-success" value="UPVOTE"><br>
