@@ -24,11 +24,21 @@ class User:
         u = graph.find_one('User', 'username', self.username)
         return u
 
-    def addFollows(self, username):
+    def addFollows(self, user):
         query = '''MATCH (a:User),(b:User)
-        WHERE a.username = \' ''' + self.username + '''\' AND b.username = \'''' + username + '''\'
-		CREATE (a)-[r:Follows]->(b)'''
-        graph.run(query)
+        WHERE a.username = {selfusername} AND b.username = {otheruser} MERGE (a)-[r:Follows]->(b)'''
+        graph.run(query, selfusername=self.username, otheruser=user)
+        # MATCH (a:User),(b:User)
+
+    def checkFollow(self, user):
+        query = '''MATCH (u1:User)-[:Follows]-(u2:User) WHERE u1.username={selfun} AND u2.username={otherusern} Return u1'''
+        result = graph.run(query, selfun=self.username, otherusern=user)
+        try:
+            bio = result.next()
+            return 1
+        except StopIteration:
+            return 0
+
         # MATCH (a:User),(b:User)
 
     # WHERE a.username = 'Ricky' AND b.username = 'Maan'
@@ -36,7 +46,7 @@ class User:
 
     def addUpvoted(self, title):
         query = '''
-		MATCH (a:User), (b:Answer) WHERE a.username = "'''+self.username+'''" AND b.title =  "'''+title +'''" MERGE (a)-[r:Upvoted]->(b)'''
+		MATCH (a:User), (b:Answer) WHERE a.username = "''' + self.username + '''" AND b.title =  "''' + title + '''" MERGE (a)-[r:Upvoted]->(b)'''
         graph.run(query)
 
     # WHERE a.username = 'Ricky' AND b.id = 'A2'
@@ -60,13 +70,11 @@ class User:
     # WHERE a.username = 'Maan' AND b.username = 'Patrick'
     # DELETE r
 
-    def removeUpvoted(self, title):
-        query = '''
-		MATCH (n:User{username: "'''+self.username+'''" })-[r:Upvoted]->(:Answer{title:"'''+title+'''"})
-		DELETE r'''
-        graph.run(query)
+    def removeFollows(self, user):
+        query = '''MATCH (u1:User)-[f:Follows]-(u2:User) WHERE u1.username={selfun} AND u2.username={otherusern} DELETE f'''
+        graph.run(query, selfun=self.username, otherusern=user)
 
-    # MATCH (a:User)-[r:Upvoted]-(b:Answer)
+        # MATCH (a:User)-[r:Upvoted]-(b:Answer)
     # WHERE a.username = 'Maan' AND b.id = 'A5'
     # DELETE r
 
@@ -153,7 +161,7 @@ class User:
         graph.create(rel)
 
     def submit_answer(self, answer, question):
-        if answer=="":
+        if answer == "":
             return
         query = '''
 			MATCH (question:Question{title:"''' + question + '''"}) MATCH(user:User {username:"''' + self.username + '''"})  MERGE(question)<-[:AnswerTo]-(answer:Answer{id:'A9',title: "''' + answer + '''", timestamp:"1",date:"1", user:"''' + self.username + '''"})<-[:Answered]-(user)
@@ -204,31 +212,29 @@ class User:
         LIMIT 5
         '''
         return graph.run(query, username=self.username)
-    
+
     def addBookmark(self, questionTitle):
         user = self.find()
         question = find_one(questionTitle)
-        rel = Relationship(user,'Bookmarked', question)
+        rel = Relationship(user, 'Bookmarked', question)
         graph.create(rel)
-	
-    def remBookmark(self, questionTitle):              
+
+    def remBookmark(self, questionTitle):
         query = '''
                 MATCH (u:User)-[r:Bookmarked]->(q:Question)
                 WHERE u.username = {username} AND q.title = {question_title}
                 DELETE r
                 '''
-        graph.run(query, username = self.username, question_title = questionTitle)
-	
+        graph.run(query, username=self.username, question_title=questionTitle)
+
     def getBookmarked(self, question_title):
         query = "MATCH (u:User)-[:Bookmarked]->(q:Question) WHERE u.username = {username} AND q.title = {questionTitle} return count(q)"
         result = graph.run(query, username=self.username, questionTitle=question_title)
-        return result.next()['count(q)'] 
-    
+        return result.next()['count(q)']
+
     def getBookmarkedQuestion(self):
         query = "MATCH (u:User)-[:Bookmarked]->(question:Question) WHERE u.username={username} return question"
-        return graph.run(query, username = self.username)
-   
-
+        return graph.run(query, username=self.username)
 
     # def getTopSuggestions(self):
     #     query = '''
@@ -241,6 +247,7 @@ class User:
     #     LIMIT 4
     #     '''
     #     return graph.run(query, username=self.username)
+
 
 def get_interests_titles():
     query = '''
@@ -327,4 +334,3 @@ def getUsersStartingWith(prefix):
     RETURN u
     '''
     return graph.run(query, prefix=prefix)
-
