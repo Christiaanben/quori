@@ -7,19 +7,13 @@
             <div class="card-body mediaFeeds">
                 <h4 class="card-title">Feeds</h4>
                 <hr>
-                <h6 class="card-subtitle mb-2 text-muted"></h6>
-                <a href="#" class="feedsColor">Top Questions</a>
-                <br>
-                <a href="#" class="feedsColor">New Questions</a>
-                <br>
-                <a href="#" class="feedsColor">Bookmarked Answers</a>
-                <br>
-                <a href="#" class="feedsColor">Followed Catagory 1</a>
-                <br>
-                <a href="#" class="feedsColor">Followed Catsgory 2</a>
-                <br>
-                <a href="#" class="feedsColor">Followed Catagory 3</a>
-                <br>
+                {% for row in followingPosts %}
+                <h4 class="card-subtitle mb-2 text-muted">{{row.user}}</h4>
+                <h5 class="card-subtitle mb-2 text-muted">{{row.qtitle}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{row.ans}}</h6>
+                UPVOTES: {{row.upvotes}}<br>
+                <hr>                                        
+                {% endfor %}  
             </div>
         </div>
         <br>
