@@ -256,8 +256,9 @@ def bookmarkPage():
         interests = get_interests_titles()
         u = User(session.get('username'))
         suggestions = u.getSuggestions()
+        followPosts = User(session['username']).getFollowingAnswers()
         return render_template('bookmark.html', posts=questions, interests=interests,
-                               pp=User(session['username']).getPP(), suggestions=suggestions)
+                               pp=User(session['username']).getPP(), suggestions=suggestions, followingPosts = followPosts)
     else:
         return redirect(url_for('login'))
 
