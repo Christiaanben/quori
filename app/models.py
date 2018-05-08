@@ -39,11 +39,6 @@ class User:
         except StopIteration:
             return 0
 
-        # MATCH (a:User),(b:User)
-
-    # WHERE a.username = 'Ricky' AND b.username = 'Maan'
-    # CREATE (a)-[r:Follows]->(b)
-
     def addUpvoted(self, title):
         query = '''
 		MATCH (a:User), (b:Answer) WHERE a.username = "''' + self.username + '''" AND b.title =  "''' + title + '''" MERGE (a)-[r:Upvoted]->(b)'''
@@ -70,7 +65,6 @@ class User:
         query = '''
 		MATCH (n:User{username: "'''+self.username+'''" })-[r:Upvoted]->(:Answer{title:"'''+title+'''"})
 		DELETE r'''
-        print query
         graph.run(query)
     # MATCH (a:User)-[r:Follows]-(b:User)
     # WHERE a.username = 'Maan' AND b.username = 'Patrick'
