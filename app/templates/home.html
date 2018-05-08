@@ -21,15 +21,23 @@
   <!-- Main column for the questions, id's need to be added to each card div depending on how much we want to display-->
   <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 mediaQuestion">
     <h4 class="card-title">Ask a Question:</h4>
-    <form class="input-group" action="{{ url_for('add_question') }}" method="post" style="display: inline;">
-      <input type="text" class="form-control" name="title" placeholder="title" width="300px" style="margin-bottom: 20px; padding: 20px; border-radius: 3px;">
-      <textarea class="form-control txtAreaQuestion" name="question" placeholder="What is your question" style=" margin-bottom: 12px; padding: 20px; border-radius: 3px; height: 150px; resize: none;"></textarea>
-      <select id="Qtags" name="Qtags" multiple>
-                    {% for interest in interests %}
-                        <option type="checkbox" name="{{ interest.tag }}"
-                                value="{{ interest.tag }}">{{ interest.tag }}</option>
-                    {% endfor %}
-                </select>
+    <form class="form-horizontal" action="{{ url_for('add_question') }}" method="post" style="display: inline;">
+                <div class="form-group" style="width: 50% ">
+                    <input type="text" class="form-control input-sm" name="title" placeholder="title"
+                           style="width: 100%;">
+                </div>
+                <div class="form-group">
+                    <select id="Qtags" name="Qtags" class="form-control input-sm" multiple style="height: 55px">
+                        {% for interest in interests %}
+                            <option type="checkbox" name="{{ interest.tag }}"
+                                    value="{{ interest.tag }}">{{ interest.tag }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                <textarea class="form-control " name="question" placeholder="What is your question"
+                          style="overflow: -moz-scrollbars-vertical; resize: vertical; max-height: 200px; min-height: 60px;"></textarea>
+                </div>
       <span class="input-group-btn">
         <input type="submit" style="width: 100px; margin-top: 10px;" class="niceButts btn btn-default" value="Ask"
                style="padding: 12px; width: 90px; border-radius: 4px;">
