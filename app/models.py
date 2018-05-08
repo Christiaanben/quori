@@ -8,13 +8,7 @@ import uuid
 # username = os.environ.get('neo4j')
 # password = os.environ.get('password')
 
-# connects to db when db authetication is off
 graph = Graph("http://localhost:7474/db/data/", user='neo4j', password='1234')
-
-
-# graph = Graph(url + '/db/data/', username=username, password=password)
-# graph = Graph('http://localhost:7474', username = 'neo4j', password = 'password')
-
 
 class User:
     def __init__(self, username):
@@ -142,22 +136,39 @@ class User:
         graph.run(query)
 
     def get_questions(self):
-        query = '''
+         queryCheck = "MATCH (u:User)-[:Follows]->(p:User) WHERE u.username = {username} RETURN count(p)"
+        result = graph.run(queryCheck, username = self.username)
+        if (result.next()['count(p)'] == 0):
+            query = '''
             MATCH (u:User)-[:Asked]->(q:Question)
             WHERE u.username={username}
             WITH COLLECT({ques:q}) AS row1
             MATCH (u:User)-[:Follows]->(:Tag)-[:Tagged]->(q:Question)
             WHERE u.username={username}
-            WITH row1+COLLECT({ques:q}) AS row2
-            MATCH (u:User)-[:Follows]->(:User)-[:Asked]->(q:Question)
-            WHERE u.username={username}
-            WITH row2+COLLECT({ques:q}) AS row3
-            UNWIND row3 AS row
+            WITH row1+COLLECT({ques:q}) AS row2           
+            UNWIND row2 AS row
             WITH row.ques AS q
-            RETURN q
-            ORDER BY q DESC
+            RETURN DISTINCT q
+            ORDER BY q.timestamp DESC
             LIMIT 10
         '''
+        else:
+            query = '''
+                MATCH (u:User)-[:Asked]->(q:Question)
+                WHERE u.username={username}
+                WITH COLLECT({ques:q}) AS row1
+                MATCH (u:User)-[:Follows]->(:Tag)-[:Tagged]->(q:Question)
+                WHERE u.username={username}
+                WITH row1+COLLECT({ques:q}) AS row2
+                MATCH (u:User)-[:Follows]->(:User)-[:Asked]->(q:Question)
+                WHERE u.username={username}
+                WITH row2+COLLECT({ques:q}) AS row3
+                UNWIND row3 AS row
+                WITH row.ques AS q
+                RETURN DISTINCT q
+                ORDER BY q.timestamp DESC
+                LIMIT 10
+            '''
         return graph.run(query, username=self.username)
 
     def addInterest(self, interest):
