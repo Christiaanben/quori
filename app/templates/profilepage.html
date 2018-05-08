@@ -68,8 +68,10 @@
                     </h3>
                 </div>
                 <div class="bio panel-body">
-                    <textarea name="txtFieldBio" class="fits" value="">{{ user.getBio()['a.bio'] }}</textarea>
+                    <textarea name="txtFieldBio" class="fits" style="resize: none;" value="">{{ user.getBio()['a.bio'] }}</textarea>
                 </div>
+                <br>
+                <br>
                 {% if user.getUsername()['un'] == session.username %}
                     </form>
                 {% endif %}
