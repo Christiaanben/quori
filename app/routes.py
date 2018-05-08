@@ -199,7 +199,16 @@ def removeupvote(answer, title):
     answers = get_answers(questiontitle)
     return redirect(url_for('question', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP()))
 
-@app.route('/rem_bookmark', methods=['GET'])
+@app.route('/add_bookmark', methods = ['GET'])
+def add_bookmark():
+    if (session.get('username')):
+        questiontitle = request.args.get('title')
+        User(session['username']).addBookmark(questiontitle)
+        return redirect(url_for('home'))
+    else:
+        return redirect(url_for('login'))
+   
+@app.route('/rem_bookmark', methods = ['GET'])
 def rem_bookmark():
     if (session.get('username')):
         questiontitle = request.args.get('title')
@@ -207,6 +216,16 @@ def rem_bookmark():
         return redirect(url_for('bookmarkPage'))
     else:
         return redirect(url_for('login'))
+
+@app.route('/rem_bookmark_home', methods = ['GET'])
+def rem_bookmark_home():
+    if (session.get('username')):
+        questiontitle = request.args.get('title')
+        User(session['username']).remBookmark(questiontitle)
+        return redirect(url_for('home'))
+    else:
+        return redirect(url_for('login'))
+
 
 
 @app.route('/bookmarkedQuestions')
@@ -224,8 +243,10 @@ def bookmarkPage():
     if (session.get('username')):
         questions = User(session['username']).getBookmarkedQuestion()
         interests = get_interests_titles()
+        u = User(session.get('username'))
+        suggestions = u.getSuggestions()
         return render_template('bookmark.html', posts=questions, interests=interests,
-                               pp=User(session['username']).getPP())
+                               pp=User(session['username']).getPP(), suggestions=suggestions)
     else:
         return redirect(url_for('login'))
 
