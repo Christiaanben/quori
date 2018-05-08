@@ -54,6 +54,12 @@ class User:
 		DELETE r'''
         graph.run(query)
 
+    def getUserUpvotes(self, answer):
+        query = '''
+            match (n:User{username:"'''+self.username+'''"})-[r:Upvoted]->(a:Answer{title:"'''+answer+'''"})
+            Return count(r) as userupvoted
+        '''
+        return graph.run(query)
     def removePP(self):
         query = 'MATCH (a:User) WHERE a.username = \''
         + self.username + '\' SET a.pp = \'temp.jpg\''
@@ -310,12 +316,15 @@ def find_one(questiontitle):
     return graph.find_one("Question", "title", questiontitle)
 
 
-def get_answers(questiontitle):
+def get_answers(questiontitle, user):
     query = '''
-    MATCH (question:Question)<-[:AnswerTo]-(answer:Answer)<-[:Answered]-(u:User) WHERE question.title = {questiontitle} 
-	OPTIONAL MATCH (a:Answer{title:answer.title})<-[b:Upvoted]-(:User) RETURN answer.title AS title, u.username AS user, u.pp AS pp, count(b) AS upvotes ORDER BY upvotes DESC
+    MATCH (question:Question)<-[:AnswerTo]-(answer:Answer)<-[:Answered]-(u:User) WHERE question.title = "'''+questiontitle+'''"
+	OPTIONAL MATCH (a:Answer{title:answer.title})<-[b:Upvoted]-(:User)
+    OPTIONAL MATCH (a:Answer{title:answer.title})<-[r:Upvoted]-(u:User{username:"'''+user+'''"}) WHERE question.title = "'''+questiontitle+'''"
+    RETURN answer.title AS title, u.username AS user, u.pp AS pp, count(r) as userupvoted, count(b) AS upvotes ORDER BY upvotes DESC
     '''
-    return graph.run(query, questiontitle=questiontitle)
+    print (query)
+    return graph.run(query)
 
 
 def timestamp():
