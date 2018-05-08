@@ -213,6 +213,34 @@ class User:
         '''
         return graph.run(query, username=self.username)
 
+@app.route('/follow/<name>', methods=['GET', 'POST'])
+def follow(name):
+    print(name)
+    User(session['username']).addFollows(name)
+    return redirect(url_for('profile', name=name))
+
+@app.route('/unfollow/<name>', methods=['GET', 'POST'])
+def unfollow(name):
+    print(name)
+    User(session['username']).removeFollows(name)
+    return redirect(url_for('profile', name=name))
+
+@app.route('/upvote/<answer>/<title>')
+def upvote(answer, title):
+    User(session['username']).addUpvoted(answer)
+    questiontitle = title
+    question = find_one(questiontitle)
+    answers = get_answers(questiontitle)
+    return redirect(url_for('question', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP()))
+
+@app.route('/removeupvote/<answer>/<title>')
+def removeupvote(answer, title):
+    User(session['username']).removeUpvoted(answer)
+    questiontitle = title
+    question = find_one(questiontitle)
+    answers = get_answers(questiontitle)
+    return redirect(url_for('question', title=questiontitle, htmlquestion=question, htmlanswers=answers, pp=User(session['username']).getPP()))
+
     def addBookmark(self, questionTitle):
         user = self.find()
         question = find_one(questionTitle)
