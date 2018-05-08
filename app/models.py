@@ -136,7 +136,7 @@ class User:
         graph.run(query)
 
     def get_questions(self):
-         queryCheck = "MATCH (u:User)-[:Follows]->(p:User) WHERE u.username = {username} RETURN count(p)"
+        queryCheck = "MATCH (u:User)-[:Follows]->(p:User) WHERE u.username = {username} RETURN count(p)"
         result = graph.run(queryCheck, username = self.username)
         if (result.next()['count(p)'] == 0):
             query = '''
