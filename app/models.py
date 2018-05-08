@@ -43,10 +43,9 @@ class User:
         + self.username + '\' SET a.pp = a.username + \'.jpg\''
         graph.run(query)
 
-    def removeFollows(self, username):
-        query = 'MATCH (a:User)-[r:Follows]-(b:User) WHERE a.username = \''
-        +self.username + '\' AND b.username = \'' + username + '\' DELETE r'
-        graph.run(query)
+    def removeFollows(self, user):
+        query = '''MATCH (u1:User)-[f:Follows]-(u2:User) WHERE u1.username={selfun} AND u2.username={otherusern} DELETE f'''
+        graph.run(query, selfun=self.username, otherusern=user)
 
     def removeUpvoted(self, title):
         query = '''
