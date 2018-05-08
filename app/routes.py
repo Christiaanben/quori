@@ -74,8 +74,9 @@ def searchpage():
 
 @app.route('/interest')
 def interest():
+    currentInterets = User(session['username']).getInterest()
     interests = get_interests_titles()
-    return render_template('interest.html', interests=interests)
+    return render_template('interest.html',currentInterets=currentInterets, interests=interests)
 
 
 @app.route('/add_interests', methods=['POST'])
@@ -85,6 +86,8 @@ def add_interests():
     for value in list_of_interests:
         if request.form.get(value['tag']):
             User(session['username']).addInterest(value['tag'])
+        else:
+            User(session['username']).removeInterest(value['tag'])
     return redirect(url_for('home'))
 
 

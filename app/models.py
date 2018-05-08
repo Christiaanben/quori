@@ -183,6 +183,18 @@ class User:
         rel = Relationship(user, 'Follows', tag)
         graph.create(rel)
 
+    def removeInterest(self, interest):
+        query = '''MATCH (u:User)-[f:Follows]-(t:Tag) WHERE u.username={un} and t.title = {tag} Delete f'''
+        return graph.run(query, un=self.username,tag = interest)
+        user = self.find()
+        tag = graph.find_one('Tag', 'title', interest)
+        rel = Relationship(user, 'Follows', tag)
+        graph.delete(rel)
+
+    def getInterest(self):
+        query = '''MATCH (u:User)-[:Follows]-(t:Tag) WHERE u.username={un} Return t'''
+        return graph.run(query, un=self.username)
+
     def getPP(self):
         query = 'MATCH (a:User) WHERE a.username = {username} RETURN a.pp AS p'
         return graph.run(query, username=self.username).next()
