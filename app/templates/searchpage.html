@@ -2,9 +2,9 @@
     {% for user in users %}
         <div class="bubble">
             <div class="panel panel-default" style="margin-left: 5%; margin-right: 5%;">
-                <div class="panel-heading" id="T1">
+                <div class="panel-heading" style ="height:60px;" id="T1">
                     <a href={{ url_for('profile', name=user[0]['username']) }}>
-                        <h3>
+                        <h3 style="margin-top:0px;">
                             <img class="user" style="margin-right:15px" src="../static/profilepictures/{{user[0]['pp']}}">
                             {{ user[0]['username'] }}
                         </h3>
