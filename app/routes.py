@@ -87,11 +87,13 @@ def add_interests():
     return redirect(url_for('home'))
 
 
-@app.route('/profile/<name>', methods=['GET', 'POST'])
-def profile(name):
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    name = request.args.get('name')
+    error = request.args.get('error')
     userinfo = User(name)
     results = User(session['username']).checkFollow(name)
-    return render_template('profilepage.html', user=userinfo, following=results, pp=User(session['username']).getPP())
+    return render_template('profilepage.html', user=userinfo, following=results, pp=User(session['username']).getPP(), error = error)
 
 
 @app.route('/add_question', methods=['POST'])
@@ -123,12 +125,18 @@ def updateBio():
 
 @app.route('/updatePassword', methods=['POST'])
 def updatePassword():
-    if request.method == 'POST':
+    error = None
+    if request.method == 'POST':       
         oldPassword = request.form['passwordOld']
         newPassword = request.form['passwordNew']
         retypePassword = request.form['passwordRetype']
-        User(session['username']).editPassword(oldPassword, newPassword, retypePassword)
-        return redirect(url_for('profile', name=session['username']))
+        if (User(session['username']).verify_password(oldPassword)):            
+            if(User(session['username']).editPassword(oldPassword, newPassword, retypePassword) == False):
+                error = "Your new passwords do not match."
+        else:
+            error = "Your current password is incorrect."           
+            
+    return redirect(url_for('profile', name=session['username'], error = error))
 
 
 @app.route('/uploader', methods=['POST'])
