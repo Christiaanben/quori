@@ -134,6 +134,12 @@ class User:
 			MATCH (question:Question{title:"''' + question + '''"}) MATCH(user:User {username:"''' + self.username + '''"})  MERGE(question)<-[:AnswerTo]-(answer:Answer{id:'A9',title: "''' + answer + '''", timestamp:"1",date:"1", user:"''' + self.username + '''"})<-[:Answered]-(user)
 		'''
         graph.run(query)
+	
+    def getFollowingAnswers(self):
+        query = '''MATCH (question:Question)<-[:AnswerTo]-(answer:Answer)<-[:Answered]-(u:User)<-[:Follows]-(p:User) WHERE p.username={username}
+                OPTIONAL MATCH (a:Answer{title:answer.title})<-[b:Upvoted]-(:User) RETURN question.title AS qtitle, answer.title AS ans, 
+                u.username AS user, u.pp AS pp, count(b) AS upvotes ORDER BY upvotes DESC LIMIT 10'''
+        return graph.run(query, username=self.username)
 
     def get_questions(self):
         queryCheck = "MATCH (u:User)-[:Follows]->(p:User) WHERE u.username = {username} RETURN count(p)"
