@@ -39,19 +39,17 @@
             </div>
             <div class="panel-body" style="padding-left:1em">
                 <p style="word-wrap: break-word;">{{ row.title }}</p>
-                <!--{{row.userupvoted}}-->
-                <!--{%if row.userupvoted == 0%}-->
-              <!--{%endif%}-->
-                <form action="{{url_for('upvote', answer = row.title, title = htmlquestion.title)}}">
-                    <input type="submit" class="btn btn-success" value="UPVOTE">
+                                <p>UPVOTES: {{row.upvotes}}</p>
+                <div ><form action="{{url_for('upvote', answer = row.title, title = htmlquestion.title)}}">
+                    <input type="submit" style="float:left"class="btn btn-success" value="UPVOTE">
                 </form>
 
                 <!--{%if row.userupvoted == 1%}-->
                 <!--                {%endif%}-->
                 <form action="{{url_for('removeupvote', answer = row.title, title = htmlquestion.title)}}">
-                    <input type="submit" class="btn btn-danger" value="UNUPVOTE">
+                    <input type="submit" style="float:left"class="btn btn-danger" value="UNUPVOTE">
                 </form>
-                <p>UPVOTES: {{row.upvotes}}</p>
+              </div>
             </div>
         </div>
         <br>
