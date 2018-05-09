@@ -14,44 +14,49 @@
         </div>
         <br>
         <form action="{{url_for('submit_answer', title = htmlquestion.title)}}" method="post">
-            <div class="panel panel-default" style="margin-left: 5%; margin-right: 5%;">
-                <div class="panel-heading" id="T1" style=" height: 60px;">
-                    <h5>Answer</h5>
-                </div>
-                <div class="panel-body" style="padding-left:1em">
-                    <textarea name="message" style="height:100px; width:100%; resize: none;" placeholder="Type your answer..."></textarea>
-                    <br><br>
-                    <input type="submit" style="width: 100px; margin-top: 10px;" class="niceButts btn btn-default" value="Answer">
-                </div>
-            </div>
-        </form>
-        <hr>
-        <br> {% for row in htmlanswers %}
-        <div class="panel panel-default" style="margin-left: 5%; margin-right: 5%;">
-            <div class="panel-heading" id="T1" style=" height: 60px;">
-                <div class="user" style="background-image: url('../../static/profilepictures/{{row.pp}}');">
-                </div>
-                <a href="#" style="font-size:15px; padding-left:5px;">{{row.user}}
-                </a>
-                <br>
-                <br>
-                <br>
-            </div>
-            <div class="panel-body" style="padding-left:1em">
-                <p style="word-wrap: break-word;">{{ row.title }}</p>
-                                <p>UPVOTES: {{row.upvotes}}</p>
-                <div ><form action="{{url_for('upvote', answer = row.title, title = htmlquestion.title)}}">
-                    <input type="submit" style="float:left"class="btn btn-success" value="UPVOTE">
-                </form>
-
-                <!--{%if row.userupvoted == 1%}-->
-                <!--                {%endif%}-->
-                <form action="{{url_for('removeupvote', answer = row.title, title = htmlquestion.title)}}">
-                    <input type="submit" style="float:left"class="btn btn-danger" value="UNUPVOTE">
-                </form>
-              </div>
-            </div>
+      <h5>Answer</h5>
+      <div class="panel-body" style="padding-left:1em">
+        <textarea name="message" style="height:100px; width:100%; resize: none;" placeholder="Type your answer..."></textarea>
+        <br><br>
+        <input type="submit" class="btn btn-secondary" value="Answer">
+      </div>
+    </form>
+    <hr>
+    <br> {% for row in htmlanswers %}
+    <div class="panel panel-default">
+      <div class="panel-heading" id="T1" style=" height: 60px;">
+        <div>
+          <div class="user" style="background-image: url('../../static/profilepictures/{{row.pp}}'); float:left">
+          </div>
+          <div style="float:left; margin-top:5px">
+            <a href="#" style="font-size:20px; padding-left:5px; margin-top:5px">{{row.user}}</a>
+          </div>
         </div>
+        <br>
+        <br>
+        <br>
+      </div>
+      <div class="panel-body" style="padding-left:1em">
+        <p style="word-wrap: break-word;">{{ row.title }}</p>
+        <!--{{row.userupvoted}}-->
+        <!--{%if row.userupvoted == 0%}-->
+        <!--{%endif%}-->
+        <hr>
+        <p>UPVOTES: {{row.upvotes}}</p>
+
+        <div>
+          <form action="{{url_for('upvote', answer = row.title, title = htmlquestion.title)}}">
+            <input type="submit" style="float:left;width:105px" class="btn btn-success" value="UPVOTE">
+          </form>
+
+          <!--{%if row.userupvoted == 1%}-->
+          <!--                {%endif%}-->
+          <form action="{{url_for('removeupvote', answer = row.title, title = htmlquestion.title)}}">
+            <input type="submit" style="margin-left:10px; float:left;width:105px" class="btn btn-danger" value="UNUPVOTE">
+          </form>
+        </div>
+      </div>
+    </div>
         <br>
         <br> {% endfor %}
     </div>
