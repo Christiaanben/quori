@@ -1,7 +1,7 @@
 import pytz
 from py2neo import Graph, Node, Relationship
 from passlib.hash import bcrypt
-# from datetime import datetime
+import time
 import datetime
 import pytz
 import os
@@ -340,14 +340,15 @@ def get_answers(questiontitle, user):
 
 
 def timestamp():
-    epoch = datetime.utcfromtimestamp(0)
-    now = datetime.now()
+
+    epoch = datetime.datetime.utcfromtimestamp(0)
+    now = datetime.datetime.now()
     delta = now - epoch
-    return delta.total_seconds()
+    return delta.total_seconds()-60*60*2
 
 
 def date():
-    return datetime.now().strftime('%Y-%m-%d')
+    return datetime.datetime.now().strftime('%Y-%m-%d')
 
 
 def getUsersStartingWith(prefix):
