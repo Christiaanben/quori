@@ -56,6 +56,8 @@
             {%if myFunction(question[0]['title']) == 1%}
             <a href="rem_bookmark_home?title={{question[0]['title']}}"><img src="../static/bookmarked.png"  alt= 'Bookmark' style = " width: 40px;height: 40px;float: right; margin-top:-10px"></a>
             {%endif%}
+            <br>
+            {{timeStampToDate(question[0]['timestamp'])}}
        </h5>
       </div>
       <div class="panel-body" style="padding-left:1em">

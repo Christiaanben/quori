@@ -1,6 +1,9 @@
+import pytz
 from py2neo import Graph, Node, Relationship
 from passlib.hash import bcrypt
-from datetime import datetime
+# from datetime import datetime
+import datetime
+import pytz
 import os
 import uuid
 
@@ -256,6 +259,15 @@ class User:
     #     '''
     #     return graph.run(query, username=self.username)
 
+def dateFromTimeStamp(timestamp):
+    date = datetime.datetime.fromtimestamp(max(int(timestamp), 1525792513))
+    timezone = pytz.timezone('Africa/Johannesburg')
+    date_aware = timezone.localize(date)
+    # print(date)
+    # print(date_aware)
+    # for i in pytz.common_timezones:
+    #     print(i)
+    return date.strftime('%Y-%m-%d %H:%M:%S')
 
 def get_interests_titles():
     query = '''

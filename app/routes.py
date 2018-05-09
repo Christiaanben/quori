@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request, session, j
 from app import app
 from app.forms import LoginForm
 from .models import find_one
-from .models import get_answers
+from .models import get_answers, dateFromTimeStamp
 from .models import User, getUsersStartingWith, get_interests_titles, add_q_tag
 import os
 
@@ -53,14 +53,17 @@ def logout():
 def home():
     if session.get('username'):
         questions = User(session['username']).get_questions()
+        # for q in questions:
+        #     print(
+        #         dateFromTimeStamp(q[0]['timestamp'])
+        #     )
         interests = get_interests_titles()
         u = User(session.get('username'))
         suggestions = u.getSuggestions()
         followPosts = User(session['username']).getFollowingAnswers()
-        # for q in suggestions:
-        #     print(q)
         return render_template('home.html', posts=questions, interests=interests,
-                               pp=User(session['username']).getPP(), suggestions=suggestions, myFunction=get_bookmarked, followingPosts = followPosts)
+                               pp=User(session['username']).getPP(), suggestions=suggestions,
+                               myFunction=get_bookmarked, followingPosts = followPosts, timeStampToDate=dateFromTimeStamp)
     else:
         return redirect(url_for('login'))
 
