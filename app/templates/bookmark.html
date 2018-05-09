@@ -27,6 +27,7 @@
                 <h5 class="card-title">
                     <a href="question?title={{ row.question.title }}">{{ row.question.title }}</a>
                     <a href="rem_bookmark?title={{row.question.title}}"><img src = "../static/bookmarked.png" alt= "Bookmark" style = " width: 40px;height: 40px;float: right; margin-top:-10px"></a>
+                    <br>{{timeStampToDate(row.question.timestamp)}}
                 </h5>
             </div>
             <div class="panel-body" style="padding-left:1em">

@@ -174,7 +174,7 @@ def question():
     # question_answers = get_answers(questiontitle)
     # return render_template('question.html', question_answers=question_answers)
     return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers,
-                           pp=User(session['username']).getPP())
+                           pp=User(session['username']).getPP(),timeStampToDate=dateFromTimeStamp)
 
 
 @app.route('/submit_answer/<title>', methods=['POST'])
@@ -270,7 +270,8 @@ def bookmarkPage():
         suggestions = u.getSuggestions()
         followPosts = User(session['username']).getFollowingAnswers()
         return render_template('bookmark.html', posts=questions, interests=interests,
-                               pp=User(session['username']).getPP(), suggestions=suggestions, followingPosts = followPosts)
+                               pp=User(session['username']).getPP(), suggestions=suggestions,
+                               followingPosts = followPosts, timeStampToDate=dateFromTimeStamp)
     else:
         return redirect(url_for('login'))
 
