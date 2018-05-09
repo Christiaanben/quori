@@ -188,8 +188,8 @@ def submit_answer(title):
     answers = get_answers(questiontitle, user.username)
     # question_answers = get_answers(questiontitle)
     # return render_template('question.html', question_answers=question_answers)
-    return render_template('question.html', title=questiontitle, htmlquestion=question, htmlanswers=answers,
-                           pp=User(session['username']).getPP())
+    return redirect(url_for('question',title=questiontitle, htmlquestion=question, htmlanswers=answers,
+                           pp=User(session['username']).getPP()))
 
 
 @app.route('/follow/<name>', methods=['GET', 'POST'])
